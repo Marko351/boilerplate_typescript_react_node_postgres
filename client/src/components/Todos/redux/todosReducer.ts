@@ -1,38 +1,36 @@
-import { ITodo, ITodos } from '../ts/interfaces';
+import { ITodo } from '../ts/interfaces';
 import { TAllReduxTypes } from '../ts/types';
+import { ADD_NEW_TODO, COMPLETE_TODO } from './reduxTypes';
 
-type state = {
+export type TStateTodos = {
   todos: Array<ITodo>;
 };
 
-const initialState = {
+const initialState: TStateTodos = {
   todos: [
     {
       id: 0,
       text: 'First Todo',
       isCompleted: false,
     },
-    {
-      id: 1,
-      text: 'Second Todo',
-      isCompleted: false,
-    },
-    {
-      id: 2,
-      text: 'Third Todo',
-      isCompleted: false,
-    },
-    {
-      id: 3,
-      text:
-        'Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo',
-      isCompleted: false,
-    },
   ],
 };
 
-export const todosReducer = (state: state = initialState, action: TAllReduxTypes): ITodos => {
+export const todosReducer = (state = initialState, action: TAllReduxTypes): TStateTodos => {
   switch (action.type) {
+    case ADD_NEW_TODO:
+      return {
+        ...state,
+        todos: [...state.todos, action.payload],
+      };
+    case COMPLETE_TODO:
+      return {
+        ...state,
+        todos: state.todos.map((todo: ITodo) => {
+          if (todo.id === action.payload) todo.isCompleted = !todo.isCompleted;
+          return todo;
+        }),
+      };
     default:
       return state;
   }
