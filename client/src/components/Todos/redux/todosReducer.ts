@@ -1,12 +1,9 @@
-import { Todo, Todos } from '../interfaces';
+import { ITodo, ITodos } from '../ts/interfaces';
+import { TAllReduxTypes } from '../ts/types';
 
 type state = {
-  todos: Array<Todo>;
+  todos: Array<ITodo>;
 };
-
-type actions =
-  | { type: 'add_new_todo'; payload: string }
-  | { type: 'set_complete_todo'; payload: number };
 
 const initialState = {
   todos: [
@@ -34,10 +31,7 @@ const initialState = {
   ],
 };
 
-export const todosReducer = (
-  state: state = initialState,
-  action: actions
-): Todos => {
+export const todosReducer = (state: state = initialState, action: TAllReduxTypes): ITodos => {
   switch (action.type) {
     default:
       return state;
