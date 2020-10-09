@@ -1,88 +1,83 @@
 import React, { createContext, useReducer, Dispatch } from 'react';
 
-interface Todo {
+interface Task {
   id: number;
   text: string;
   isCompleted: boolean;
 }
 
 type state = {
-  todos: Array<Todo>;
+  tasks: Array<Task>;
 };
 
-type actions =
-  | { type: 'add_new_todo'; payload: string }
-  | { type: 'set_complete_todo'; payload: number };
+type actions = { type: 'add_new_task'; payload: string } | { type: 'set_complete_task'; payload: number };
 
 const initialState = {
-  todos: [
+  tasks: [
     {
       id: 0,
-      text: 'First Todo',
+      text: 'First Task',
       isCompleted: false,
     },
     {
       id: 1,
-      text: 'Second Todo',
+      text: 'Second Task',
       isCompleted: false,
     },
     {
       id: 2,
-      text: 'Third Todo',
+      text: 'Third Task',
       isCompleted: false,
     },
     {
       id: 3,
       text:
-        'Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo Fourth Todo',
+        'Fourth Task Fourth Task Fourth Task Fourth Task Fourth Task Fourth Task Fourth Task Fourth Task Fourth Task Fourth Task Fourth Task Fourth Task Fourth Task Fourth Task',
       isCompleted: false,
     },
   ],
 };
 
-type TodosContextType = {
-  todos: Todo[];
+type TasksContextType = {
+  tasks: Task[];
 };
 
-export const todosStore = createContext<TodosContextType | any>(initialState);
-const { Provider } = todosStore;
+export const tasksStore = createContext<TasksContextType | any>(initialState);
+const { Provider } = tasksStore;
 
 interface Props {
   children?: JSX.Element[];
 }
 
-export const TodosProvider: React.FC<Props> = ({ children }: Props) => {
-  const [state, dispatch] = useReducer(
-    (state: state, action: actions): state => {
-      switch (action.type) {
-        case 'add_new_todo':
-          return {
-            ...state,
-            todos: [
-              ...state.todos,
-              {
-                text: action.payload,
-                isCompleted: false,
-                id: state.todos.length - 1 + 1,
-              },
-            ],
-          };
-        case 'set_complete_todo':
-          return {
-            ...state,
-            todos: state.todos.map((todo) => {
-              if (todo.id === action.payload) {
-                todo.isCompleted = !todo.isCompleted;
-              }
-              return todo;
-            }),
-          };
-        default:
-          return state;
-      }
-    },
-    initialState
-  );
+export const TasksProvider: React.FC<Props> = ({ children }: Props) => {
+  const [state, dispatch] = useReducer((state: state, action: actions): state => {
+    switch (action.type) {
+      case 'add_new_task':
+        return {
+          ...state,
+          tasks: [
+            ...state.tasks,
+            {
+              text: action.payload,
+              isCompleted: false,
+              id: state.tasks.length - 1 + 1,
+            },
+          ],
+        };
+      case 'set_complete_task':
+        return {
+          ...state,
+          tasks: state.tasks.map((task) => {
+            if (task.id === action.payload) {
+              task.isCompleted = !task.isCompleted;
+            }
+            return task;
+          }),
+        };
+      default:
+        return state;
+    }
+  }, initialState);
 
   return <Provider value={{ ...state, dispatch }}>{children}</Provider>;
 };

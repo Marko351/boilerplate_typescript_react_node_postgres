@@ -1,9 +1,9 @@
 import { Action, combineReducers } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { todosReducer } from '../components/Todos/redux/todosReducer';
+import { tasksReducer } from '../components/Tasks/redux/tasksReducer';
 
 const rootReducer = combineReducers({
-  todosReducer,
+  tasksReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
