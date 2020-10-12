@@ -30,6 +30,8 @@ module.exports = {
   rules: {
       'prettier/prettier': ['error', {}, { usePrettierrc: true }],
       'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off'
+      'react/prop-types': 'off',
+      'no-empty-pattern': 'off',
+      '@typescript-eslint/no-empty-function': 'off'
   }
 };

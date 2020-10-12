@@ -1,18 +1,20 @@
 import React from 'react';
-
 import { Provider } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+
 import store from './redux/store';
-import { Wrapper } from './components/Wrapper';
 import { NavBar } from './layout/NavBar';
-import Tasks from './components/Tasks/Tasks';
+import { TaskComponent } from './components/Tasks/Tasks';
+import { CalendarContainer } from './components/Calendar/CalendarContainer';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <NavBar />
-      <Wrapper>
-        <Tasks />
-      </Wrapper>
+      <Switch>
+        <Route path='/task' component={TaskComponent} />
+        <Route path='/' component={CalendarContainer} />
+      </Switch>
     </Provider>
   );
 };

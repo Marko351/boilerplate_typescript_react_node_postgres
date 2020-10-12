@@ -1,10 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { RootState } from '../../redux/reducers';
 import { ITask } from './ts/interfaces';
 import { TaskItem } from './TaskItem';
 import { addNewTask, toggleComplete } from './redux/taskActions';
+import { Wrapper } from '../../common/Wrapper';
 
 const mapStateToProps = (state: RootState) => ({
   tasksReducer: state.tasksReducer,
@@ -16,7 +17,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type TasksProps = PropsFromRedux;
 
-const TasksComponent: React.FC<TasksProps> = ({ tasksReducer, addNewTask, toggleComplete }: TasksProps) => {
+const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask, toggleComplete }: TasksProps) => {
   const [task] = useState({
     id: Math.floor(Math.random() * 100),
     text: '',
@@ -32,21 +33,23 @@ const TasksComponent: React.FC<TasksProps> = ({ tasksReducer, addNewTask, toggle
   };
 
   return (
-    <Fragment>
-      {tasksReducer.tasks.map((task: ITask) => {
-        return (
-          <TaskItem
-            key={task.id}
-            text={task.text}
-            isCompleted={task.isCompleted}
-            id={task.id}
-            onToggleComplete={onToggleComplete}
-          />
-        );
-      })}
+    <Wrapper>
+      <div>
+        {tasksReducer.tasks.map((task: ITask) => {
+          return (
+            <TaskItem
+              key={task.id}
+              text={task.text}
+              isCompleted={task.isCompleted}
+              id={task.id}
+              onToggleComplete={onToggleComplete}
+            />
+          );
+        })}
+      </div>
       {/* <button onClick={onAddNewTask}>Add new task</button> */}
-    </Fragment>
+    </Wrapper>
   );
 };
 
-export default connector(TasksComponent);
+export const TaskComponent = connector(TasksComponentDefault);

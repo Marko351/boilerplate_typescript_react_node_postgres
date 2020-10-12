@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomCard from '../../common/CustomCard/CustomCard';
+import { CustomCard } from '../../common/CustomCard';
 
 interface TaskItemProps {
   text: string;
