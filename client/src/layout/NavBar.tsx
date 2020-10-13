@@ -41,9 +41,10 @@ export const NavBar: React.FC = () => {
                 aria-haspopup='true'>
                 <img
                   className='h-8 w-8 rounded-full'
-                  src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+                  src='https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'
                   alt=''
                 />
+                <span className='ml-2'>Username</span>
               </button>
             </div>
             {/* <!--
@@ -57,23 +58,23 @@ export const NavBar: React.FC = () => {
                   To: "transform opacity-0 scale-95"
               --> */}
             <div className='hidden dropdown origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg z-10'>
-              {/* <div
-                className='py-1 rounded-md bg-white shadow-xs'
+              <div
+                className='py-1 rounded-md bg-white w-full shadow-xs'
                 role='menu'
                 aria-orientation='vertical'
                 aria-labelledby='user-menu'>
-                <a href='#' className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' role='menuitem'>
+                <button className='block px-4 py-2 w-full text-sm text-gray-700 hover:bg-gray-100' role='menuitem'>
                   Your Profile
-                </a>
+                </button>
 
-                <a href='#' className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' role='menuitem'>
+                <button className='block px-4 py-2 w-full text-sm text-gray-700 hover:bg-gray-100' role='menuitem'>
                   Settings
-                </a>
+                </button>
 
-                <a href='#' className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100' role='menuitem'>
+                <button className='block px-4 py-2 text-sm w-full text-gray-700 hover:bg-gray-100' role='menuitem'>
                   Sign out
-                </a>
-              </div> */}
+                </button>
+              </div>
             </div>
           </div>
         </div>
