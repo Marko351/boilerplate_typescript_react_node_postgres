@@ -13,7 +13,7 @@ export const CalendarCheckbox: React.FC<CheckboxProps> = ({ color, customClass, 
   return (
     <label className={`inline-flex items-center cursor-pointer ${customClass}`}>
       <input
-        className={`form-checkbox h-8 w-8 text-${color}-500`}
+        className={`form-checkbox h-6 w-6 cursor-pointer text-${color}-500`}
         type='checkbox'
         checked={value}
         name={name}

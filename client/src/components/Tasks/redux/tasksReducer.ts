@@ -7,13 +7,7 @@ export type TStateTasks = {
 };
 
 const initialState: TStateTasks = {
-  tasks: [
-    {
-      id: 0,
-      text: 'First Task',
-      isCompleted: false,
-    },
-  ],
+  tasks: [],
 };
 
 export const tasksReducer = (state = initialState, action: TAllReduxTypes): TStateTasks => {
