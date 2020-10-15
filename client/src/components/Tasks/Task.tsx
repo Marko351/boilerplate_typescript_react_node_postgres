@@ -1,6 +1,7 @@
 import { stringify } from 'querystring';
 import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { CustomButton } from '../../common/CustomButton';
 import { CustomInput } from '../../common/CustomInput';
 import { CustomSelect } from '../../common/CustomSelect';
 import { CustomTextarea } from '../../common/CustomTextarea';
@@ -35,6 +36,10 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
     setTask({ ...task, [name]: value });
   };
 
+  const onAddCheckList = () => {
+    console.log('test');
+  };
+
   return (
     <div className='flex px-5'>
       <div className='lg:w-1/2 px-5'>
@@ -61,6 +66,9 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
               name='description'
               label='Description'
             />
+          </div>
+          <div className='w-full'>
+            <CustomButton text='Add Checklist' onClick={onAddCheckList} color='green' />
           </div>
         </div>
       </div>
