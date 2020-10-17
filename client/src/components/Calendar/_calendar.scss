@@ -1,0 +1,10 @@
+.custom-calendar {
+  font-size: 1.6rem;
+
+  & .rbc-toolbar button {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+  }
+
+  &--checkbox-container {}
+}

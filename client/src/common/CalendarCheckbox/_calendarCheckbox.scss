@@ -1,0 +1,59 @@
+/* Basic styles */
+input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+label {
+  position: relative;
+  display: inline-block;
+  padding: 0 0 0 2em;
+  height: 1.5rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+label::before,
+label::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+label::before {
+  content: " ";
+  border: 2px solid red;
+  border-radius: 20%;
+}
+
+/* Ovo je check */
+input[type="checkbox"]+label::after {
+  content: "\2714";
+  color: red;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* :checked */
+input[type="checkbox"]:checked+label::before {
+  background: #fff;
+  border-color: red;
+}
+
+input[type="checkbox"]+label::after {
+  transform: scale(0);
+}
+
+input[type="checkbox"]:checked+label::after {
+  transform: scale(1);
+}
+
+/* Transition */
+label::before,
+label::after {
+  transition: .25s all ease;
+}

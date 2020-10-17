@@ -11,15 +11,21 @@ interface CheckboxProps {
 
 export const CalendarCheckbox: React.FC<CheckboxProps> = ({ color, customClass, label, value, name, onChange }) => {
   return (
-    <label className={`inline-flex items-center cursor-pointer ${customClass}`}>
+    <>
       <input
-        className={`form-checkbox h-6 w-6 cursor-pointer text-${color}-500`}
         type='checkbox'
-        checked={value}
+        id={name}
+        className='calendar-checkbox__checkbox'
         name={name}
+        checked={value}
         onChange={onChange}
       />
-      <span className={`ml-2 font-normal text-lg text-${color}-700`}>{label}</span>
-    </label>
+      <label htmlFor={name}>Check and uncheck this</label>
+    </>
+    // <label className='calendar-checkbox'>
+    //   {label}
+    //   <input type='checkbox' className='calendar-checkbox__checkbox' name={name} checked={value} onChange={onChange} />
+    //   <div className='calendar-checkbox__indicator'></div>
+    // </label>
   );
 };

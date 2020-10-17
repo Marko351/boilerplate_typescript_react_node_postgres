@@ -1,0 +1,47 @@
+.navbar {
+  background-color: $color-tertiary;
+  padding: 1rem;
+  height: auto;
+  color: $color-gray;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo-box {
+    margin-right: 1rem;
+    display: inline-block;
+    opacity: .4;
+    cursor: pointer;
+
+    &:hover {
+      opacity: .7;
+    }
+  }
+
+  &__logo {
+    color: $color-gray;
+    font-size: 2rem;
+  }
+
+  &__link {
+    font-size: 1.6rem;
+    padding: .4rem;
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    &:hover {
+      // color: scale-color($color-gray, $lightness: +100%);
+      color: darken($color-gray, 8%);
+    }
+
+    &--active {
+      background-color: $color-tertiaryLight;
+      border-radius: 2px;
+    }
+  }
+}

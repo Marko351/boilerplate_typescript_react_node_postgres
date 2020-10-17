@@ -13,6 +13,7 @@ const localizer = momentLocalizer(moment);
 export const CustomCalendar: React.FC<CalendarProps> = ({ events, onSelectEvent, eventPropGetterConfig }) => {
   return (
     <Calendar
+      className='custom-calendar'
       selectable
       localizer={localizer}
       events={events}
@@ -24,7 +25,7 @@ export const CustomCalendar: React.FC<CalendarProps> = ({ events, onSelectEvent,
       endAccessor='scheduled_at'
       onSelectEvent={onSelectEvent}
       eventPropGetter={eventPropGetterConfig}
-      style={{ height: '50rem' }}
+      style={{ height: '70rem' }}
     />
   );
 };

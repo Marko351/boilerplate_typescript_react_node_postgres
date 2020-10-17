@@ -17,7 +17,7 @@ export const CustomInput: React.FC<CustomInputProps> = ({ value, onChange, name,
         {label}
       </label>
       <input
-        className='w-full border rounded px-2 py-1 focus:outline-none text-gray-700'
+        className='w-full border rounded px-2 py-1 focus:outline-none focus:shadow-outline text-gray-700'
         type={type || 'text'}
         value={value}
         onChange={onChange}

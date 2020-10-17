@@ -4,9 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './index.css';
 
-import './assets/main.css';
+import './styles/main.scss';
 
 ReactDOM.render(
   <BrowserRouter>

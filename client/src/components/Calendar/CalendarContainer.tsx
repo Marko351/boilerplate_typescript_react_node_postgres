@@ -2,11 +2,10 @@ import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { RootState } from '../../redux/reducers';
-import { Wrapper } from '../../common/Wrapper';
-import { CustomCard } from '../../common/CustomCard';
+import { CustomCard } from '../../common/CustomCard/CustomCard';
 import { CustomCalendar } from './Calendar';
 import { ICalendarEvent, IEventPropGetter } from './ts/interfaces';
-import { CalendarCheckbox } from '../../common/CalendarCheckbox';
+import { CalendarCheckbox } from '../../common/CalendarCheckbox/CalendarCheckbox';
 
 const mapStateToProps = (state: RootState) => ({});
 
@@ -24,13 +23,14 @@ const CalendarContainerDefault: React.FC<CalendarProps> = () => {
 
   const handleFiltersChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target as HTMLInputElement;
+    console.log(name);
     setFilters({ ...filters, [name]: checked });
   };
 
   const eventPropGetterConfig = (event: ICalendarEvent): IEventPropGetter => {
     switch (event.referenceTo) {
       case 'tasks':
-        return { style: { backgroundColor: '#2b6cb0', color: 'white' } };
+        return { style: { backgroundColor: '#2f855a', color: 'white' } };
       case 'events':
         return { style: { backgroundColor: '#c53030', color: 'white' } };
       default:
@@ -39,12 +39,12 @@ const CalendarContainerDefault: React.FC<CalendarProps> = () => {
   };
 
   return (
-    <Wrapper>
+    <div className='wrapper'>
       <CustomCard headerText='calendar'>
-        <div className='mb-3 flex items-center'>
+        <div className='calendar--checkbox-container'>
           <CalendarCheckbox
-            customClass='mr-5'
-            color='blue'
+            customClass='mr-small'
+            color='green'
             name='tasks'
             value={filters.tasks}
             onChange={handleFiltersChange}
@@ -60,7 +60,7 @@ const CalendarContainerDefault: React.FC<CalendarProps> = () => {
         </div>
         <CustomCalendar events={[]} onSelectEvent={''} eventPropGetterConfig={eventPropGetterConfig} />
       </CustomCard>
-    </Wrapper>
+    </div>
   );
 };
 
