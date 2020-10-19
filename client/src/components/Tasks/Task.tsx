@@ -1,10 +1,9 @@
-import { stringify } from 'querystring';
 import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { CustomButton } from '../../common/CustomButton';
-import { CustomInput } from '../../common/CustomInput';
+import { CustomInput } from '../../common/CustomInput/CustomInput';
 import { CustomSelect } from '../../common/CustomSelect';
-import { CustomTextarea } from '../../common/CustomTextarea';
+import { CustomTextarea } from '../../common/CustomTextarea/CustomTextarea';
 import { TASK_PRIORITIES } from '../../constants/constants';
 
 import { RootState } from '../../redux/reducers';
@@ -45,10 +44,23 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
       <div className='lg:w-1/2 px-5'>
         <div className='flex flex-col'>
           <div className='w-full mb-3'>
-            <CustomInput value={task.taskName} onChange={handleTaskChange} name='taskName' label='Task Name' />
+            <CustomInput
+              value={task.taskName}
+              placeholder='Task Name'
+              onChange={handleTaskChange}
+              name='taskName'
+              label='Task Name'
+            />
           </div>
           <div className='w-full mb-3'>
-            <CustomInput type='date' value={task.dueDate} onChange={handleTaskChange} name='dueDate' label='Due Date' />
+            <CustomInput
+              type='date'
+              placeholder='Due Date'
+              value={task.dueDate}
+              onChange={handleTaskChange}
+              name='dueDate'
+              label='Due Date'
+            />
           </div>
           <div className='w-full mb-3'>
             <CustomSelect
@@ -63,6 +75,7 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
             <CustomTextarea
               value={task.description}
               onChange={handleTaskChange}
+              placeholder='Description'
               name='description'
               label='Description'
             />

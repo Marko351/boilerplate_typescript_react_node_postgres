@@ -5,18 +5,20 @@ interface CustomTextareaProps {
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   name: string;
   label: string;
+  placeholder: string;
   error?: boolean;
   disabled?: boolean;
 }
 
-export const CustomTextarea: React.FC<CustomTextareaProps> = ({ value, onChange, name, label, error }) => {
+export const CustomTextarea: React.FC<CustomTextareaProps> = ({ placeholder, value, onChange, name, label, error }) => {
   return (
-    <div className='flex flex-col w-full'>
-      <label htmlFor={name} className='mb-1 text-gray-800'>
+    <div className='c-input'>
+      <label htmlFor={name} className='c-input__label'>
         {label}
       </label>
       <textarea
-        className='w-full border rounded px-2 py-1 focus:outline-none text-gray-700'
+        className='c-input__input'
+        placeholder={placeholder}
         rows={3}
         value={value}
         onChange={onChange}

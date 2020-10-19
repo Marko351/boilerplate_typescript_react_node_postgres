@@ -39,24 +39,17 @@ const CalendarContainerDefault: React.FC<CalendarProps> = () => {
   };
 
   return (
-    <div className='wrapper'>
+    <div className='wrapper custom-calendar'>
       <CustomCard headerText='calendar'>
-        <div className='calendar--checkbox-container'>
+        <div className='custom-calendar--checkbox-container'>
           <CalendarCheckbox
             customClass='mr-small'
-            color='green'
             name='tasks'
             value={filters.tasks}
             onChange={handleFiltersChange}
             label='Tasks'
           />
-          <CalendarCheckbox
-            color='red'
-            name='events'
-            value={filters.events}
-            onChange={handleFiltersChange}
-            label='Events'
-          />
+          <CalendarCheckbox name='events' value={filters.events} onChange={handleFiltersChange} label='Events' />
         </div>
         <CustomCalendar events={[]} onSelectEvent={''} eventPropGetterConfig={eventPropGetterConfig} />
       </CustomCard>
