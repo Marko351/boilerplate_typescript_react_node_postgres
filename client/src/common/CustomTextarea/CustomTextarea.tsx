@@ -6,13 +6,22 @@ interface CustomTextareaProps {
   name: string;
   label: string;
   placeholder: string;
+  customClass?: string;
   error?: boolean;
   disabled?: boolean;
 }
 
-export const CustomTextarea: React.FC<CustomTextareaProps> = ({ placeholder, value, onChange, name, label, error }) => {
+export const CustomTextarea: React.FC<CustomTextareaProps> = ({
+  customClass,
+  placeholder,
+  value,
+  onChange,
+  name,
+  label,
+  error,
+}) => {
   return (
-    <div className='c-input'>
+    <div className={`c-input ${customClass}`}>
       <label htmlFor={name} className='c-input__label'>
         {label}
       </label>

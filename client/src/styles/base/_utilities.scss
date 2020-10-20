@@ -3,10 +3,36 @@
   margin: 0 auto;
 }
 
+.mt-tiny {
+  margin-top: 1rem;
+}
+
 .mr-tiny {
   margin-right: 1rem;
 }
 
 .mr-small {
   margin-right: 1.5rem;
+}
+
+.mb-tiny {
+  margin-bottom: 1rem;
+}
+
+.mb-small {
+  margin-bottom: 1rem;
+}
+
+.d-flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.separate-line {
+  width: 100%;
+  height: .1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  background-color: $color-grayDarkest;
 }

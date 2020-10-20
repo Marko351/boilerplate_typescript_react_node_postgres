@@ -6,14 +6,24 @@ interface CustomInputProps {
   name: string;
   label: string;
   placeholder: string;
+  customClass?: string;
   type?: string;
   error?: boolean;
   disabled?: boolean;
 }
 
-export const CustomInput: React.FC<CustomInputProps> = ({ placeholder, value, onChange, name, label, error, type }) => {
+export const CustomInput: React.FC<CustomInputProps> = ({
+  customClass,
+  placeholder,
+  value,
+  onChange,
+  name,
+  label,
+  error,
+  type,
+}) => {
   return (
-    <div className='c-input'>
+    <div className={`c-input ${customClass}`}>
       <label htmlFor={name} className='c-input__label'>
         {label}
       </label>

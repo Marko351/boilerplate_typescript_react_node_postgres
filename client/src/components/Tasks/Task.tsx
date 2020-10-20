@@ -1,9 +1,10 @@
 import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { CustomButton } from '../../common/CustomButton';
+import { CustomButton } from '../../common/CustomButton/CustomButton';
 import { CustomInput } from '../../common/CustomInput/CustomInput';
-import { CustomSelect } from '../../common/CustomSelect';
+import { CustomSelect } from '../../common/CustomSelect/CustomSelect';
 import { CustomTextarea } from '../../common/CustomTextarea/CustomTextarea';
+import { ChecklistItem } from './ChecklistItem';
 import { TASK_PRIORITIES } from '../../constants/constants';
 
 import { RootState } from '../../redux/reducers';
@@ -26,7 +27,7 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
     description: '',
     dueDate: '',
     priority: 1,
-    checklist: [],
+    checklist: [{ isCompleted: false, description: 'test' }],
     isCompleted: false,
   });
 
@@ -40,53 +41,61 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
   };
 
   return (
-    <div className='flex px-5'>
-      <div className='lg:w-1/2 px-5'>
-        <div className='flex flex-col'>
-          <div className='w-full mb-3'>
-            <CustomInput
-              value={task.taskName}
-              placeholder='Task Name'
-              onChange={handleTaskChange}
-              name='taskName'
-              label='Task Name'
+    <>
+      <div className='task'>
+        <div className='task__left'>
+          <CustomInput
+            customClass={'mb-tiny'}
+            value={task.taskName}
+            placeholder='Task Name'
+            onChange={handleTaskChange}
+            name='taskName'
+            label='Task Name'
+          />
+          <CustomInput
+            customClass={'mb-tiny'}
+            type='date'
+            placeholder='Due Date'
+            value={task.dueDate}
+            onChange={handleTaskChange}
+            name='dueDate'
+            label='Due Date'
+          />
+          <CustomSelect
+            customClass={'mb-tiny'}
+            value={task.priority}
+            options={TASK_PRIORITIES}
+            onChange={handleTaskChange}
+            name='priority'
+            label='Task Priority'
+          />
+          <CustomTextarea
+            customClass={'mb-tiny'}
+            value={task.description}
+            onChange={handleTaskChange}
+            placeholder='Description'
+            name='description'
+            label='Description'
+          />
+          <div className='task__checklists'>
+            <span className='task__checklists--label'>Checklist</span>
+            <ChecklistItem isCompleted={task.checklist[0].isCompleted} description={task.checklist[0].description} />
+            <CustomButton
+              customClassName={task.checklist.length ? 'mt-tiny' : ''}
+              text='Add Checklist Item'
+              onClick={onAddCheckList}
+              color='primary'
             />
-          </div>
-          <div className='w-full mb-3'>
-            <CustomInput
-              type='date'
-              placeholder='Due Date'
-              value={task.dueDate}
-              onChange={handleTaskChange}
-              name='dueDate'
-              label='Due Date'
-            />
-          </div>
-          <div className='w-full mb-3'>
-            <CustomSelect
-              value={task.priority}
-              options={TASK_PRIORITIES}
-              onChange={handleTaskChange}
-              name='priority'
-              label='Task Priority'
-            />
-          </div>
-          <div className='w-full mb-3'>
-            <CustomTextarea
-              value={task.description}
-              onChange={handleTaskChange}
-              placeholder='Description'
-              name='description'
-              label='Description'
-            />
-          </div>
-          <div className='w-full'>
-            <CustomButton text='Add Checklist' onClick={onAddCheckList} color='green' />
           </div>
         </div>
+        <div className='task__right'>
+          Right Sideasdad Right Sideasdad Right Sideasdad Right Sideasdad Right Sideasdad Right Sideasdad Right
+          Sideasdad
+        </div>
       </div>
-      <div className='lg:w-2/5'></div>
-    </div>
+      <div className='separate-line'></div>
+      <div></div>
+    </>
   );
 };
 

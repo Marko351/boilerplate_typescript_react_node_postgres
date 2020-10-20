@@ -1,0 +1,69 @@
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__left {
+    min-width: 60%;
+    padding-right: 2rem;
+  }
+
+  &__right {
+    min-width: 40%;
+    padding-left: 2rem;
+  }
+
+  &__checklists {
+    margin-top: 1rem;
+
+    &--label {
+      display: inline-block;
+      font-size: 1.4rem;
+      margin-bottom: .5rem;
+    }
+  }
+}
+
+.checklist {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border: 1px solid $color-secondaryLight;
+  border-radius: 3px;
+  font-size: 1.4rem;
+
+  &__ingredients {
+    display: flex;
+    align-items: center;
+  }
+
+  &__description {
+    margin-left: 1rem;
+  }
+
+  &__icons {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon-box {
+    width: 2rem;
+    height: 2rem;
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+
+  &__button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+}
