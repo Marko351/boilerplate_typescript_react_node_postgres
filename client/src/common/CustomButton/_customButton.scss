@@ -1,5 +1,5 @@
 .c-button {
-  padding: .7rem 1rem;
+  padding: 0.7rem 1rem;
   display: inline-block;
   border-radius: 4px;
   transition: all 0.2s;
@@ -20,5 +20,4 @@
       background-color: lighten($color-tertiary, 10%);
     }
   }
-
 }

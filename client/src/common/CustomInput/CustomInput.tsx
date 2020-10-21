@@ -4,7 +4,7 @@ interface CustomInputProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   name: string;
-  label: string;
+  label?: string;
   placeholder: string;
   customClass?: string;
   type?: string;
@@ -24,9 +24,11 @@ export const CustomInput: React.FC<CustomInputProps> = ({
 }) => {
   return (
     <div className={`c-input ${customClass}`}>
-      <label htmlFor={name} className='c-input__label'>
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={name} className='c-input__label'>
+          {label}
+        </label>
+      )}
       <input
         className='c-input__input'
         type={type || 'text'}

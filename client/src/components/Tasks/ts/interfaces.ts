@@ -13,6 +13,8 @@ export interface ITasks {
 }
 
 export interface IChecklist {
-  title: string;
+  description: string;
   isCompleted: boolean;
+  uuid?: string;
+  id?: number;
 }
