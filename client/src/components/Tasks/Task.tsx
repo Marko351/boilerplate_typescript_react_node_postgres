@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { CustomButton } from '../../common/CustomButton/CustomButton';
@@ -10,7 +10,8 @@ import { TASK_PRIORITIES } from '../../constants/constants';
 
 import { RootState } from '../../redux/reducers';
 import { addNewTask, toggleComplete } from './redux/taskActions';
-import { IChecklist } from './ts/interfaces';
+import { IChecklist } from '../../types/_task-types';
+import { ProgressBar } from './ProgressBar';
 
 const mapStateToProps = (state: RootState) => ({
   tasksReducer: state.tasksReducer,
@@ -31,10 +32,22 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
     description: '',
     dueDate: '',
     priority: 1,
-    checklist: [],
     isCompleted: false,
   });
   const [checklists, setChecklist] = useState<Checklists>([]);
+  const [progressValue, setProgressValue] = useState(0);
+
+  useEffect(() => {
+    getProgressValue();
+  }, [checklists]);
+
+  const getProgressValue = () => {
+    let count = 0;
+    checklists.forEach((checklist) => {
+      if (checklist.isCompleted) count++;
+    });
+    setProgressValue(+((100 / checklists.length) * count).toFixed(2) || 0);
+  };
 
   const handleTaskChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { value, name } = e.target;
@@ -107,6 +120,7 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
           />
           <div className='task__checklists'>
             <span className='task__checklists--label'>Checklist</span>
+            <ProgressBar value={progressValue} />
             {checklists.map((checklistItem, index) => {
               const id = checklistItem.id! || checklistItem.uuid!;
               return (
@@ -122,7 +136,7 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
               );
             })}
             <CustomButton
-              customClassName={`${task.checklist.length ? 'mt-tiny' : ''} d-block`}
+              customClassName={`${checklists.length ? 'mt-tiny' : ''} d-block`}
               text='Add Checklist Item'
               onClick={onAddCheckList}
               color='primary'
@@ -135,7 +149,7 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
         </div>
       </div>
       <div className='separate-line'></div>
-      <div></div>
+      <div className='footer-buttons'>{/* <CustomButton text='Save' onClick={() => {}} color='success' /> */}</div>
     </>
   );
 };

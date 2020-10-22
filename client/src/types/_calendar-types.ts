@@ -1,4 +1,7 @@
-import { TEventGetter } from './types';
+export type TEventGetter = {
+  backgroundColor: string;
+  color: string;
+};
 
 export interface ICalendarEvent {
   referenceTo: string;

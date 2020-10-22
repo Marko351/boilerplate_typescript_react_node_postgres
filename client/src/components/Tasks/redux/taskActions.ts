@@ -1,4 +1,4 @@
-import { ITask } from '../ts/interfaces';
+import { ITask } from '../../../types/_task-types';
 import { AppThunk } from '../../../redux/reducers';
 import { ADD_NEW_TASK, COMPLETE_TASK } from './reduxTypes';
 

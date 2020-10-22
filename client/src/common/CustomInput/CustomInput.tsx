@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, KeyboardEvent } from 'react';
 
 interface CustomInputProps {
   value: string;
@@ -10,6 +10,7 @@ interface CustomInputProps {
   type?: string;
   error?: boolean;
   disabled?: boolean;
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export const CustomInput: React.FC<CustomInputProps> = ({
@@ -21,6 +22,7 @@ export const CustomInput: React.FC<CustomInputProps> = ({
   label,
   error,
   type,
+  onKeyDown,
 }) => {
   return (
     <div className={`c-input ${customClass}`}>
@@ -36,6 +38,7 @@ export const CustomInput: React.FC<CustomInputProps> = ({
         value={value}
         onChange={onChange}
         name={name}
+        onKeyDown={onKeyDown}
       />
       {error && <small>{`${label} is required`}</small>}
     </div>

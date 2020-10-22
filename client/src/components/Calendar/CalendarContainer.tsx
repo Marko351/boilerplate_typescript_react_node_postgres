@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 import { CustomCard } from '../../common/CustomCard/CustomCard';
 import { CustomCalendar } from './Calendar';
-import { ICalendarEvent, IEventPropGetter } from './ts/interfaces';
+import { ICalendarEvent, IEventPropGetter } from '../../types/_calendar-types';
 import { CalendarCheckbox } from '../../common/CalendarCheckbox/CalendarCheckbox';
 
 const mapStateToProps = (state: RootState) => ({});

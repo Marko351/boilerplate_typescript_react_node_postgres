@@ -1,8 +1,7 @@
 .c-input {
   display: flex;
   flex-direction: column;
-  max-width: 100%;
-
+  min-width: 100%;
 
   textarea,
   input,
@@ -14,7 +13,7 @@
     color: $color-dark;
     border: 1px solid $color-grayDarkest;
     border-radius: 2px;
-    padding: .7rem;
+    padding: 0.7rem;
     background-color: $color-grayLight;
   }
 
@@ -29,6 +28,6 @@
 
   &__label {
     font-size: 1.4rem;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
 }

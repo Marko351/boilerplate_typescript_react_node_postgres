@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { ReactComponent as DeleteIcon } from '../../assets/icons/wrong.svg';
 import { ReactComponent as PencilIcon } from '../../assets/icons/pencil.svg';
 import { CustomInput } from '../../common/CustomInput/CustomInput';
@@ -26,6 +26,12 @@ export const ChecklistItem: React.FC<IChecklist> = ({
     setIsUpdateClicked(!isUpdateClicked);
   };
 
+  const onPressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setIsUpdateClicked(!isUpdateClicked);
+    }
+  };
+
   return (
     <div className='checklist'>
       <div className='checklist__ingredients'>
@@ -44,6 +50,7 @@ export const ChecklistItem: React.FC<IChecklist> = ({
             placeholder='Description'
             onChange={(e) => onChangeChecklistDesc(e, index)}
             name='description'
+            onKeyDown={onPressEnter}
           />
         )}
       </div>

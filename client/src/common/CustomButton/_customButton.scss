@@ -20,4 +20,20 @@
       background-color: lighten($color-tertiary, 10%);
     }
   }
+
+  &__success {
+    border: 2px solid $color-greenLight;
+    background-color: $color-green;
+    color: #fff;
+
+    &:hover {
+      background-color: lighten($color-green, 10%);
+    }
+  }
+}
+
+.footer-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
