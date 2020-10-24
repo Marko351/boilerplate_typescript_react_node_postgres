@@ -1,21 +1,18 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export const NavBar: React.FC = () => {
-  // const toggleUserDropdown = () => {
-  //   const element = document.querySelector('.dropdown');
-  //   if (element) {
-  //     if (element.classList.contains('hidden')) element.classList.remove('hidden');
-  //     else element.classList.add('hidden');
-  //   }
-  // };
+import logo from '../../assets/img/logo.png';
 
+export const NavBar: React.FC = (props) => {
   return (
     <div className='navbar'>
       <div className='navbar__wrapper wrapper'>
         <div className='navbar__wrapper--first-box'>
-          <div className='navbar__logo-box'>
-            <h1 className='navbar__logo'>
+          <div className='logo'>
+            <div className='logo__box'>
+              <img src={logo} className='logo__img' alt='logo' />
+            </div>
+            <h1 className='logo__text'>
               <NavLink to='/home'>PlanningApp</NavLink>
             </h1>
           </div>
