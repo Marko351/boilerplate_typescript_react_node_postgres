@@ -3,10 +3,12 @@ import { ADD_NEW_TASK, COMPLETE_TASK } from './reduxTypes';
 
 export type TStateTasks = {
   tasks: Array<ITask>;
+  isLoading: boolean;
 };
 
 const initialState: TStateTasks = {
   tasks: [],
+  isLoading: false,
 };
 
 export const tasksReducer = (state = initialState, action: TAllReduxTypes): TStateTasks => {

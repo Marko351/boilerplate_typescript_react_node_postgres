@@ -1,0 +1,15 @@
+.event {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__left {
+    min-width: 60%;
+    padding-right: 2rem;
+  }
+
+  &__right {
+    min-width: 40%;
+    padding-left: 2rem;
+  }
+}

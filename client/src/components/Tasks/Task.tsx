@@ -1,20 +1,23 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+
 import { CustomButton } from '../../common/CustomButton/CustomButton';
 import { CustomInput } from '../../common/CustomInput/CustomInput';
 import { CustomSelect } from '../../common/CustomSelect/CustomSelect';
 import { CustomTextarea } from '../../common/CustomTextarea/CustomTextarea';
 import { ChecklistItem } from './ChecklistItem';
-import { TASK_PRIORITIES } from '../../constants/constants';
+import { ProgressBar } from './ProgressBar';
+import { Comment } from '../Comments/Comment';
 
+import { TASK_PRIORITIES } from '../../constants/constants';
 import { RootState } from '../../redux/reducers';
 import { addNewTask, toggleComplete } from './redux/taskActions';
-import { IChecklist } from '../../types/_task-types';
-import { ProgressBar } from './ProgressBar';
+import { IChecklist, ITask } from '../../types/_task-types';
 
 const mapStateToProps = (state: RootState) => ({
   tasksReducer: state.tasksReducer,
+  commentsReducer: state.commentsReducer,
 });
 
 const connector = connect(mapStateToProps, { addNewTask, toggleComplete });
@@ -25,8 +28,8 @@ type TasksProps = PropsFromRedux;
 
 type Checklists = IChecklist[];
 
-const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask, toggleComplete }) => {
-  const [task, setTask] = useState({
+const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask, toggleComplete, commentsReducer }) => {
+  const [task, setTask] = useState<ITask>({
     id: null,
     taskName: '',
     description: '',
@@ -144,8 +147,7 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
           </div>
         </div>
         <div className='task__right'>
-          Right Sideasdad Right Sideasdad Right Sideasdad Right Sideasdad Right Sideasdad Right Sideasdad Right
-          Sideasdad
+          <Comment comments={commentsReducer.comments} />
         </div>
       </div>
       <div className='separate-line'></div>

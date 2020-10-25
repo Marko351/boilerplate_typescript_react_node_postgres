@@ -1,7 +1,11 @@
+//COMPONENTS
 @import '../../components/Calendar/calendar';
 @import '../../components/Navbar/navbar';
 @import '../../components/Tasks/task';
+@import '../../components/Events/event';
+@import '../../components/Comments/comment';
 
+//COMMON
 @import '../../common/CustomCard/customCard';
 @import '../../common/CalendarCheckbox/calendarCheckbox';
 @import '../../common/CustomInput/customInput';
