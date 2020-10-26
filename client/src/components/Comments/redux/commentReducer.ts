@@ -8,7 +8,20 @@ export type TStateComments = {
 const initialState: TStateComments = {
   comments: [
     {
-      id: null,
+      id: 1,
+      createdAt: '22-01-1992',
+      createdBy: 'Marko',
+      description:
+        'Testiram za projekat. Ovo je komentar Testiram za projekat. Ovo je komentar Testiram za projekat. Ovo je komentar',
+    },
+    {
+      id: 2,
+      createdAt: '22-01-1992',
+      createdBy: 'Marko',
+      description: 'Testiram za projekat. Ovo je komentar',
+    },
+    {
+      id: 3,
       createdAt: '22-01-1992',
       createdBy: 'Marko',
       description: 'Testiram za projekat. Ovo je komentar',

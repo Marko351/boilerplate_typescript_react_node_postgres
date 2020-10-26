@@ -3,12 +3,14 @@ import { connect, ConnectedProps } from 'react-redux';
 
 import { CustomInput } from '../../common/CustomInput/CustomInput';
 import { CustomTextarea } from '../../common/CustomTextarea/CustomTextarea';
+import { Comment } from '../Comments/Comment';
 
 import { RootState } from '../../redux/reducers';
 import { IEvent } from '../../types/_event-types';
 
 const mapStateToProps = (state: RootState) => ({
   eventReducer: state.eventReducer,
+  commentsReducer: state.commentsReducer,
 });
 
 const connector = connect(mapStateToProps, {});
@@ -17,7 +19,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type EventProps = PropsFromRedux;
 
-export const EventsComponentDefault: React.FC<EventProps> = ({ eventReducer }) => {
+export const EventsComponentDefault: React.FC<EventProps> = ({ commentsReducer, eventReducer }) => {
   const [event, setEvent] = useState<IEvent>({
     id: null,
     eventName: '',
@@ -80,8 +82,7 @@ export const EventsComponentDefault: React.FC<EventProps> = ({ eventReducer }) =
           />
         </div>
         <div className='event__right'>
-          Right Sideasdad Right Sideasdad Right Sideasdad Right Sideasdad Right Sideasdad Right Sideasdad Right
-          Sideasdad
+          <Comment comments={commentsReducer.comments} />
         </div>
       </div>
       <div className='separate-line'></div>

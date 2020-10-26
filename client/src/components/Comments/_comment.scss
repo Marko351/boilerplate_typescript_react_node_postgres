@@ -1,0 +1,41 @@
+.comment {
+  max-height: 30rem;
+  overflow-y: scroll;
+  @include scrollbars(0.5rem, $color-mainLight, $color-grayDark);
+
+  &__header {
+    padding: 1.5rem;
+    background-color: $color-gray;
+    font-size: 1.6rem;
+  }
+  &__body {
+    padding: 1.5rem;
+    border: 1px solid $color-gray;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+
+  &__add-comment {
+    margin-bottom: 1.2rem;
+  }
+
+  &__comment {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 1px solid $color-gray;
+    margin-top: 0.3rem;
+    padding: 1rem 0.5rem;
+    border-radius: 2px;
+
+    &--description {
+      font-size: 1.4rem;
+    }
+    &--date {
+      margin-top: 0.5rem;
+      color: $color-grayDarkest;
+      font-size: 1.4rem;
+    }
+  }
+}
