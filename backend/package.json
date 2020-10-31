@@ -6,11 +6,12 @@
   "license": "",
   "scripts": {
     "dev": "APP_ENV=development tsnd --respawn --files -r @babel/register --inspect -- src/index.ts",
-    "build": "babel ./src -d ./dist --extensions .ts --copy-files",
+    "build": "babel ./src ./migrations -d ./dist --extensions .ts --copy-files",
     "typecheck": "tsc",
     "start": "node dist/index.js",
     "lint:base": "eslint --ext .js,.json,.ts",
-    "lint": "npm lint:base src"
+    "lint": "npm lint:base src",
+    "migration:create": "npx migrate:make $npm_config_first -x ts"
   },
   "lint-staged": {
     "src/**/*.{ts,js,json}": [
@@ -31,8 +32,9 @@
     "@babel/preset-typescript": "^7.10.4",
     "@babel/register": "^7.11.5",
     "@types/express": "^4.17.8",
+    "@types/knex": "^0.16.1",
     "@types/morgan": "^1.9.2",
-    "@types/node": "^14.6.3",
+    "@types/node": "^14.14.6",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "eslint": "^7.8.1",
@@ -51,6 +53,8 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "morgan": "^1.10.0"
+    "knex": "^0.21.9",
+    "morgan": "^1.10.0",
+    "pg": "^8.4.2"
   }
 }
