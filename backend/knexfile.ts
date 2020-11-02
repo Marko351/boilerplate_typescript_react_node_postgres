@@ -9,5 +9,11 @@ module.exports = {
       password: 'postgres',
       database: 'planning_app',
     },
+    migrations: {
+      directory: './src/migrations',
+    },
+    seeds: {
+      directory: './src/seeds',
+    },
   },
 };

@@ -6,23 +6,17 @@
   "license": "",
   "scripts": {
     "dev": "APP_ENV=development tsnd --respawn --files -r @babel/register --inspect -- src/index.ts",
-    "build": "babel ./src ./migrations -d ./dist --extensions .ts --copy-files",
+    "build": "babel ./src -d ./dist --extensions .ts --copy-files",
     "typecheck": "tsc",
     "start": "node dist/index.js",
     "lint:base": "eslint --ext .js,.json,.ts",
     "lint": "npm lint:base src",
-    "migration:create": "npx migrate:make $npm_config_first -x ts"
-  },
-  "lint-staged": {
-    "src/**/*.{ts,js,json}": [
-      "npm lint:base --fix",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm typecheck && lint-staged"
-    }
+    "migration:create": "npx knex migrate:make $npm_config_name -x ts",
+    "migration:run": "npx knex migrate:latest",
+    "migration:down": "npx knex migrate:down",
+    "seed:create": "npx knex seed:make $npm_config_name -x ts",
+    "seed:run": "npx knex seed:run",
+    "seed:down": "npx knex seed:down"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -54,6 +48,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "knex": "^0.21.9",
+    "knex-stringcase": "^1.4.3",
     "morgan": "^1.10.0",
     "pg": "^8.4.2"
   }
