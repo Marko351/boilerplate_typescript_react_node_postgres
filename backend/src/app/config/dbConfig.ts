@@ -9,5 +9,7 @@ const environment = process.env.APP_ENV || 'development';
 const environmentConfig = stringcase(config[environment]);
 
 const connection = knex(environmentConfig);
-console.log('PostgreSQL');
-module.exports = connection;
+
+export type knexType = ReturnType<typeof knex>;
+
+export { connection as knex };

@@ -4,9 +4,9 @@ module.exports = {
     debug: false,
     connection: {
       host: 'localhost',
-      port: '6432',
-      user: 'postgres',
-      password: 'postgres',
+      port: process.env.DATABASE_PORT,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASS,
       database: 'planning_app',
     },
     migrations: {
