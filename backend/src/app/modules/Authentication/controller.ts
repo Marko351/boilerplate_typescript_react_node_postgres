@@ -1,9 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 
-class AuthenticationController {
+import { BaseController } from '../../libraries/baseControllerAndRepository/BaseController';
+import { AuthenticationRepository } from './repository';
+class AuthenticationController extends BaseController {
+  constructor(repo = new AuthenticationRepository()) {
+    super(repo);
+  }
   async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = req.body;
+      this.repo;
     } catch (err) {
       console.log(err);
       next(err);
@@ -12,7 +17,6 @@ class AuthenticationController {
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = req.body;
       res.status(200).json('success');
     } catch (err) {
       console.log(err);
