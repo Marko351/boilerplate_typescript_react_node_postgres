@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
-import { BaseController } from '../../libraries/baseControllerAndRepository/BaseController';
 import { AuthenticationRepository } from './repository';
-class AuthenticationController extends BaseController {
-  constructor(repo = new AuthenticationRepository()) {
-    super(repo);
+class AuthenticationController {
+  public repo: AuthenticationRepository;
+  constructor() {
+    this.repo = new AuthenticationRepository();
   }
   async register(req: Request, res: Response, next: NextFunction) {
     try {
-      this.repo;
     } catch (err) {
       console.log(err);
       next(err);
@@ -22,6 +22,24 @@ class AuthenticationController extends BaseController {
       console.log(err);
       next(err);
     }
+  }
+
+  generateToken(user: any) {
+    return new Promise((resolve, reject) => {
+      if (!user) {
+        reject(new Error());
+      }
+      const token = jwt.sign(
+        {
+          userId: user.id,
+          email: user.email,
+          name: user.name,
+        },
+        process.env.JWT_SECRET || 'thisWillChange',
+        { expiresIn: '999999 days' },
+      );
+      resolve(token);
+    });
   }
 }
 
