@@ -16,5 +16,5 @@ export const returnFormattedValidationError = (errorsParam: ValidationError, res
 
 export const returnFormattedError = (name: string, message: string, status: number, res: Response) => {
   const errors: Errors = { [name]: message }
-  res.status(status).json(errors)
+  return res.status(status).json(errors)
 }

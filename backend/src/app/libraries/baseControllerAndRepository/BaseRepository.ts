@@ -15,16 +15,18 @@ class BaseRepository {
     this.columns = columns
   }
 
-  async getByField(filed: string, value: string | number | boolean) {
-    return this.knex(this.tableName)
+  async getByField<T>(field: string, value: string | number | boolean) {
+    const response = (await this.knex(this.tableName)
       .select('*')
-      .where({ [filed]: value })
+      .where({ [field]: value })) as T[]
+    return response
   }
 
-  async create(data: DataI) {
-    return this.knex(this.tableName)
+  async create<T>(data: DataI) {
+    const response = (await this.knex(this.tableName)
       .insert(data)
-      .returning(this.columns || '*')
+      .returning(this.columns || '*')) as T[]
+    return response
   }
 
   async updateOne(data: DataI, id: number) {
