@@ -3,6 +3,7 @@ import { BaseRepository } from '../../libraries/baseControllerAndRepository/Base
 class AuthenticationRepository extends BaseRepository {
   constructor() {
     super()
+    this.tableName = 'users'
   }
 }
 

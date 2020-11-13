@@ -1,5 +1,9 @@
 import { knex, knexType } from '../../config/dbConfig'
 
+interface DataI {
+  [key: string]: string | number | boolean
+}
+
 class BaseRepository {
   public tableName?: string
   public readonly knex: knexType
@@ -11,13 +15,19 @@ class BaseRepository {
     this.columns = columns
   }
 
-  async create<D>(data: D) {
+  async getByField(filed: string, value: string | number | boolean) {
+    return this.knex(this.tableName)
+      .select('*')
+      .where({ [filed]: value })
+  }
+
+  async create(data: DataI) {
     return this.knex(this.tableName)
       .insert(data)
       .returning(this.columns || '*')
   }
 
-  async updateOne<D>(data: D, id: number) {
+  async updateOne(data: DataI, id: number) {
     return this.knex(this.tableName).update(data).where({ id }).first()
   }
 

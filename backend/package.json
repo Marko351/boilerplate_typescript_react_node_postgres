@@ -11,12 +11,12 @@
     "start": "node dist/index.js",
     "lint:base": "eslint --ext .js,.json,.ts",
     "lint": "npm lint:base src",
-    "migration:create": "npx knex migrate:make $npm_config_name -x ts",
-    "migration:run": "npx knex migrate:latest",
-    "migration:down": "npx knex migrate:down",
-    "seed:create": "npx knex seed:make $npm_config_name -x ts",
-    "seed:run": "npx knex seed:run",
-    "seed:down": "npx knex seed:down"
+    "migration:create": "APP_ENV=development npx knex migrate:make $npm_config_name -x ts",
+    "migration:up": "APP_ENV=development npx knex migrate:latest",
+    "migration:down": "APP_ENV=development npx knex migrate:down",
+    "seed:create": "APP_ENV=development npx knex seed:make $npm_config_name -x ts",
+    "seed:up": "APP_ENV=development npx knex seed:run",
+    "seed:down": "APP_ENV=development npx knex seed:down"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -47,12 +47,12 @@
     "node": ">=12"
   },
   "dependencies": {
+    "argon2": "^0.27.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "joi": "^17.3.0",
-    "json-web-token": "^3.2.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.9",
     "knex-stringcase": "^1.4.3",

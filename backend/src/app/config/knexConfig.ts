@@ -16,6 +16,6 @@ const knexConfig = {
       directory: './src/seeds',
     },
   },
-};
+}
 
-export { knexConfig };
+export { knexConfig }

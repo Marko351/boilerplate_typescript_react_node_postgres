@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import Joi from 'joi'
+import argon2 from 'argon2'
 
-import { AuthValidationKeys } from '../../types/Authentication/Auth.t'
-import { HTTP_CREATED } from '../../constants/HTTPStatusCode'
-import { returnFormattedValidationError } from '../../helpers/formattedError'
+import { RegisterDataReceived } from '../../types/Authentication/Auth'
+import { HTTP_BAD_REQUEST } from '../../constants/HTTPStatusCode'
+import { returnFormattedError, returnFormattedValidationError } from '../../helpers/formattedError'
 import { AuthenticationRepository } from './repository'
+import { generateJwtToken } from '../../helpers/generateJwtToken'
 class AuthenticationController {
   public repo: AuthenticationRepository
   constructor() {
@@ -13,10 +15,27 @@ class AuthenticationController {
   }
   async registerUser(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password } = req.body
-      console.log('object')
-      const response = await this.repo.create({})
-      res.status(HTTP_CREATED).json(response)
+      const { email, password, username }: RegisterDataReceived = req.body
+      const isUserEmailExists = await this.repo.getByField('email', email)
+      if (isUserEmailExists.length > 0) {
+        returnFormattedError('email', 'User with that email already created', HTTP_BAD_REQUEST, res)
+      }
+      const isUserUsernameExists = await this.repo.getByField('username', username)
+      if (isUserUsernameExists.length > 0) {
+        returnFormattedError('username', 'User with that username already created', HTTP_BAD_REQUEST, res)
+      }
+      const hashedPassword = await argon2.hash(password)
+      const data = {
+        email: email,
+        password: hashedPassword,
+        username: username,
+      }
+      const user = await this.repo.create(data)
+      if (user[0]) {
+        await generateJwtToken(user[0], res)
+      } else {
+        throw new Error()
+      }
     } catch (err) {
       console.log(err)
       next(err)
@@ -40,6 +59,7 @@ class AuthenticationController {
         .keys({
           email: Joi.string().email({ minDomainSegments: 2 }).required(),
           password: Joi.string().alphanum().min(3).max(50).required(),
+          username: Joi.string().required(),
         })
       await schema.validateAsync(data)
       next()

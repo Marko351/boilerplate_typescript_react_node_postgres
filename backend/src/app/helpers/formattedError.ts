@@ -13,3 +13,8 @@ export const returnFormattedValidationError = (errorsParam: ValidationError, res
   })
   return res.status(HTTP_VALIDATION_ERROR).json(errors)
 }
+
+export const returnFormattedError = (name: string, message: string, status: number, res: Response) => {
+  const errors: Errors = { [name]: message }
+  res.status(status).json(errors)
+}
