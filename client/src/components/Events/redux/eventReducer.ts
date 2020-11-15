@@ -1,4 +1,4 @@
-import { IEvent, TAllReduxEventTypes } from '../../../types/_event-types';
+import { IEvent, TAllReduxEventTypes } from '../../../types/Event';
 import { GET_EVENT, GET_EVENTS, SET_LOADING } from './eventTypes';
 
 export type TStateEvents = {

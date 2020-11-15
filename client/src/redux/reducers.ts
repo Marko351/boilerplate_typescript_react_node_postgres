@@ -1,17 +1,19 @@
-import { Action, combineReducers } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { tasksReducer } from '../components/Tasks/redux/tasksReducer';
-import { eventReducer } from '../components/Events/redux/eventReducer';
-import { commentsReducer } from '../components/Comments/redux/commentReducer';
+import { Action, combineReducers } from 'redux'
+import { ThunkAction } from 'redux-thunk'
+import { tasksReducer } from '../components/Tasks/redux/tasksReducer'
+import { eventReducer } from '../components/Events/redux/eventReducer'
+import { commentsReducer } from '../components/Comments/redux/commentReducer'
+import { authReducer } from '../components/Login/redux/authReducer'
 
 const rootReducer = combineReducers({
   tasksReducer,
   eventReducer,
   commentsReducer,
-});
+  authReducer,
+})
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof rootReducer>
 
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>
 
-export default rootReducer;
+export default rootReducer

@@ -1,4 +1,4 @@
-import { BaseRepository } from '../../libraries/baseControllerAndRepository/BaseRepository'
+import { BaseRepository } from '../../libraries/baseRepository/BaseRepository'
 
 class AuthenticationRepository extends BaseRepository {
   constructor() {

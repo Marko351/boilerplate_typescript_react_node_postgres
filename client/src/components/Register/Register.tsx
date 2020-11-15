@@ -1,22 +1,34 @@
-import React, { useState, ChangeEvent } from 'react';
-import { CustomButton } from '../../common/CustomButton/CustomButton';
-import { CustomInput } from '../../common/CustomInput/CustomInput';
+import React, { useState, ChangeEvent } from 'react'
+import { connect, ConnectedProps } from 'react-redux'
 
-export const Register: React.FC = () => {
+import { CustomButton } from '../../common/CustomButton/CustomButton'
+import { CustomInput } from '../../common/CustomInput/CustomInput'
+import { RootState } from '../../redux/reducers'
+import { registerUser } from '../Login/redux/authActions'
+
+const mapStateToProps = (state: RootState) => ({})
+
+const connector = connect(mapStateToProps, { registerUser })
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+interface RegisterProps extends PropsFromRedux {}
+
+const RegisterComponent: React.FC<RegisterProps> = ({ registerUser }) => {
   const [data, setData] = useState({
     username: '',
     password: '',
     email: '',
-  });
+  })
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setData({ ...data, [name]: value });
-  };
+    const { value, name } = e.target
+    setData({ ...data, [name]: value })
+  }
 
   const onRegisterClick = () => {
-    console.log('Register Clicked');
-  };
+    registerUser()
+  }
 
   return (
     <div className='register'>
@@ -47,5 +59,7 @@ export const Register: React.FC = () => {
       />
       <CustomButton color='main' onClick={onRegisterClick} text='Register' customClassName='register__button' />
     </div>
-  );
-};
+  )
+}
+
+export const Register = connector(RegisterComponent)

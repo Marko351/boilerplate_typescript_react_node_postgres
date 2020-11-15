@@ -1,14 +1,17 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import React from 'react'
+import { Provider } from 'react-redux'
+import { Route, Switch } from 'react-router-dom'
 
-import store from './redux/store';
-import { NavBar } from './components/Navbar/NavBar';
-import { CalendarContainer } from './components/Calendar/CalendarContainer';
-import { TaskContainer } from './components/Tasks/TaskContainer';
-import { EventsContainer } from './components/Events/EventsContainer';
-import { Login } from './components/Login/Login';
-import { Register } from './components/Register/Register';
+import store from './redux/store'
+import { NavBar } from './components/Navbar/NavBar'
+import { CalendarContainer } from './components/Calendar/CalendarContainer'
+import { TaskContainer } from './components/Tasks/TaskContainer'
+import { EventsContainer } from './components/Events/EventsContainer'
+import { Login } from './components/Login/Login'
+import { Register } from './components/Register/Register'
+import { configureAxiosInterceptors } from './utils/configureAxiosInterceptors'
+
+configureAxiosInterceptors(store)
 
 const App: React.FC = () => {
   return (
@@ -22,7 +25,7 @@ const App: React.FC = () => {
         <Route path='/event' component={EventsContainer} />
       </Switch>
     </Provider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

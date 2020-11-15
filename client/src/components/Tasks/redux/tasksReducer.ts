@@ -1,4 +1,4 @@
-import { ITask, TAllReduxTypes } from '../../../types/_task-types';
+import { ITask, TAllReduxTypes } from '../../../types/Task';
 import { ADD_NEW_TASK, COMPLETE_TASK } from './reduxTypes';
 
 export type TStateTasks = {

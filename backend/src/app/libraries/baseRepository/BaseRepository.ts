@@ -29,12 +29,16 @@ class BaseRepository {
     return response
   }
 
-  async updateOne(data: DataI, id: number) {
-    return this.knex(this.tableName).update(data).where({ id }).first()
+  async updateOne<T>(data: DataI, id: number) {
+    await this.knex(this.tableName).update(data).where({ id })
+    const response = (await this.knex(this.tableName).select().where({ id }).first()) as T
+    return response
   }
 
-  async deleteOne(id: number) {
-    return this.knex(this.tableName).delete().where({ id })
+  async deleteOne<T>(id: number) {
+    await this.knex(this.tableName).delete().where({ id })
+    const response = (await this.knex(this.tableName).select().where({ id }).first()) as T
+    return response
   }
 }
 

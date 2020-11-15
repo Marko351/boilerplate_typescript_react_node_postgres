@@ -22,6 +22,6 @@ export const generateJwtToken = (user: Partial<UserDataI>, res: Response) =>
           httpOnly: true,
         })
         .status(HTTP_OK)
-        .json({}),
+        .json({ token }),
     )
   })

@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
-import { CustomButton } from '../../common/CustomButton/CustomButton';
+// import { CustomButton } from '../../common/CustomButton/CustomButton';
 
 import { CustomInput } from '../../common/CustomInput/CustomInput';
-import { IComment } from '../../types/_comment-types';
+import { IComment } from '../../types/Comment';
 
 interface commentProps {
   comments: IComment[];

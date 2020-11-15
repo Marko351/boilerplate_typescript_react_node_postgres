@@ -13,7 +13,7 @@ import { Comment } from '../Comments/Comment';
 import { TASK_PRIORITIES } from '../../constants/constants';
 import { RootState } from '../../redux/reducers';
 import { addNewTask, toggleComplete } from './redux/taskActions';
-import { IChecklist, ITask } from '../../types/_task-types';
+import { IChecklist, ITask } from '../../types/Task';
 
 const mapStateToProps = (state: RootState) => ({
   tasksReducer: state.tasksReducer,

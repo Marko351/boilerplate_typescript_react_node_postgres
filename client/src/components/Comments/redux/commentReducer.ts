@@ -1,4 +1,4 @@
-import { IComment, TAllReduxCommentTypes } from '../../../types/_comment-types';
+import { IComment, TAllReduxCommentTypes } from '../../../types/Comment';
 import { GET_COMMENTS } from './commentTypes';
 
 export type TStateComments = {

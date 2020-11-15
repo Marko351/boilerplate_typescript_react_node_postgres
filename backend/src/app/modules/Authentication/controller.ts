@@ -30,11 +30,7 @@ class AuthenticationController {
         username: username,
       }
       const user: IUser[] = await this.repo.create<IUser>(data)
-      if (user[0]) {
-        await generateJwtToken(user[0], res)
-      } else {
-        throw new Error()
-      }
+      await generateJwtToken(user[0], res)
     } catch (err) {
       console.log(err)
       next(err)
@@ -43,6 +39,7 @@ class AuthenticationController {
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
+      console.log(req.cookies.token)
       const { password, usernameOrEmail } = req.body
       const field = usernameOrEmail.includes('@') ? 'email' : 'username'
       const user: IUser[] = await this.repo.getByField<IUser>(field, usernameOrEmail)
@@ -85,7 +82,7 @@ class AuthenticationController {
             .required()
             .messages({
               'string.pattern.base':
-                'Username don`t allowed. Please enter username that matches following pattern (Letters, Numbers, -, _, ` `)',
+                'Username doesn`t allowed. Please enter username that matches following pattern (Letters, Numbers, -, _, ` `)',
               'any.required': 'Username is required',
             }),
         })

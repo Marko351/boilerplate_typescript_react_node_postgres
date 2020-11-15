@@ -1,21 +1,33 @@
-import React, { useState, ChangeEvent } from 'react';
-import { CustomButton } from '../../common/CustomButton/CustomButton';
-import { CustomInput } from '../../common/CustomInput/CustomInput';
+import React, { useState, ChangeEvent } from 'react'
+import { connect, ConnectedProps } from 'react-redux'
 
-export const Login: React.FC = () => {
+import { CustomButton } from '../../common/CustomButton/CustomButton'
+import { CustomInput } from '../../common/CustomInput/CustomInput'
+import { RootState } from '../../redux/reducers'
+import { loginUser } from './redux/authActions'
+
+const mapStateToProps = (state: RootState) => ({})
+
+const connector = connect(mapStateToProps, { loginUser })
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+interface LoginProps extends PropsFromRedux {}
+
+const LoginComponent: React.FC<LoginProps> = ({ loginUser }) => {
   const [data, setData] = useState({
     username: '',
     password: '',
-  });
+  })
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setData({ ...data, [name]: value });
-  };
+    const { value, name } = e.target
+    setData({ ...data, [name]: value })
+  }
 
   const onLoginClick = () => {
-    console.log('Login Clicked');
-  };
+    loginUser()
+  }
 
   return (
     // <div className='center-screen'>
@@ -40,5 +52,7 @@ export const Login: React.FC = () => {
       <CustomButton color='main' onClick={onLoginClick} text='Login' customClassName='login__button' />
     </div>
     // </div>
-  );
-};
+  )
+}
+
+export const Login = connector(LoginComponent)

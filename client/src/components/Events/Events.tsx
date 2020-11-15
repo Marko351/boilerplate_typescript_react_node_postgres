@@ -6,7 +6,7 @@ import { CustomTextarea } from '../../common/CustomTextarea/CustomTextarea';
 import { Comment } from '../Comments/Comment';
 
 import { RootState } from '../../redux/reducers';
-import { IEvent } from '../../types/_event-types';
+import { IEvent } from '../../types/Event';
 
 const mapStateToProps = (state: RootState) => ({
   eventReducer: state.eventReducer,

@@ -1,9 +1,9 @@
-import { BaseRepository } from '../../libraries/baseControllerAndRepository/BaseRepository';
+import { BaseRepository } from '../../libraries/baseRepository/BaseRepository'
 
 class UserRepository extends BaseRepository {
   constructor() {
-    super();
+    super()
   }
 }
 
-export { UserRepository };
+export { UserRepository }
