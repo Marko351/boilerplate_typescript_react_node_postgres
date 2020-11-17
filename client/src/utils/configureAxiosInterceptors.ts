@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios'
-import { ErrorInfo } from 'react'
 import { clearErrors, getErrors } from '../components/Errors/redux/errorActions'
 import { HTTP_UNAUTHORIZED, HTTP_VALIDATION_ERROR } from '../constants/httpStatus'
 

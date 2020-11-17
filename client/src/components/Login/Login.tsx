@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import { CustomButton } from '../../common/CustomButton/CustomButton'
 import { CustomInput } from '../../common/CustomInput/CustomInput'
 import { RootState } from '../../redux/reducers'
+import { IUserDataLogin } from '../../types/Auth'
 import { loginUser } from './redux/authActions'
 
 const mapStateToProps = (state: RootState) => ({})
@@ -15,8 +16,8 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 interface LoginProps extends PropsFromRedux {}
 
 const LoginComponent: React.FC<LoginProps> = ({ loginUser }) => {
-  const [data, setData] = useState({
-    username: '',
+  const [data, setData] = useState<IUserDataLogin>({
+    usernameOrEmail: '',
     password: '',
   })
 
@@ -26,7 +27,7 @@ const LoginComponent: React.FC<LoginProps> = ({ loginUser }) => {
   }
 
   const onLoginClick = () => {
-    loginUser()
+    loginUser(data)
   }
 
   return (
@@ -34,11 +35,11 @@ const LoginComponent: React.FC<LoginProps> = ({ loginUser }) => {
     <div className='login'>
       <h2 className='login__heading'>Login</h2>
       <CustomInput
-        name='username'
+        name='usernameOrEmail'
         onChange={onChange}
         label={'Username'}
         placeholder='Username'
-        value={data.username}
+        value={data.usernameOrEmail}
         customClass='mb-tiny'
       />
       <CustomInput

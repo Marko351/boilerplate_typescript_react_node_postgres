@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import { CustomButton } from '../../common/CustomButton/CustomButton'
 import { CustomInput } from '../../common/CustomInput/CustomInput'
 import { RootState } from '../../redux/reducers'
+import { IUserDataRegister } from '../../types/Auth'
 import { registerUser } from '../Login/redux/authActions'
 
 const mapStateToProps = (state: RootState) => ({})
@@ -15,7 +16,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 interface RegisterProps extends PropsFromRedux {}
 
 const RegisterComponent: React.FC<RegisterProps> = ({ registerUser }) => {
-  const [data, setData] = useState({
+  const [data, setData] = useState<IUserDataRegister>({
     username: '',
     password: '',
     email: '',
@@ -27,7 +28,7 @@ const RegisterComponent: React.FC<RegisterProps> = ({ registerUser }) => {
   }
 
   const onRegisterClick = () => {
-    registerUser()
+    registerUser(data)
   }
 
   return (

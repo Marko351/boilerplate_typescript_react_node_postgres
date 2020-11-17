@@ -1,16 +1,24 @@
-import React, { createContext, useReducer, Dispatch } from 'react';
+/**
+ *
+ * THIS FILE IS EXAMPLE OF HOW TO DO THINGS WITH CONTEXT API AND DO NOT HAVE ANY EFFECT ON THE PROJECT
+ *
+ * FIND REDUX VERSION ON  'src/components/Tasks/redux'
+ *
+ */
+
+import React, { createContext, useReducer, Dispatch } from 'react'
 
 interface Task {
-  id: number;
-  text: string;
-  isCompleted: boolean;
+  id: number
+  text: string
+  isCompleted: boolean
 }
 
 type state = {
-  tasks: Array<Task>;
-};
+  tasks: Array<Task>
+}
 
-type actions = { type: 'add_new_task'; payload: string } | { type: 'set_complete_task'; payload: number };
+type actions = { type: 'add_new_task'; payload: string } | { type: 'set_complete_task'; payload: number }
 
 const initialState = {
   tasks: [
@@ -36,17 +44,17 @@ const initialState = {
       isCompleted: false,
     },
   ],
-};
+}
 
 type TasksContextType = {
-  tasks: Task[];
-};
+  tasks: Task[]
+}
 
-export const tasksStore = createContext<TasksContextType | any>(initialState);
-const { Provider } = tasksStore;
+export const tasksStore = createContext<TasksContextType | any>(initialState)
+const { Provider } = tasksStore
 
 interface Props {
-  children?: JSX.Element[];
+  children?: JSX.Element[]
 }
 
 export const TasksProvider: React.FC<Props> = ({ children }: Props) => {
@@ -63,21 +71,21 @@ export const TasksProvider: React.FC<Props> = ({ children }: Props) => {
               id: state.tasks.length - 1 + 1,
             },
           ],
-        };
+        }
       case 'set_complete_task':
         return {
           ...state,
           tasks: state.tasks.map((task) => {
             if (task.id === action.payload) {
-              task.isCompleted = !task.isCompleted;
+              task.isCompleted = !task.isCompleted
             }
-            return task;
+            return task
           }),
-        };
+        }
       default:
-        return state;
+        return state
     }
-  }, initialState);
+  }, initialState)
 
-  return <Provider value={{ ...state, dispatch }}>{children}</Provider>;
-};
+  return <Provider value={{ ...state, dispatch }}>{children}</Provider>
+}
