@@ -32,6 +32,24 @@
       background-color: $color-tertiaryLight;
       border-radius: 2px;
     }
+
+    &--button {
+      font-size: 1.6rem;
+      border: none;
+      cursor: pointer;
+      color: $color-gray;
+      background-color: transparent;
+      margin: 0;
+      padding: 0;
+
+      &:hover {
+        color: darken($color-gray, 8%);
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
   }
 }
 

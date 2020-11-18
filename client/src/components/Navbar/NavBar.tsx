@@ -1,9 +1,19 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
-import logo from '../../assets/img/logo.png';
+import logo from '../../assets/img/logo.png'
+import { RootState } from '../../redux/reducers'
+import { logout } from '../Login/redux/authActions'
 
-export const NavBar: React.FC = (props) => {
+export const NavBar: React.FC = () => {
+  const isAuthenticated = useSelector<RootState>((state) => state.authReducer.isAuthenticated)
+  const dispatch = useDispatch()
+
+  const onLogoutClick = () => {
+    dispatch(logout())
+  }
+
   return (
     <div className='navbar'>
       <div className='navbar__wrapper wrapper'>
@@ -16,25 +26,37 @@ export const NavBar: React.FC = (props) => {
               <NavLink to='/home'>PlanningApp</NavLink>
             </h1>
           </div>
-          <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/home'>
-            Home
-          </NavLink>
-          <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/task'>
-            Add Task
-          </NavLink>
-          <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/event'>
-            Add Event
-          </NavLink>
+          {!isAuthenticated ? null : (
+            <>
+              <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/home'>
+                Home
+              </NavLink>
+              <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/task'>
+                Add Task
+              </NavLink>
+              <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/event'>
+                Add Event
+              </NavLink>
+            </>
+          )}
         </div>
         <div className='navbar__wrapper--second-box'>
-          <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/login'>
-            Login
-          </NavLink>
-          <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/register'>
-            Register
-          </NavLink>
+          {isAuthenticated ? (
+            <button onClick={onLogoutClick} className='navbar__link--button'>
+              Logout
+            </button>
+          ) : (
+            <>
+              <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/login'>
+                Login
+              </NavLink>
+              <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/register'>
+                Register
+              </NavLink>
+            </>
+          )}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

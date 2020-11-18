@@ -17,7 +17,7 @@ export const generateJwtToken = (user: Partial<UserDataI>, res: Response) =>
     resolve(
       res
         .cookie('token', token, {
-          expires: new Date(Date.now() + 25200),
+          expires: new Date(Date.now() + 604800),
           secure: false, // set to true if using https
           httpOnly: true,
         })

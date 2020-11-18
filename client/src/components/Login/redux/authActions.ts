@@ -20,7 +20,12 @@ export const registerUser = (data: IUserDataRegister): AppThunk<void> => async (
   dispatch(setCurrentUser(decoded))
 }
 
-export const setCurrentUser = (decoded: IAuthUser) => {
+export const logout = (): AppThunk<void> => async (dispatch) => {
+  setAuthToken('')
+  dispatch(setCurrentUser({}))
+}
+
+export const setCurrentUser = (decoded: IAuthUser | {}) => {
   return {
     type: SET_CURRENT_USER,
     payload: decoded,

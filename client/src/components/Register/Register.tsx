@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
+import { RouteComponentProps } from 'react-router-dom'
 
 import { CustomButton } from '../../common/CustomButton/CustomButton'
 import { CustomInput } from '../../common/CustomInput/CustomInput'
@@ -13,9 +14,9 @@ const connector = connect(mapStateToProps, { registerUser })
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-interface RegisterProps extends PropsFromRedux {}
+interface RegisterProps extends PropsFromRedux, RouteComponentProps {}
 
-const RegisterComponent: React.FC<RegisterProps> = ({ registerUser }) => {
+const RegisterComponent: React.FC<RegisterProps> = ({ registerUser, history }) => {
   const [data, setData] = useState<IUserDataRegister>({
     username: '',
     password: '',
@@ -27,8 +28,9 @@ const RegisterComponent: React.FC<RegisterProps> = ({ registerUser }) => {
     setData({ ...data, [name]: value })
   }
 
-  const onRegisterClick = () => {
-    registerUser(data)
+  const onRegisterClick = async () => {
+    await registerUser(data)
+    history.push('/')
   }
 
   return (

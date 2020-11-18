@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
+import { RouteComponentProps } from 'react-router-dom'
 
 import { CustomButton } from '../../common/CustomButton/CustomButton'
 import { CustomInput } from '../../common/CustomInput/CustomInput'
@@ -13,9 +14,9 @@ const connector = connect(mapStateToProps, { loginUser })
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-interface LoginProps extends PropsFromRedux {}
+interface LoginProps extends PropsFromRedux, RouteComponentProps {}
 
-const LoginComponent: React.FC<LoginProps> = ({ loginUser }) => {
+const LoginComponent: React.FC<LoginProps> = ({ loginUser, history }) => {
   const [data, setData] = useState<IUserDataLogin>({
     usernameOrEmail: '',
     password: '',
@@ -26,8 +27,9 @@ const LoginComponent: React.FC<LoginProps> = ({ loginUser }) => {
     setData({ ...data, [name]: value })
   }
 
-  const onLoginClick = () => {
-    loginUser(data)
+  const onLoginClick = async () => {
+    await loginUser(data)
+    history.push('/')
   }
 
   return (
