@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react'
+import React, { useState, ChangeEvent, useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 
@@ -8,7 +8,10 @@ import { RootState } from '../../redux/reducers'
 import { IUserDataRegister } from '../../types/Auth'
 import { registerUser } from '../Login/redux/authActions'
 
-const mapStateToProps = (state: RootState) => ({})
+const mapStateToProps = (state: RootState) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
+  errors: state.errorReducer.errors,
+})
 
 const connector = connect(mapStateToProps, { registerUser })
 
@@ -16,12 +19,18 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 
 interface RegisterProps extends PropsFromRedux, RouteComponentProps {}
 
-const RegisterComponent: React.FC<RegisterProps> = ({ registerUser, history }) => {
+const RegisterComponent: React.FC<RegisterProps> = ({ registerUser, history, isAuthenticated, errors }) => {
   const [data, setData] = useState<IUserDataRegister>({
     username: '',
     password: '',
     email: '',
   })
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.goBack()
+    }
+  }, [])
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target
@@ -43,6 +52,7 @@ const RegisterComponent: React.FC<RegisterProps> = ({ registerUser, history }) =
         placeholder='Email'
         value={data.email}
         customClass='mb-tiny'
+        errorMess={errors['email'] ? errors['email'] : ''}
       />
       <CustomInput
         name='username'
@@ -51,6 +61,7 @@ const RegisterComponent: React.FC<RegisterProps> = ({ registerUser, history }) =
         placeholder='Username'
         value={data.username}
         customClass='mb-tiny'
+        errorMess={errors['username'] ? errors['username'] : ''}
       />
       <CustomInput
         name='password'
@@ -59,6 +70,7 @@ const RegisterComponent: React.FC<RegisterProps> = ({ registerUser, history }) =
         placeholder='Password'
         value={data.password}
         type='password'
+        errorMess={errors['password'] ? errors['password'] : ''}
       />
       <CustomButton color='main' onClick={onRegisterClick} text='Register' customClassName='register__button' />
     </div>

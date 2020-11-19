@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { HTTP_UNAUTHORIZED } from '../constants/HTTPStatusCode'
 import { returnFormattedError } from './formattedError'
 
-const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
+export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token || ''
   try {
     if (!token) {

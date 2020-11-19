@@ -6,7 +6,7 @@ import { HTTP_VALIDATION_ERROR } from '../../constants/HTTPStatusCode'
 import { returnFormattedError, returnFormattedValidationError } from '../../helpers/formattedError'
 import { AuthenticationRepository } from './repository'
 import { generateJwtToken } from '../../helpers/generateJwtToken'
-import { IUser } from '../../types/Users/User'
+import { IUser } from '../Users/User'
 class AuthenticationController {
   public repo: AuthenticationRepository
   constructor() {
@@ -70,12 +70,12 @@ class AuthenticationController {
         .keys({
           email: Joi.string().email({ minDomainSegments: 2 }).required().messages({
             'string.email': 'Email must be a valid email',
-            'any.required': 'Email is required',
+            'string.empty': 'Email is required',
           }),
           password: Joi.string().min(3).message('too short (minimum 3 character)').max(50).required().messages({
             'string.min': 'too short (minimum 3 character)',
             'string.max': 'too long (maximum 3 character)',
-            'any.required': 'Password is required',
+            'string.empty': 'Password is required',
           }),
           username: Joi.string()
             .regex(/^[a-z0-9\d\-_\s]+$/i)
@@ -83,7 +83,7 @@ class AuthenticationController {
             .messages({
               'string.pattern.base':
                 'Username doesn`t allowed. Please enter username that matches following pattern (Letters, Numbers, -, _, ` `)',
-              'any.required': 'Username is required',
+              'string.empty': 'Username is required',
             }),
         })
       await schema.validateAsync(data)
@@ -97,18 +97,16 @@ class AuthenticationController {
   async ValidateAuthLogin(req: Request, res: Response, next: NextFunction) {
     try {
       const data = req.body
-      const schema = Joi.alternatives().try(
-        Joi.object()
-          .options({ abortEarly: false })
-          .keys({
-            password: Joi.string().required().messages({
-              'any.required': 'Password is required',
-            }),
-            usernameOrEmail: Joi.string().required().messages({
-              'any.required': 'Username or email is required',
-            }),
+      const schema = Joi.object()
+        .options({ abortEarly: false })
+        .keys({
+          password: Joi.string().required().messages({
+            'string.empty': 'Password is required',
           }),
-      )
+          usernameOrEmail: Joi.string().required().messages({
+            'string.empty': 'Username or email is required',
+          }),
+        })
       await schema.validateAsync(data)
       next()
     } catch (err) {

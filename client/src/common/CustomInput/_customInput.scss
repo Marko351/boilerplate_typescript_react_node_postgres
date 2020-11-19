@@ -30,4 +30,9 @@
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
   }
+
+  &__error {
+    color: $color-main;
+    font-size: 1.3rem;
+  }
 }

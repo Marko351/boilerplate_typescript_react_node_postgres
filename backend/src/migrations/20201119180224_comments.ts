@@ -1,6 +1,6 @@
 import * as Knex from 'knex'
 
-const TABLE_NAME = 'users'
+const TABLE_NAME = 'comments'
 
 export async function up(knex: Knex): Promise<void> {
   const isExists = await knex.schema.hasTable(TABLE_NAME)
@@ -9,9 +9,10 @@ export async function up(knex: Knex): Promise<void> {
       table.increments('id').primary()
       table.timestamp('creation_date').notNullable().defaultTo(knex.fn.now())
 
-      table.specificType('username', 'VARCHAR(50)').notNullable()
-      table.specificType('email', 'VARCHAR(50)').notNullable()
-      table.specificType('password', 'VARCHAR(255)').notNullable()
+      table.integer('created_by').notNullable().unsigned().references('id').inTable('users')
+      table.integer('event_id').unsigned().references('id').inTable('events')
+      table.integer('task_id').unsigned().references('id').inTable('tasks')
+      table.text('comment')
     })
   }
 }

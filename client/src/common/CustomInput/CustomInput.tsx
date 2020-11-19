@@ -1,16 +1,16 @@
-import React, { ChangeEvent, KeyboardEvent } from 'react';
+import React, { ChangeEvent, KeyboardEvent } from 'react'
 
 interface CustomInputProps {
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  name: string;
-  label?: string;
-  placeholder: string;
-  customClass?: string;
-  type?: string;
-  error?: boolean;
-  disabled?: boolean;
-  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  value: string
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  name: string
+  label?: string
+  placeholder: string
+  customClass?: string
+  type?: string
+  errorMess?: string
+  disabled?: boolean
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void
 }
 
 export const CustomInput: React.FC<CustomInputProps> = ({
@@ -20,7 +20,7 @@ export const CustomInput: React.FC<CustomInputProps> = ({
   onChange,
   name,
   label,
-  error,
+  errorMess,
   type,
   onKeyDown,
 }) => {
@@ -40,7 +40,7 @@ export const CustomInput: React.FC<CustomInputProps> = ({
         name={name}
         onKeyDown={onKeyDown}
       />
-      {error && <small>{`${label} is required`}</small>}
+      {!!errorMess && <small className='c-input__error'>{errorMess}</small>}
     </div>
-  );
-};
+  )
+}

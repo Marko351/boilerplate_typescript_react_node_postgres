@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react'
+import React, { useState, ChangeEvent, useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 
@@ -8,7 +8,10 @@ import { RootState } from '../../redux/reducers'
 import { IUserDataLogin } from '../../types/Auth'
 import { loginUser } from './redux/authActions'
 
-const mapStateToProps = (state: RootState) => ({})
+const mapStateToProps = (state: RootState) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
+  errors: state.errorReducer.errors,
+})
 
 const connector = connect(mapStateToProps, { loginUser })
 
@@ -16,11 +19,17 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 
 interface LoginProps extends PropsFromRedux, RouteComponentProps {}
 
-const LoginComponent: React.FC<LoginProps> = ({ loginUser, history }) => {
+export const LoginComponent: React.FC<LoginProps> = ({ loginUser, history, isAuthenticated, errors }) => {
   const [data, setData] = useState<IUserDataLogin>({
     usernameOrEmail: '',
     password: '',
   })
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.goBack()
+    }
+  }, [])
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target
@@ -43,6 +52,7 @@ const LoginComponent: React.FC<LoginProps> = ({ loginUser, history }) => {
         placeholder='Username'
         value={data.usernameOrEmail}
         customClass='mb-tiny'
+        errorMess={errors['usernameOrEmail'] ? errors['usernameOrEmail'] : ''}
       />
       <CustomInput
         name='password'
@@ -51,6 +61,7 @@ const LoginComponent: React.FC<LoginProps> = ({ loginUser, history }) => {
         placeholder='Password'
         value={data.password}
         type='password'
+        errorMess={errors['password'] ? errors['password'] : ''}
       />
       <CustomButton color='main' onClick={onLoginClick} text='Login' customClassName='login__button' />
     </div>

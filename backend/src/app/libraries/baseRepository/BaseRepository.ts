@@ -15,6 +15,14 @@ class BaseRepository {
     this.columns = columns
   }
 
+  async getOne<T>(id: number) {
+    const response = (await this.knex(this.tableName)
+      .select(this.columns || '*')
+      .where({ id })
+      .first()) as T
+    return response
+  }
+
   async getByField<T>(field: string, value: string | number | boolean) {
     const response = (await this.knex(this.tableName)
       .select('*')
