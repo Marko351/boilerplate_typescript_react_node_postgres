@@ -8,6 +8,7 @@ interface Errors {
 
 export const returnFormattedValidationError = (errorsParam: ValidationError, res: Response) => {
   const errors: Errors = {}
+  // console.log(errorsParam)
   errorsParam.details.forEach((error: ValidationErrorItem) => {
     errors[error.context?.label as string] = error.message
   })
