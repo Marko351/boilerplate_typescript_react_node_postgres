@@ -1,15 +1,15 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { ReactComponent as DeleteIcon } from '../../assets/icons/wrong.svg';
-import { ReactComponent as PencilIcon } from '../../assets/icons/pencil.svg';
-import { CustomInput } from '../../common/CustomInput/CustomInput';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
+import { ReactComponent as DeleteIcon } from '../../assets/icons/wrong.svg'
+import { ReactComponent as PencilIcon } from '../../assets/icons/pencil.svg'
+import { CustomInput } from '../../common/CustomInput/CustomInput'
 
 interface IChecklist {
-  isCompleted: boolean;
-  description: string;
-  onChangeChecklistDesc: (e: ChangeEvent<HTMLInputElement>, index: number) => void;
-  index: number;
-  onDeleteChecklistItem: (id: string | number) => void;
-  id: string | number;
+  isCompleted: boolean
+  description: string
+  onChangeChecklistDesc: (e: ChangeEvent<HTMLInputElement>, index: number) => void
+  index: number
+  onDeleteChecklistItem: (id: string | number) => void
+  id: string | number
 }
 
 export const ChecklistItem: React.FC<IChecklist> = ({
@@ -20,17 +20,17 @@ export const ChecklistItem: React.FC<IChecklist> = ({
   onDeleteChecklistItem,
   id,
 }) => {
-  const [isUpdateClicked, setIsUpdateClicked] = useState(false);
+  const [isUpdateClicked, setIsUpdateClicked] = useState(false)
 
   const onUpdateClick = () => {
-    setIsUpdateClicked(!isUpdateClicked);
-  };
+    setIsUpdateClicked(!isUpdateClicked)
+  }
 
   const onPressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      setIsUpdateClicked(!isUpdateClicked);
+      setIsUpdateClicked(!isUpdateClicked)
     }
-  };
+  }
 
   return (
     <div className='checklist'>
@@ -67,5 +67,5 @@ export const ChecklistItem: React.FC<IChecklist> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

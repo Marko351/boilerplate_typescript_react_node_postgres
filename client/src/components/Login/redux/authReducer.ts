@@ -4,7 +4,7 @@ import { SET_CURRENT_USER } from './authTypes'
 
 export type TStateAuth = {
   isAuthenticated: boolean
-  user: IAuthUser | {}
+  user: IAuthUser | unknown
 }
 
 const initialState: TStateAuth = {

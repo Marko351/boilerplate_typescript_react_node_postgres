@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-import { decode } from 'querystring'
 import { HTTP_UNAUTHORIZED } from '../constants/HTTPStatusCode'
 import { returnFormattedError } from './formattedError'
 

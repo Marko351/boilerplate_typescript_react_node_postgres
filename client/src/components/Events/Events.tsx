@@ -1,23 +1,23 @@
-import React, { ChangeEvent, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import React, { ChangeEvent, useState } from 'react'
+import { connect, ConnectedProps } from 'react-redux'
 
-import { CustomInput } from '../../common/CustomInput/CustomInput';
-import { CustomTextarea } from '../../common/CustomTextarea/CustomTextarea';
-import { Comment } from '../Comments/Comment';
+import { CustomInput } from '../../common/CustomInput/CustomInput'
+import { CustomTextarea } from '../../common/CustomTextarea/CustomTextarea'
+import { Comment } from '../Comments/Comment'
 
-import { RootState } from '../../redux/reducers';
-import { IEvent } from '../../types/Event';
+import { RootState } from '../../redux/reducers'
+import { IEvent } from '../../types/Event'
 
 const mapStateToProps = (state: RootState) => ({
   eventReducer: state.eventReducer,
   commentsReducer: state.commentsReducer,
-});
+})
 
-const connector = connect(mapStateToProps, {});
+const connector = connect(mapStateToProps, {})
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
+type PropsFromRedux = ConnectedProps<typeof connector>
 
-type EventProps = PropsFromRedux;
+type EventProps = PropsFromRedux
 
 export const EventsComponentDefault: React.FC<EventProps> = ({ commentsReducer, eventReducer }) => {
   const [event, setEvent] = useState<IEvent>({
@@ -27,12 +27,12 @@ export const EventsComponentDefault: React.FC<EventProps> = ({ commentsReducer, 
     startDate: '',
     endDate: '',
     location: '',
-  });
+  })
 
   const handleEventChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setEvent({ ...event, [name]: value });
-  };
+    const { name, value } = e.target
+    setEvent({ ...event, [name]: value })
+  }
 
   return (
     <>
@@ -88,7 +88,7 @@ export const EventsComponentDefault: React.FC<EventProps> = ({ commentsReducer, 
       <div className='separate-line'></div>
       <div className='footer-buttons'>{/* <CustomButton text='Save' onClick={() => {}} color='success' /> */}</div>
     </>
-  );
-};
+  )
+}
 
-export const EventsComponent = connector(EventsComponentDefault);
+export const EventsComponent = connector(EventsComponentDefault)

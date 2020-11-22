@@ -33,5 +33,6 @@ module.exports = {
     'react/prop-types': 'off',
     'jsx-a11y/no-onchange': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
-};
+}

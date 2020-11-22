@@ -1,4 +1,5 @@
 export interface IEvent {
+  id?: number
   creationDate: string
   createdBy?: number
   name: string

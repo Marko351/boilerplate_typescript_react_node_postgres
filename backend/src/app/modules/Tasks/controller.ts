@@ -5,11 +5,19 @@ import { HTTP_OK } from '../../constants/HTTPStatusCode'
 import { ITask } from './Task'
 import { TasksRepository } from './repository'
 import { returnFormattedValidationError } from '../../helpers/formattedError'
+import { ChecklistRepository } from '../Checklists'
+import { CommentsRepository } from '../Comments'
+import { IChecklist } from '../Checklists/Checklist'
+import { IComment } from '../Comments/Comment'
 
 class TaskController {
   public repo: TasksRepository
+  public checklistRepo: ChecklistRepository
+  public commentRepo: CommentsRepository
   constructor() {
     this.repo = new TasksRepository()
+    this.checklistRepo = new ChecklistRepository()
+    this.commentRepo = new CommentsRepository()
   }
 
   async getOne(req: Request, res: Response, next: NextFunction) {
@@ -26,11 +34,35 @@ class TaskController {
 
   async createTasks(req: Request, res: Response, next: NextFunction) {
     try {
+      const { name, dueDate, taskPriority, description, checklists, comments } = req.body
       const data = {
-        ...req.body,
+        name,
+        dueDate,
+        taskPriority,
+        description,
         createdBy: req.userData.userId,
       }
       const response = await this.repo.create<ITask>(data)
+      if (checklists.length) {
+        for (let i = 0; i < checklists.length; i++) {
+          const checklistData = {
+            taskId: response[i].id,
+            isDone: checklists[i].isDone,
+            description: checklists[i].description,
+          }
+          await this.checklistRepo.create<IChecklist>(checklistData)
+        }
+      }
+      if (comments.length) {
+        for (let i = 0; i < comments.length; i++) {
+          const commentData = {
+            taskId: response[i].id,
+            comment: comments[i].comment,
+            createdBy: req.userData.userId,
+          }
+          await this.commentRepo.create<IComment>(commentData)
+        }
+      }
       res.status(HTTP_OK).json(response)
     } catch (err) {
       console.log(err)

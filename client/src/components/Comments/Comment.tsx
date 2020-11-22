@@ -1,20 +1,20 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react'
 // import { CustomButton } from '../../common/CustomButton/CustomButton';
 
-import { CustomInput } from '../../common/CustomInput/CustomInput';
-import { IComment } from '../../types/Comment';
+import { CustomInput } from '../../common/CustomInput/CustomInput'
+import { IComment } from '../../types/Comment'
 
 interface commentProps {
-  comments: IComment[];
+  comments: IComment[]
 }
 
 export const Comment: React.FC<commentProps> = ({ comments }) => {
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState('')
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setComment(value);
-  };
+    const { value } = e.target
+    setComment(value)
+  }
 
   return (
     <div className='comment'>
@@ -31,5 +31,5 @@ export const Comment: React.FC<commentProps> = ({ comments }) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

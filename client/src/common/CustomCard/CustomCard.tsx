@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
 interface CustomCardProps {
-  children: React.ReactElement[] | React.ReactElement;
-  headerText: string;
+  children: React.ReactElement[] | React.ReactElement
+  headerText: string
 }
 
 export const CustomCard: React.FC<CustomCardProps> = ({ children, headerText }) => {
@@ -11,5 +11,5 @@ export const CustomCard: React.FC<CustomCardProps> = ({ children, headerText }) 
       <div className='card__header'>{headerText.toUpperCase()}</div>
       <div className='card__body'>{children}</div>
     </div>
-  );
-};
+  )
+}

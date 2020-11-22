@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
 interface ProgressBarProps {
-  value: number;
+  value: number
 }
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({ value }) => {
@@ -10,5 +10,5 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ value }) => {
       <span className='progress-bar__value'>{value}%</span>
       <div className='progress-bar__progress' style={{ width: `${value}%` }}></div>
     </div>
-  );
-};
+  )
+}

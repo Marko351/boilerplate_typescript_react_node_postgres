@@ -5,11 +5,15 @@ import { HTTP_OK } from '../../constants/HTTPStatusCode'
 import { IEvent } from './Event'
 import { EventsRepository } from './repository'
 import { returnFormattedValidationError } from '../../helpers/formattedError'
+import { CommentsRepository } from '../Comments'
+import { IComment } from '../Comments/Comment'
 
 class EventController {
   public repo: EventsRepository
+  public commentRepo: CommentsRepository
   constructor() {
     this.repo = new EventsRepository()
+    this.commentRepo = new CommentsRepository()
   }
 
   async getOne(req: Request, res: Response, next: NextFunction) {
@@ -26,11 +30,26 @@ class EventController {
 
   async createEvents(req: Request, res: Response, next: NextFunction) {
     try {
+      const { name, startDate, endDate, description, location, comments } = req.body
       const data = {
-        ...req.body,
+        name,
+        startDate,
+        endDate,
+        description,
+        location,
         createdBy: req.userData.userId,
       }
       const response = await this.repo.create<IEvent>(data)
+      if (comments.length) {
+        for (let i = 0; i < comments.length; i++) {
+          const commentData = {
+            eventId: response[i].id,
+            comment: comments[i].comment,
+            createdBy: req.userData.userId,
+          }
+          await this.commentRepo.create<IComment>(commentData)
+        }
+      }
       res.status(HTTP_OK).json(response)
     } catch (err) {
       console.log(err)

@@ -1,7 +1,7 @@
 import { knex, knexType } from '../../config/dbConfig'
 
 interface DataI {
-  [key: string]: string | number | boolean
+  [key: string]: string | number | boolean | undefined | null
 }
 
 class BaseRepository {

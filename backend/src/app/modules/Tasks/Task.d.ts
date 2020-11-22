@@ -1,6 +1,7 @@
 import { HIGH, LOW, MIDDLE } from '../../constants/TaskPriorities'
 
 export interface ITask {
+  id?: number
   creationDate: string
   createdBy?: number
   name: string

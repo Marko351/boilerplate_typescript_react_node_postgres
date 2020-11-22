@@ -1,14 +1,14 @@
-import React from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
+import React from 'react'
+import { Calendar, momentLocalizer } from 'react-big-calendar'
+import moment from 'moment'
 
 interface CalendarProps {
-  events: any;
-  onSelectEvent: any;
-  eventPropGetterConfig: any;
+  events: any
+  onSelectEvent: any
+  eventPropGetterConfig: any
 }
 
-const localizer = momentLocalizer(moment);
+const localizer = momentLocalizer(moment)
 
 export const CustomCalendar: React.FC<CalendarProps> = ({ events, onSelectEvent, eventPropGetterConfig }) => {
   return (
@@ -27,5 +27,5 @@ export const CustomCalendar: React.FC<CalendarProps> = ({ events, onSelectEvent,
       eventPropGetter={eventPropGetterConfig}
       style={{ height: '70rem' }}
     />
-  );
-};
+  )
+}

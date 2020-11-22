@@ -25,7 +25,7 @@ export const logout = (): AppThunk<void> => async (dispatch) => {
   dispatch(setCurrentUser({}))
 }
 
-export const setCurrentUser = (decoded: IAuthUser | {}) => {
+export const setCurrentUser = (decoded: IAuthUser | unknown) => {
   return {
     type: SET_CURRENT_USER,
     payload: decoded,

@@ -1,6 +1,6 @@
-import React from 'react';
-import { CustomCard } from '../../common/CustomCard/CustomCard';
-import { TaskComponent } from './Task';
+import React from 'react'
+import { CustomCard } from '../../common/CustomCard/CustomCard'
+import { TaskComponent } from './Task'
 
 export const TaskContainer: React.FC = () => {
   return (
@@ -9,5 +9,5 @@ export const TaskContainer: React.FC = () => {
         <TaskComponent />
       </CustomCard>
     </div>
-  );
-};
+  )
+}

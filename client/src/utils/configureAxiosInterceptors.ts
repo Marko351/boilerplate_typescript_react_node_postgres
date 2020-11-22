@@ -14,8 +14,9 @@ export const configureAxiosInterceptors = (store: any) => {
       store.dispatch(clearErrors())
       if (handledErrorStatuses.includes(error.response.status)) {
         store.dispatch(getErrors(error.response.data))
-      } else {
       }
+      // else {
+      // }
       return new Promise((_resolve, reject) => {
         reject(error)
       })

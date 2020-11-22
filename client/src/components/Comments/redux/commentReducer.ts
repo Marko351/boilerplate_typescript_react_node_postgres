@@ -1,9 +1,9 @@
-import { IComment, TAllReduxCommentTypes } from '../../../types/Comment';
-import { GET_COMMENTS } from './commentTypes';
+import { IComment, TAllReduxCommentTypes } from '../../../types/Comment'
+import { GET_COMMENTS } from './commentTypes'
 
 export type TStateComments = {
-  comments: Array<IComment>;
-};
+  comments: Array<IComment>
+}
 
 const initialState: TStateComments = {
   comments: [
@@ -27,7 +27,7 @@ const initialState: TStateComments = {
       description: 'Testiram za projekat. Ovo je komentar',
     },
   ],
-};
+}
 
 export const commentsReducer = (state = initialState, action: TAllReduxCommentTypes): TStateComments => {
   switch (action.type) {
@@ -35,8 +35,8 @@ export const commentsReducer = (state = initialState, action: TAllReduxCommentTy
       return {
         ...state,
         comments: action.payload,
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}

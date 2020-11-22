@@ -7,7 +7,7 @@ export interface IGetErrors {
 
 export interface IClearErrors {
   type: typeof CLEAR_ERRORS
-  payload: {}
+  payload: unknown
 }
 
 export type TAllReduxErrorTypes = IGetErrors | IClearErrors

@@ -1,6 +1,6 @@
-import React from 'react';
-import { CustomCard } from '../../common/CustomCard/CustomCard';
-import { EventsComponent } from './Events';
+import React from 'react'
+import { CustomCard } from '../../common/CustomCard/CustomCard'
+import { EventsComponent } from './Events'
 
 export const EventsContainer: React.FC = () => {
   return (
@@ -9,5 +9,5 @@ export const EventsContainer: React.FC = () => {
         <EventsComponent />
       </CustomCard>
     </div>
-  );
-};
+  )
+}

@@ -1,14 +1,14 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react'
 
-type optionType = { value: number; label: string };
+type optionType = { value: number; label: string }
 
 interface CustomSelectProps {
-  options: Array<optionType>;
-  name: string;
-  label: string;
-  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  value: number;
-  customClass?: string;
+  options: Array<optionType>
+  name: string
+  label: string
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void
+  value: number
+  customClass?: string
 }
 
 export const CustomSelect: React.FC<CustomSelectProps> = ({ customClass, value, options, name, label, onChange }) => {
@@ -25,5 +25,5 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({ customClass, value, 
         ))}
       </select>
     </div>
-  );
-};
+  )
+}

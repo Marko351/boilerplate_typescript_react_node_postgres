@@ -1,14 +1,14 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react'
 
 interface CustomTextareaProps {
-  value: string;
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  name: string;
-  label: string;
-  placeholder: string;
-  customClass?: string;
-  error?: boolean;
-  disabled?: boolean;
+  value: string
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void
+  name: string
+  label: string
+  placeholder: string
+  customClass?: string
+  error?: boolean
+  disabled?: boolean
 }
 
 export const CustomTextarea: React.FC<CustomTextareaProps> = ({
@@ -35,5 +35,5 @@ export const CustomTextarea: React.FC<CustomTextareaProps> = ({
       />
       {error && <small>{`${label} is required`}</small>}
     </div>
-  );
-};
+  )
+}
