@@ -1,10 +1,13 @@
+import axios from 'axios'
+
 import { ITask } from '../../../types/Task'
 import { AppThunk } from '../../../redux/reducers'
 import { ADD_NEW_TASK, COMPLETE_TASK } from './reduxTypes'
 
-export const addNewTask = (data: ITask): AppThunk<void> => (dispatch) => {
+export const addNewTask = (data: ITask): AppThunk<void> => async (dispatch) => {
   try {
-    dispatch({ type: ADD_NEW_TASK, payload: data })
+    const response = await axios.post<ITask>(`/tasks`, data, { withCredentials: true })
+    dispatch({ type: ADD_NEW_TASK, payload: response.data })
   } catch (err) {
     console.log(err)
   }

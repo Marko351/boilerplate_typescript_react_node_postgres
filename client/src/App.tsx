@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import Cookies from 'js-cookie'
@@ -22,6 +23,11 @@ if (token) {
   if (decoded.exp < currentTime) {
     Cookies.remove('token')
   }
+}
+
+axios.defaults.baseURL = 'http://localhost:5000/api/v1'
+if (process.env.REACT_APP_ENV === 'qa') {
+  axios.defaults.baseURL = '/api/v1'
 }
 
 configureAxiosInterceptors(store)

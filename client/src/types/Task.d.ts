@@ -13,12 +13,13 @@ export interface TCompleteTask {
 export type TAllReduxTypes = TAddNewTask | TCompleteTask
 
 export interface ITask {
-  id: number | null
-  taskName: string
+  id?: number | null
+  name: string
   description: string
   dueDate: string
-  priority: number
-  isCompleted: boolean
+  creationDate?: string
+  taskPriority: number
+  isCompleted?: boolean
 }
 
 export interface ITasks {

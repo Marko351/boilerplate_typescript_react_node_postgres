@@ -43,7 +43,7 @@ class TaskController {
         createdBy: req.userData.userId,
       }
       const response = await this.repo.create<ITask>(data)
-      if (checklists.length) {
+      if (checklists && checklists.length) {
         for (let i = 0; i < checklists.length; i++) {
           const checklistData = {
             taskId: response[i].id,
@@ -53,7 +53,7 @@ class TaskController {
           await this.checklistRepo.create<IChecklist>(checklistData)
         }
       }
-      if (comments.length) {
+      if (comments && comments.length) {
         for (let i = 0; i < comments.length; i++) {
           const commentData = {
             taskId: response[i].id,

@@ -9,6 +9,7 @@ import { CustomTextarea } from '../../common/CustomTextarea/CustomTextarea'
 import { ChecklistItem } from './ChecklistItem'
 import { ProgressBar } from './ProgressBar'
 import { Comment } from '../Comments/Comment'
+import { CustomTable } from '../../common/CustomTable/CustomTable'
 
 import { TASK_PRIORITIES } from '../../constants/constants'
 import { RootState } from '../../redux/reducers'
@@ -31,10 +32,10 @@ type Checklists = IChecklist[]
 const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask, toggleComplete, commentsReducer }) => {
   const [task, setTask] = useState<ITask>({
     id: null,
-    taskName: '',
+    name: '',
     description: '',
     dueDate: '',
-    priority: 1,
+    taskPriority: 1,
     isCompleted: false,
   })
   const [checklists, setChecklist] = useState<Checklists>([])
@@ -84,16 +85,27 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
     setChecklist(newChecklist)
   }
 
+  const onSaveClick = async () => {
+    const taskData = {
+      name: task.name,
+      description: task.description,
+      dueDate: task.dueDate,
+      taskPriority: task.taskPriority,
+    }
+    await addNewTask(taskData)
+  }
+
   return (
     <>
+      <CustomTable />
       <div className='task'>
         <div className='task__left'>
           <CustomInput
             customClass={'mb-tiny'}
-            value={task.taskName}
+            value={task.name}
             placeholder='Task Name'
             onChange={handleTaskChange}
-            name='taskName'
+            name='name'
             label='Task Name'
           />
           <CustomInput
@@ -107,10 +119,10 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
           />
           <CustomSelect
             customClass={'mb-tiny'}
-            value={task.priority}
+            value={task.taskPriority}
             options={TASK_PRIORITIES}
             onChange={handleTaskChange}
-            name='priority'
+            name='taskPriority'
             label='Task Priority'
           />
           <CustomTextarea
@@ -151,7 +163,9 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
         </div>
       </div>
       <div className='separate-line'></div>
-      <div className='footer-buttons'>{/* <CustomButton text='Save' onClick={() => {}} color='success' /> */}</div>
+      <div className='footer-buttons'>
+        <CustomButton text='Save' onClick={onSaveClick} color='success' />
+      </div>
     </>
   )
 }

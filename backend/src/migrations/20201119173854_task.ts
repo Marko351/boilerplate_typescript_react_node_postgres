@@ -14,6 +14,8 @@ export async function up(knex: Knex): Promise<void> {
       table.timestamp('due_date').notNullable()
       table.integer('task_priority')
       table.text('description')
+      table.boolean('is_completed')
+      table.timestamp('completion_date')
     })
   }
 }

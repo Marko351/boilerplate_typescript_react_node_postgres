@@ -6,22 +6,17 @@ interface UserDataI {
   id: number
 }
 
-export const generateJwtToken = (user: Partial<UserDataI>, res: Response) =>
-  new Promise((resolve, reject) => {
-    if (!user) {
-      reject(new Error())
-    }
-    const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || 'thisWillChange', {
-      expiresIn: process.env.EXPIRATION,
-    })
-    resolve(
-      res
-        .cookie('token', token, {
-          expires: new Date(Date.now() + 604800),
-          secure: false, // set to true if using https
-          httpOnly: true,
-        })
-        .status(HTTP_OK)
-        .json({ token }),
-    )
+export const generateJwtToken = (user: Partial<UserDataI>, res: Response) => {
+  if (!user) {
+    throw new Error()
+  }
+  const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET || 'thisWillChange', {
+    expiresIn: process.env.EXPIRATION,
   })
+  res.cookie('token', token, {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    secure: false, // set to true if using https
+    httpOnly: true,
+  })
+  res.status(HTTP_OK).json({ token })
+}
