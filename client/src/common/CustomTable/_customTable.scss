@@ -1,0 +1,48 @@
+.paginator {
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+  margin: 1rem;
+
+  &__arrow {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    display: inline-flex;
+    background: transparent;
+    border: none;
+    fill: $color-tertiary;
+
+    &:focus {
+      outline: none;
+    }
+
+    &--left {
+      margin-left: 2rem;
+    }
+  }
+
+  &__limit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &--info {
+      display: flex;
+      align-items: center;
+      margin-left: 1rem;
+
+      & > span {
+        margin-right: 0.5rem;
+      }
+    }
+
+    &--options {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
