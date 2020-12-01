@@ -9,7 +9,6 @@ import { CustomTextarea } from '../../common/CustomTextarea/CustomTextarea'
 import { ChecklistItem } from './ChecklistItem'
 import { ProgressBar } from './ProgressBar'
 import { Comment } from '../Comments/Comment'
-import { CustomTable } from '../../common/CustomTable/CustomTable'
 
 import { TASK_PRIORITIES } from '../../constants/constants'
 import { RootState } from '../../redux/reducers'
@@ -97,7 +96,6 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
 
   return (
     <>
-      <CustomTable />
       <div className='task'>
         <div className='task__left'>
           <CustomInput

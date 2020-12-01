@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import ReactDataGrid from '@inovua/reactdatagrid-community'
+import { TypeColumn } from '@inovua/reactdatagrid-community/types'
 import '@inovua/reactdatagrid-community/index.css'
 import 'react-virtualized/styles.css'
 
@@ -12,28 +13,20 @@ export const DEFAULT_SKIP = 0
 export const DEFAULT_PAGE = 1
 export const LIMIT_OPTIONS = [5, 10, 15, 50]
 
-const columns = [
-  { name: 'name', header: 'Name', minWidth: 100, defaultFlex: 1 },
-  { name: 'age', header: 'Age', minWidth: 100, defaultFlex: 1 },
-]
+type Data = {
+  [key: string]: string | number
+}
+interface TableProps {
+  data: Data[]
+  gridStyle?:
+    | {
+        [key: string]: React.ReactText
+      }
+    | undefined
+  columns: TypeColumn[]
+}
 
-const gridStyle = { minHeight: 500 }
-
-const data = [
-  { id: 1, name: 'John McQueen', age: 35 },
-  { id: 2, name: 'Mary Stones', age: 25 },
-  { id: 3, name: 'Robert Fil', age: 27 },
-  { id: 4, name: 'Roger Robson', age: 81 },
-  { id: 5, name: 'Billary Konwik', age: 18 },
-  { id: 6, name: 'Bob Martin', age: 18 },
-  { id: 7, name: 'Matthew Richardson', age: 54 },
-  { id: 8, name: 'Ritchie Peterson', age: 54 },
-  { id: 9, name: 'Bryan Martin', age: 40 },
-  { id: 10, name: 'Matthew Richardson', age: 54 },
-  { id: 11, name: 'Ritchie Peterson', age: 54 },
-  { id: 12, name: 'Bryan Martin', age: 40 },
-]
-export const CustomTable: React.FC = () => {
+export const CustomTable: React.FC<TableProps> = ({ data, gridStyle, columns }) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
   const [page, setPage] = useState(DEFAULT_PAGE)
   const [skip, setSkip] = useState(DEFAULT_SKIP)
@@ -41,7 +34,6 @@ export const CustomTable: React.FC = () => {
 
   const onSkipChange = useCallback(
     (amount, type) => {
-      console.log(skip, amount)
       if (type === 1) {
         setSkip(skip - amount)
         setPage(page - 1)
@@ -54,10 +46,10 @@ export const CustomTable: React.FC = () => {
     [skip, page],
   )
 
-  // const onLimitChange = (amount: number) => {
-  //   setSkip(skip + amount)
-  //   console.log(amount)
-  // }
+  const onLimitChange = (amount: number) => {
+    setLimit(amount)
+    setLimitUpdateOpen(false)
+  }
 
   const paginationToolbar = () => {
     return (
@@ -71,7 +63,7 @@ export const CustomTable: React.FC = () => {
           disabled={skip === 0}>
           <ArrowLeft />
         </button>
-        Page {page}
+        <span className='paginator__page'>Page {page}</span>
         <button
           className='paginator__arrow'
           onClick={() => onSkipChange(limit, 2)}
@@ -88,7 +80,9 @@ export const CustomTable: React.FC = () => {
           {limitUpdateOpen && (
             <div className='paginator__limit--options'>
               {LIMIT_OPTIONS.map((option) => (
-                <span key={option}>{option}</span>
+                <span key={option} onClick={() => onLimitChange(option)} role='button' tabIndex={option}>
+                  {option}
+                </span>
               ))}
             </div>
           )}
