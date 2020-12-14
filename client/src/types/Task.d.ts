@@ -1,4 +1,4 @@
-import { ADD_NEW_TASK, COMPLETE_TASK } from '../components/Tasks/redux/reduxTypes'
+import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS } from '../components/Tasks/redux/reduxTypes'
 
 export interface TAddNewTask {
   type: typeof ADD_NEW_TASK
@@ -10,7 +10,12 @@ export interface TCompleteTask {
   payload: number
 }
 
-export type TAllReduxTypes = TAddNewTask | TCompleteTask
+export interface TGetAllTasks {
+  type: typeof GET_ALL_TASKS
+  payload: ITask[]
+}
+
+export type TAllReduxTypes = TAddNewTask | TCompleteTask | TGetAllTasks
 
 export interface ITask {
   id?: number | null

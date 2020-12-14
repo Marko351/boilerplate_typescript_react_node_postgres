@@ -11,3 +11,8 @@ export interface ITask {
 }
 
 type TTaskPriorities = typeof LOW | typeof HIGH | typeof MIDDLE
+
+export interface IGetAllTaskOptions {
+  limit: number
+  skip: number
+}

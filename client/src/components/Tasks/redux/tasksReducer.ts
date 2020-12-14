@@ -1,5 +1,5 @@
 import { ITask, TAllReduxTypes } from '../../../types/Task'
-import { ADD_NEW_TASK, COMPLETE_TASK } from './reduxTypes'
+import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS } from './reduxTypes'
 
 export type TStateTasks = {
   tasks: Array<ITask>
@@ -17,6 +17,11 @@ export const tasksReducer = (state = initialState, action: TAllReduxTypes): TSta
       return {
         ...state,
         tasks: [...state.tasks, action.payload],
+      }
+    case GET_ALL_TASKS:
+      return {
+        ...state,
+        tasks: action.payload,
       }
     case COMPLETE_TASK:
       return {

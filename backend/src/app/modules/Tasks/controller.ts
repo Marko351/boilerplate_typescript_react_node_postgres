@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import Joi from 'joi'
 
 import { HTTP_OK } from '../../constants/HTTPStatusCode'
-import { ITask } from './Task'
+import { ITask, IGetAllTaskOptions } from './Task'
 import { TasksRepository } from './repository'
 import { returnFormattedValidationError } from '../../helpers/formattedError'
 import { ChecklistRepository } from '../Checklists'
@@ -114,6 +114,23 @@ class TaskController {
       next()
     } catch (err) {
       returnFormattedValidationError(err, res)
+    }
+  }
+
+  async getAllTasks(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { limit, skip } = req.query
+      const options = {
+        limit: Number(limit),
+        skip: Number(skip),
+      }
+      const optionsParsed = (options as unknown) as IGetAllTaskOptions
+      const response = await this.repo.getAllTasks(optionsParsed, req.userData.userId!)
+      // console.log(response)
+      res.status(HTTP_OK).json(response)
+    } catch (err) {
+      console.log(err)
+      next(err)
     }
   }
 }

@@ -7,26 +7,28 @@ import 'react-virtualized/styles.css'
 import { ReactComponent as ArrowDown } from '../../assets/icons/arrow-down.svg'
 import { ReactComponent as ArrowLeft } from '../../assets/icons/left-arrow.svg'
 import { ReactComponent as ArrowRight } from '../../assets/icons/right-arrow.svg'
+import { ITask } from '../../types/Task'
 
 export const DEFAULT_LIMIT = 5
 export const DEFAULT_SKIP = 0
 export const DEFAULT_PAGE = 1
 export const LIMIT_OPTIONS = [5, 10, 15, 50]
 
-type Data = {
-  [key: string]: string | number
-}
+// interface Data<T> {
+//   [key: string]: string | number | null | boolean | undefined
+// }
 interface TableProps {
-  data: Data[]
+  data: ITask[]
   gridStyle?:
     | {
         [key: string]: React.ReactText
       }
     | undefined
   columns: TypeColumn[]
+  onSkipAndLimitChange?: (name: string, value: number) => void
 }
 
-export const CustomTable: React.FC<TableProps> = ({ data, gridStyle, columns }) => {
+export const CustomTable: React.FC<TableProps> = ({ data, gridStyle, columns, onSkipAndLimitChange }) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
   const [page, setPage] = useState(DEFAULT_PAGE)
   const [skip, setSkip] = useState(DEFAULT_SKIP)
@@ -37,16 +39,19 @@ export const CustomTable: React.FC<TableProps> = ({ data, gridStyle, columns }) 
       if (type === 1) {
         setSkip(skip - amount)
         setPage(page - 1)
+        onSkipAndLimitChange && onSkipAndLimitChange('skip', skip - amount)
       }
       if (type === 2) {
         setSkip(skip + amount)
         setPage(page + 1)
+        onSkipAndLimitChange && onSkipAndLimitChange('skip', skip + amount)
       }
     },
     [skip, page],
   )
 
   const onLimitChange = (amount: number) => {
+    onSkipAndLimitChange && onSkipAndLimitChange('limit', amount)
     setLimit(amount)
     setLimitUpdateOpen(false)
   }
