@@ -1,5 +1,6 @@
 .custom-calendar {
   font-size: 1.6rem;
+  height: calc(100vh - 13.5rem);
 
   &--checkbox-container {
     display: flex;
@@ -11,5 +12,4 @@
     padding: 1rem 1.5rem;
     cursor: pointer;
   }
-
 }

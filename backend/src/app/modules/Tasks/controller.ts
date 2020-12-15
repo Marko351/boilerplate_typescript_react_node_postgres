@@ -120,12 +120,11 @@ class TaskController {
   async getAllTasks(req: Request, res: Response, next: NextFunction) {
     try {
       const { limit, skip } = req.query
-      const options = {
-        limit: Number(limit),
-        skip: Number(skip),
+      const options: IGetAllTaskOptions = {
+        limit: Number(limit) || 0,
+        skip: Number(skip) || 0,
       }
-      const optionsParsed = (options as unknown) as IGetAllTaskOptions
-      const response = await this.repo.getAllTasks(optionsParsed, req.userData.userId!)
+      const response = await this.repo.getAllTasks(options, req.userData.userId!)
       // console.log(response)
       res.status(HTTP_OK).json(response)
     } catch (err) {

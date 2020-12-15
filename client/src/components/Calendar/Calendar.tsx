@@ -25,7 +25,7 @@ export const CustomCalendar: React.FC<CalendarProps> = ({ events, onSelectEvent,
       endAccessor='scheduled_at'
       onSelectEvent={onSelectEvent}
       eventPropGetter={eventPropGetterConfig}
-      style={{ height: '70rem' }}
+      // style={{ height: '70rem' }}
     />
   )
 }

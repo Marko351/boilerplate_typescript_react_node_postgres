@@ -1,7 +1,7 @@
 .navbar {
   background-color: $color-tertiary;
   padding: 1rem;
-  height: auto;
+  height: $navbar-height;
   color: $color-gray;
 
   &__wrapper {

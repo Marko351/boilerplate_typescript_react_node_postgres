@@ -10,8 +10,8 @@ export const Homepage: React.FC = () => {
   return (
     <>
       <Switch>
-        <Route path='/event' component={EventsContainer} />
-        <Route path='/task' component={TaskTable} />
+        <Route path='/events' component={EventsContainer} />
+        <Route path='/tasks' component={TaskTable} />
         <Route path='/' component={CalendarContainer} />
       </Switch>
     </>

@@ -10,7 +10,7 @@ import { ChecklistItem } from './ChecklistItem'
 import { ProgressBar } from './ProgressBar'
 import { Comment } from '../Comments/Comment'
 
-import { TASK_PRIORITIES } from '../../constants/constants'
+import { TASK_PRIORITIES } from '../../constants/taskConstants'
 import { RootState } from '../../redux/reducers'
 import { addNewTask, toggleComplete } from './redux/taskActions'
 import { IChecklist, ITask } from '../../types/Task'

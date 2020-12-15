@@ -14,7 +14,7 @@ export const addNewTask = (data: ITask): AppThunk<void> => async (dispatch) => {
 }
 
 export const getAllTasks = (options: any): AppThunk<void> => async (dispatch) => {
-  const response = await axios.get('/tasks', { params: options })
+  const response = await axios.get('/tasks', { params: options, withCredentials: true })
   dispatch({ type: GET_ALL_TASKS, payload: response.data })
 }
 

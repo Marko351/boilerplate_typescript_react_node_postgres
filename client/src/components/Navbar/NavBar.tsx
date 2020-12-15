@@ -16,7 +16,7 @@ export const NavBar: React.FC = () => {
 
   return (
     <div className='navbar'>
-      <div className='navbar__wrapper wrapper'>
+      <div className='navbar__wrapper'>
         <div className='navbar__wrapper--first-box'>
           <div className='logo'>
             <div className='logo__box'>
@@ -31,11 +31,11 @@ export const NavBar: React.FC = () => {
               <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/home'>
                 Home
               </NavLink>
-              <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/task'>
-                Add Task
+              <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/tasks'>
+                Tasks
               </NavLink>
-              <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/event'>
-                Add Event
+              <NavLink className='navbar__link' activeClassName='navbar__link--active' to='/events'>
+                Events
               </NavLink>
             </>
           )}

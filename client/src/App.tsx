@@ -26,7 +26,6 @@ if (token) {
 }
 
 axios.defaults.baseURL = 'http://localhost:5000/api/v1'
-axios.defaults.withCredentials = true
 if (process.env.REACT_APP_ENV === 'qa') {
   axios.defaults.baseURL = '/api/v1'
 }

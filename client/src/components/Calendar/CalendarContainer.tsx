@@ -39,20 +39,20 @@ const CalendarContainerDefault: React.FC<CalendarProps> = () => {
   }
 
   return (
-    <div className='wrapper custom-calendar'>
-      <CustomCard headerText='calendar'>
-        <div className='custom-calendar--checkbox-container'>
-          <CalendarCheckbox
-            customClass='mr-small'
-            name='tasks'
-            value={filters.tasks}
-            onChange={handleFiltersChange}
-            label='Tasks'
-          />
-          <CalendarCheckbox name='events' value={filters.events} onChange={handleFiltersChange} label='Events' />
-        </div>
-        <CustomCalendar events={[]} onSelectEvent={''} eventPropGetterConfig={eventPropGetterConfig} />
-      </CustomCard>
+    <div className='wrapper custom-calendar mt-middle'>
+      {/* <CustomCard headerText='calendar'> */}
+      <div className='custom-calendar--checkbox-container'>
+        <CalendarCheckbox
+          customClass='mr-small'
+          name='tasks'
+          value={filters.tasks}
+          onChange={handleFiltersChange}
+          label='Tasks'
+        />
+        <CalendarCheckbox name='events' value={filters.events} onChange={handleFiltersChange} label='Events' />
+      </div>
+      <CustomCalendar events={[]} onSelectEvent={''} eventPropGetterConfig={eventPropGetterConfig} />
+      {/* </CustomCard> */}
     </div>
   )
 }
