@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
+import { NavLink, RouteComponentProps } from 'react-router-dom'
 
 import { getAllTasks } from './redux/taskActions'
 import { RootState } from '../../redux/reducers'
@@ -11,10 +12,9 @@ import { CustomCard } from '../../common/CustomCard/CustomCard'
 import { CustomTable, DEFAULT_LIMIT, DEFAULT_SKIP } from '../../common/CustomTable/CustomTable'
 import { getTaskPriority } from '../../constants/taskConstants'
 
-// const data = [
-//   // { id: 1, name: 'John McQueen', age: 35 },
-// ]
-export const TaskTable: React.FC = () => {
+type ITaskTable = RouteComponentProps
+
+export const TaskTable: React.FC<ITaskTable> = ({ history }) => {
   const dispatch = useDispatch()
   const TaskReducer = useSelector<RootState, TStateTasks>((state) => state.tasksReducer)
   const [data, setData] = useState<ITask[]>([])
@@ -22,7 +22,6 @@ export const TaskTable: React.FC = () => {
     limit: DEFAULT_LIMIT,
     skip: DEFAULT_SKIP,
   })
-
   useEffect(() => {
     if (TaskReducer.tasks.length) {
       setData(TaskReducer.tasks)
@@ -49,7 +48,7 @@ export const TaskTable: React.FC = () => {
   }
 
   const dateBody = (rowData: any, name: string) => {
-    return moment(rowData.data[name]).utc().local().format('MM-DD-YYYY hh:mm A')
+    return moment(rowData.data[name]).utc().local().format('MM-DD-YYYY')
   }
 
   const priorityBody = (rowData: any) => {
@@ -60,8 +59,20 @@ export const TaskTable: React.FC = () => {
     return rowData.data.createdByObj.username
   }
 
+  const nameBody = (rowData: any) => {
+    return (
+      <NavLink to={`/tasks/${rowData.data.id}`} className='color-link'>
+        {rowData.data.name}
+      </NavLink>
+    )
+  }
+
+  const onCreateNewTaskClick = () => {
+    history.push('/tasks/new')
+  }
+
   const columns = [
-    { name: 'name', header: 'Name', minWidth: 100, defaultFlex: 1 },
+    { name: 'name', header: 'Name', minWidth: 100, defaultFlex: 1, render: nameBody },
     {
       name: 'creationDate',
       header: 'Creation Date',
@@ -82,7 +93,11 @@ export const TaskTable: React.FC = () => {
   ]
   return (
     <div className='wrapper'>
-      <CustomCard headerText='Task Table'>
+      <CustomCard
+        headerText='Task Table'
+        isButtonShowed={true}
+        buttonText={'Create New Task'}
+        onButtonClick={onCreateNewTaskClick}>
         <CustomTable columns={columns} data={data} onSkipAndLimitChange={onSkipAndLimitChange} />
       </CustomCard>
     </div>

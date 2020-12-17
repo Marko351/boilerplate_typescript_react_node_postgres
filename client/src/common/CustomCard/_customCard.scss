@@ -6,10 +6,17 @@
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     height: auto;
-    background-color: $color-secondary;
-    font-size: 1.6rem;
-    color: $color-grayDarkest;
-    font-weight: 600;
+    background-color: $color-grayDark;
+    display: grid;
+    grid-gap: auto;
+    grid-template-columns: 1fr minmax(15rem, 15rem);
+    align-items: center;
+
+    &--text {
+      color: $color-dark;
+      font-weight: 600;
+      font-size: 1.6rem;
+    }
   }
 
   &__body {

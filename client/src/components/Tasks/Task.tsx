@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState, useEffect } from 'react'
-import { connect, ConnectedProps } from 'react-redux'
+import { useDispatch, useSelector, ConnectedProps } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
+import { RouteComponentProps } from 'react-router-dom'
 
 import { CustomButton } from '../../common/CustomButton/CustomButton'
 import { CustomInput } from '../../common/CustomInput/CustomInput'
@@ -12,23 +13,22 @@ import { Comment } from '../Comments/Comment'
 
 import { TASK_PRIORITIES } from '../../constants/taskConstants'
 import { RootState } from '../../redux/reducers'
-import { addNewTask, toggleComplete } from './redux/taskActions'
+import { addNewTask, getTask } from './redux/taskActions'
 import { IChecklist, ITask } from '../../types/Task'
+import { TStateComments } from '../Comments/redux/commentReducer'
+import { CustomCard } from '../../common/CustomCard/CustomCard'
 
-const mapStateToProps = (state: RootState) => ({
-  tasksReducer: state.tasksReducer,
-  commentsReducer: state.commentsReducer,
-})
+interface MatchParams {
+  id: string
+}
 
-const connector = connect(mapStateToProps, { addNewTask, toggleComplete })
-
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-type TasksProps = PropsFromRedux
+type ITaskProps = RouteComponentProps<MatchParams>
 
 type Checklists = IChecklist[]
 
-const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask, toggleComplete, commentsReducer }) => {
+export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
+  const dispatch = useDispatch()
+  const commentsReducer = useSelector<RootState, TStateComments>((state) => state.commentsReducer)
   const [task, setTask] = useState<ITask>({
     id: null,
     name: '',
@@ -41,8 +41,19 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
   const [progressValue, setProgressValue] = useState(0)
 
   useEffect(() => {
+    if (match.params.id) {
+      loadData()
+    }
+  }, [])
+
+  useEffect(() => {
     getProgressValue()
   }, [checklists])
+
+  const loadData = async () => {
+    const numId = +match.params.id
+    await dispatch(getTask(numId))
+  }
 
   const getProgressValue = () => {
     let count = 0
@@ -91,81 +102,81 @@ const TasksComponentDefault: React.FC<TasksProps> = ({ tasksReducer, addNewTask,
       dueDate: task.dueDate,
       taskPriority: task.taskPriority,
     }
-    await addNewTask(taskData)
+    await dispatch(addNewTask(taskData))
   }
 
   return (
-    <>
-      <div className='task'>
-        <div className='task__left'>
-          <CustomInput
-            customClass={'mb-tiny'}
-            value={task.name}
-            placeholder='Task Name'
-            onChange={handleTaskChange}
-            name='name'
-            label='Task Name'
-          />
-          <CustomInput
-            customClass={'mb-tiny'}
-            type='date'
-            placeholder='Due Date'
-            value={task.dueDate}
-            onChange={handleTaskChange}
-            name='dueDate'
-            label='Due Date'
-          />
-          <CustomSelect
-            customClass={'mb-tiny'}
-            value={task.taskPriority}
-            options={TASK_PRIORITIES}
-            onChange={handleTaskChange}
-            name='taskPriority'
-            label='Task Priority'
-          />
-          <CustomTextarea
-            customClass={'mb-tiny'}
-            value={task.description}
-            onChange={handleTaskChange}
-            placeholder='Description'
-            name='description'
-            label='Description'
-          />
-          <div className='task__checklists'>
-            <span className='task__checklists--label'>Checklist</span>
-            <ProgressBar value={progressValue} />
-            {checklists.map((checklistItem, index) => {
-              const id = checklistItem.id! || checklistItem.uuid!
-              return (
-                <ChecklistItem
-                  key={id}
-                  id={id}
-                  isCompleted={checklistItem.isCompleted}
-                  description={checklistItem.description}
-                  onChangeChecklistDesc={onChangeChecklistDesc}
-                  index={index}
-                  onDeleteChecklistItem={onDeleteChecklistItem}
-                />
-              )
-            })}
-            <CustomButton
-              customClassName={`${checklists.length ? 'mt-tiny' : ''} d-block`}
-              text='Add Checklist Item'
-              onClick={onAddCheckList}
-              color='primary'
+    <div className='wrapper'>
+      <CustomCard headerText='Create Task' isButtonShowed={false}>
+        <div className='task'>
+          <div className='task__left'>
+            <CustomInput
+              customClass={'mb-tiny'}
+              value={task.name}
+              placeholder='Task Name'
+              onChange={handleTaskChange}
+              name='name'
+              label='Task Name'
             />
+            <CustomInput
+              customClass={'mb-tiny'}
+              type='date'
+              placeholder='Due Date'
+              value={task.dueDate}
+              onChange={handleTaskChange}
+              name='dueDate'
+              label='Due Date'
+            />
+            <CustomSelect
+              customClass={'mb-tiny'}
+              value={task.taskPriority}
+              options={TASK_PRIORITIES}
+              onChange={handleTaskChange}
+              name='taskPriority'
+              label='Task Priority'
+            />
+            <CustomTextarea
+              customClass={'mb-tiny'}
+              value={task.description}
+              onChange={handleTaskChange}
+              placeholder='Description'
+              name='description'
+              label='Description'
+            />
+            <div className='task__checklists'>
+              <span className='task__checklists--label'>Checklist</span>
+              <ProgressBar value={progressValue} />
+              {checklists.map((checklistItem, index) => {
+                const id = checklistItem.id! || checklistItem.uuid!
+                return (
+                  <ChecklistItem
+                    key={id}
+                    id={id}
+                    isCompleted={checklistItem.isCompleted}
+                    description={checklistItem.description}
+                    onChangeChecklistDesc={onChangeChecklistDesc}
+                    index={index}
+                    onDeleteChecklistItem={onDeleteChecklistItem}
+                  />
+                )
+              })}
+              <CustomButton
+                customClassName={`${checklists.length ? 'mt-tiny' : ''} d-block`}
+                text='Add Checklist Item'
+                onClick={onAddCheckList}
+                color='primary'
+              />
+            </div>
+          </div>
+          <div className='task__right'>
+            <Comment comments={commentsReducer.comments} />
           </div>
         </div>
-        <div className='task__right'>
-          <Comment comments={commentsReducer.comments} />
+        <div className='separate-line'></div>
+        <div className='footer-buttons'>
+          <CustomButton text='Save' onClick={onSaveClick} color='success' />
         </div>
-      </div>
-      <div className='separate-line'></div>
-      <div className='footer-buttons'>
-        <CustomButton text='Save' onClick={onSaveClick} color='success' />
-      </div>
-    </>
+      </CustomCard>
+    </div>
   )
 }
-
-export const TaskComponent = connector(TasksComponentDefault)

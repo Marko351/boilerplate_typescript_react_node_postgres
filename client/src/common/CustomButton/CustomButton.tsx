@@ -1,9 +1,9 @@
 import React from 'react'
 
 interface CustomButtonProps {
-  text: string
-  onClick: () => void
-  color: string
+  text?: string
+  onClick?: () => void
+  color?: string
   customClassName?: string
 }
 

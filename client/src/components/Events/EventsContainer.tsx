@@ -5,7 +5,7 @@ import { EventsComponent } from './Events'
 export const EventsContainer: React.FC = () => {
   return (
     <div className='wrapper'>
-      <CustomCard headerText='Create Event'>
+      <CustomCard headerText='Create Event' isButtonShowed={false}>
         <EventsComponent />
       </CustomCard>
     </div>

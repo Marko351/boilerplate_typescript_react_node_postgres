@@ -19,20 +19,21 @@ export const LIMIT_OPTIONS = [5, 10, 15, 50]
 // }
 interface TableProps {
   data: ITask[]
-  gridStyle?:
-    | {
-        [key: string]: React.ReactText
-      }
-    | undefined
+  // gridStyle?:
+  //   | {
+  //       [key: string]: React.ReactText
+  //     }
+  //   | undefined
   columns: TypeColumn[]
   onSkipAndLimitChange?: (name: string, value: number) => void
 }
 
-export const CustomTable: React.FC<TableProps> = ({ data, gridStyle, columns, onSkipAndLimitChange }) => {
+export const CustomTable: React.FC<TableProps> = ({ data, columns, onSkipAndLimitChange }) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
   const [page, setPage] = useState(DEFAULT_PAGE)
   const [skip, setSkip] = useState(DEFAULT_SKIP)
   const [limitUpdateOpen, setLimitUpdateOpen] = useState(false)
+  const [gridStyle, setGridStyle] = useState({ minHeight: 240 })
 
   const onSkipChange = useCallback(
     (amount, type) => {
