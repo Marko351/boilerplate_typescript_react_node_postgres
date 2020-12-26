@@ -12,6 +12,7 @@ import { ITask } from '../../types/Task'
 export const DEFAULT_LIMIT = 5
 export const DEFAULT_SKIP = 0
 export const DEFAULT_PAGE = 1
+export const DEFAULT_TOTAL_RECORDS = 5
 export const LIMIT_OPTIONS = [5, 10, 15, 50]
 
 // interface Data<T> {
@@ -25,10 +26,11 @@ interface TableProps {
   //     }
   //   | undefined
   columns: TypeColumn[]
+  totalRecords: number
   onSkipAndLimitChange?: (name: string, value: number) => void
 }
 
-export const CustomTable: React.FC<TableProps> = ({ data, columns, onSkipAndLimitChange }) => {
+export const CustomTable: React.FC<TableProps> = ({ data, columns, onSkipAndLimitChange, totalRecords }) => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT)
   const [page, setPage] = useState(DEFAULT_PAGE)
   const [skip, setSkip] = useState(DEFAULT_SKIP)
@@ -55,13 +57,18 @@ export const CustomTable: React.FC<TableProps> = ({ data, columns, onSkipAndLimi
     onSkipAndLimitChange && onSkipAndLimitChange('limit', amount)
     setLimit(amount)
     setLimitUpdateOpen(false)
+    if (amount === 5) {
+      setGridStyle({ minHeight: 200 + 39 })
+    } else {
+      setGridStyle({ minHeight: (data.length + 1) * 40 + 39 })
+    }
   }
 
   const paginationToolbar = () => {
     return (
       <div className='paginator'>
         <span className='text-muted'>
-          {skip} to {skip + limit} of {data.length}
+          {skip} to {skip + limit} of {totalRecords || DEFAULT_TOTAL_RECORDS}
         </span>
         <button
           className='paginator__arrow paginator__arrow--left'
@@ -73,7 +80,7 @@ export const CustomTable: React.FC<TableProps> = ({ data, columns, onSkipAndLimi
         <button
           className='paginator__arrow'
           onClick={() => onSkipChange(limit, 2)}
-          disabled={data.length <= skip + limit}>
+          disabled={(totalRecords || DEFAULT_TOTAL_RECORDS) <= skip + limit}>
           <ArrowRight />
         </button>
         <span className='paginator__limit'>
@@ -105,8 +112,6 @@ export const CustomTable: React.FC<TableProps> = ({ data, columns, onSkipAndLimi
         dataSource={data}
         style={gridStyle}
         pagination
-        limit={limit}
-        skip={skip}
         renderPaginationToolbar={() => null}
       />
       {paginationToolbar()}

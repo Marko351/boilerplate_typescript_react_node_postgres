@@ -18,7 +18,7 @@ class TasksRepository extends BaseRepository {
         'tasks.name',
         'tasks.task_priority',
         this.knex.raw(`
-          to_json(json_build_object('username', users.username)) as created_by_obj
+        to_json(json_build_object('username', users.username)) as created_by_obj
         `),
       ])
       .joinRaw(joins)
@@ -26,7 +26,18 @@ class TasksRepository extends BaseRepository {
       .orderBy([{ column: 'creation_date', order: 'desc' }])
       .limit(options.limit)
       .offset(options.skip)
-    return data
+
+    const count: any = await this.knex(this.tableName).count('*').first()
+
+    // console.log(count)
+    return {
+      data,
+      options: {
+        totalRecords: count.count,
+        limit: options.limit,
+        skip: options.skip,
+      },
+    }
   }
 }
 

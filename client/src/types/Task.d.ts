@@ -1,4 +1,11 @@
-import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS, GET_TASK } from '../components/Tasks/redux/reduxTypes'
+import {
+  ADD_NEW_TASK,
+  COMPLETE_TASK,
+  GET_ALL_TASKS,
+  GET_TASK,
+  CLEAR_ALL_DATA,
+} from '../components/Tasks/redux/reduxTypes'
+import { ITableOptions } from './Table'
 
 export interface TAddNewTask {
   type: typeof ADD_NEW_TASK
@@ -12,7 +19,10 @@ export interface TCompleteTask {
 
 export interface TGetAllTasks {
   type: typeof GET_ALL_TASKS
-  payload: ITask[]
+  payload: {
+    data: ITask[]
+    options: ITableOptions
+  }
 }
 
 export interface TGetTask {
@@ -20,7 +30,11 @@ export interface TGetTask {
   payload: ITask
 }
 
-export type TAllReduxTypes = TAddNewTask | TCompleteTask | TGetAllTasks | TGetTask
+export interface IClearAllTaskData {
+  type: typeof CLEAR_ALL_DATA
+}
+
+export type TAllReduxTypes = TAddNewTask | TCompleteTask | TGetAllTasks | TGetTask | IClearAllTaskData
 
 export interface ITask {
   id?: number | null

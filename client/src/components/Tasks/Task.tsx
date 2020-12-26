@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState, useEffect } from 'react'
 import { useDispatch, useSelector, ConnectedProps } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 import { RouteComponentProps } from 'react-router-dom'
+import moment from 'moment'
 
 import { CustomButton } from '../../common/CustomButton/CustomButton'
 import { CustomInput } from '../../common/CustomInput/CustomInput'
@@ -13,10 +14,11 @@ import { Comment } from '../Comments/Comment'
 
 import { TASK_PRIORITIES } from '../../constants/taskConstants'
 import { RootState } from '../../redux/reducers'
-import { addNewTask, getTask } from './redux/taskActions'
+import { addNewTask, getTask, clearAllTaskData } from './redux/taskActions'
 import { IChecklist, ITask } from '../../types/Task'
 import { TStateComments } from '../Comments/redux/commentReducer'
 import { CustomCard } from '../../common/CustomCard/CustomCard'
+import { TStateTasks } from './redux/tasksReducer'
 
 interface MatchParams {
   id: string
@@ -29,6 +31,7 @@ type Checklists = IChecklist[]
 export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
   const dispatch = useDispatch()
   const commentsReducer = useSelector<RootState, TStateComments>((state) => state.commentsReducer)
+  const TaskReducer = useSelector<RootState, TStateTasks>((state) => state.tasksReducer)
   const [task, setTask] = useState<ITask>({
     id: null,
     name: '',
@@ -42,15 +45,28 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
 
   useEffect(() => {
     if (match.params.id) {
-      loadData()
+      getSingleTask()
+    }
+    return () => {
+      dispatch(clearAllTaskData())
     }
   }, [])
+
+  useEffect(() => {
+    if (Object.keys(TaskReducer.task).length) {
+      const newTaskData = {
+        ...TaskReducer.task,
+        dueDate: moment(TaskReducer.task.dueDate).utc().local().format('YYYY-MM-DD'),
+      }
+      setTask(newTaskData)
+    }
+  }, [TaskReducer.task])
 
   useEffect(() => {
     getProgressValue()
   }, [checklists])
 
-  const loadData = async () => {
+  const getSingleTask = async () => {
     const numId = +match.params.id
     await dispatch(getTask(numId))
   }
@@ -107,7 +123,7 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
 
   return (
     <div className='wrapper'>
-      <CustomCard headerText='Create Task' isButtonShowed={false}>
+      <CustomCard headerText={match.params.id ? 'Edit Task' : 'Create Task'} isButtonShowed={false}>
         <div className='task'>
           <div className='task__left'>
             <CustomInput

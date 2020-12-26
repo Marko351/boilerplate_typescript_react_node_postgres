@@ -1,10 +1,12 @@
+import { ITableOptions } from '../../../types/Table'
 import { ITask, TAllReduxTypes } from '../../../types/Task'
-import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS, GET_TASK } from './reduxTypes'
+import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS, GET_TASK, CLEAR_ALL_DATA } from './reduxTypes'
 
 export type TStateTasks = {
   task: ITask
   tasks: Array<ITask>
   isLoading: boolean
+  options: ITableOptions
 }
 
 const initialState: TStateTasks = {
@@ -16,10 +18,25 @@ const initialState: TStateTasks = {
   },
   tasks: [],
   isLoading: false,
+  options: {
+    totalRecords: 0,
+    limit: 0,
+    skip: 0,
+  },
 }
 
 export const tasksReducer = (state = initialState, action: TAllReduxTypes): TStateTasks => {
   switch (action.type) {
+    case CLEAR_ALL_DATA:
+      return {
+        ...state,
+        task: {
+          name: '',
+          description: '',
+          dueDate: '',
+          taskPriority: 0,
+        },
+      }
     case GET_TASK:
       return {
         ...state,
@@ -33,7 +50,8 @@ export const tasksReducer = (state = initialState, action: TAllReduxTypes): TSta
     case GET_ALL_TASKS:
       return {
         ...state,
-        tasks: action.payload,
+        tasks: action.payload.data,
+        options: action.payload.options,
       }
     case COMPLETE_TASK:
       return {

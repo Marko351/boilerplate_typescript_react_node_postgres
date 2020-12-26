@@ -10,11 +10,13 @@
     font-weight: 400;
     font-family: 'Open Sans', sans-serif;
     width: 100%;
-    color: $color-dark;
     border: 1px solid $color-grayDarkest;
     border-radius: 2px;
     padding: 0.7rem;
-    background-color: $color-grayLight;
+  }
+
+  select {
+    background-color: #fff;
   }
 
   &__input {

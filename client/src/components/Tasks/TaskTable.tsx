@@ -23,9 +23,7 @@ export const TaskTable: React.FC<ITaskTable> = ({ history }) => {
     skip: DEFAULT_SKIP,
   })
   useEffect(() => {
-    if (TaskReducer.tasks.length) {
-      setData(TaskReducer.tasks)
-    }
+    setData(TaskReducer.tasks)
   }, [TaskReducer.tasks])
 
   useEffect(() => {
@@ -98,7 +96,12 @@ export const TaskTable: React.FC<ITaskTable> = ({ history }) => {
         isButtonShowed={true}
         buttonText={'Create New Task'}
         onButtonClick={onCreateNewTaskClick}>
-        <CustomTable columns={columns} data={data} onSkipAndLimitChange={onSkipAndLimitChange} />
+        <CustomTable
+          columns={columns}
+          data={data}
+          onSkipAndLimitChange={onSkipAndLimitChange}
+          totalRecords={TaskReducer.options.totalRecords}
+        />
       </CustomCard>
     </div>
   )

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { ITask } from '../../../types/Task'
 import { AppThunk } from '../../../redux/reducers'
-import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS, GET_TASK } from './reduxTypes'
+import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS, GET_TASK, CLEAR_ALL_DATA } from './reduxTypes'
 
 export const addNewTask = (data: ITask): AppThunk<void> => async (dispatch) => {
   try {
@@ -12,6 +12,10 @@ export const addNewTask = (data: ITask): AppThunk<void> => async (dispatch) => {
     console.log(err)
   }
 }
+
+export const clearAllTaskData = () => ({
+  type: CLEAR_ALL_DATA,
+})
 
 export const getTask = (id: number): AppThunk<void> => async (dispatch) => {
   const response = await axios.get(`/tasks/${id}`)
