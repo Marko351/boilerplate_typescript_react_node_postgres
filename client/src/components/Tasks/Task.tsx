@@ -16,9 +16,9 @@ import { TASK_PRIORITIES } from '../../constants/taskConstants'
 import { RootState } from '../../redux/reducers'
 import { addNewTask, getTask, clearAllTaskData } from './redux/taskActions'
 import { IChecklist, ITask } from '../../types/Task'
-import { TStateComments } from '../Comments/redux/commentReducer'
 import { CustomCard } from '../../common/CustomCard/CustomCard'
 import { TStateTasks } from './redux/tasksReducer'
+import { getComments } from '../Comments/redux/commentActions'
 
 interface MatchParams {
   id: string
@@ -30,7 +30,6 @@ type Checklists = IChecklist[]
 
 export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
   const dispatch = useDispatch()
-  const commentsReducer = useSelector<RootState, TStateComments>((state) => state.commentsReducer)
   const TaskReducer = useSelector<RootState, TStateTasks>((state) => state.tasksReducer)
   const [task, setTask] = useState<ITask>({
     id: null,
@@ -45,7 +44,8 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
 
   useEffect(() => {
     if (match.params.id) {
-      getSingleTask()
+      dispatch(getTask(+match.params.id))
+      dispatch(getComments(+match.params.id, 'task'))
     }
     return () => {
       dispatch(clearAllTaskData())
@@ -54,11 +54,13 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
 
   useEffect(() => {
     if (Object.keys(TaskReducer.task).length) {
+      const { checklist, ...rest } = TaskReducer.task
       const newTaskData = {
-        ...TaskReducer.task,
-        dueDate: moment(TaskReducer.task.dueDate).utc().local().format('YYYY-MM-DD'),
+        ...rest,
+        dueDate: moment(rest.dueDate).utc().local().format('YYYY-MM-DD'),
       }
       setTask(newTaskData)
+      setChecklist(checklist)
     }
   }, [TaskReducer.task])
 
@@ -66,15 +68,10 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
     getProgressValue()
   }, [checklists])
 
-  const getSingleTask = async () => {
-    const numId = +match.params.id
-    await dispatch(getTask(numId))
-  }
-
   const getProgressValue = () => {
     let count = 0
     checklists.forEach((checklist) => {
-      if (checklist.isCompleted) count++
+      if (checklist.isDone) count++
     })
     setProgressValue(+((100 / checklists.length) * count).toFixed(2) || 0)
   }
@@ -86,7 +83,7 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
 
   const onAddCheckList = () => {
     const newItem = {
-      isCompleted: false,
+      isDone: false,
       description: '',
       uuid: uuidv4(),
     }
@@ -97,7 +94,7 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
     const { name, value, checked } = e.target
     const newChecklist = [...checklists]
     if (name === 'description') newChecklist[index][name] = value
-    if (name === 'isCompleted') newChecklist[index][name] = checked
+    if (name === 'isDone') newChecklist[index][name] = checked
     setChecklist(newChecklist)
   }
 
@@ -118,7 +115,7 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
       dueDate: task.dueDate,
       taskPriority: task.taskPriority,
     }
-    await dispatch(addNewTask(taskData))
+    await dispatch(addNewTask(taskData, checklists))
   }
 
   return (
@@ -168,7 +165,7 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
                   <ChecklistItem
                     key={id}
                     id={id}
-                    isCompleted={checklistItem.isCompleted}
+                    isDone={checklistItem.isDone}
                     description={checklistItem.description}
                     onChangeChecklistDesc={onChangeChecklistDesc}
                     index={index}
@@ -185,12 +182,12 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
             </div>
           </div>
           <div className='task__right'>
-            <Comment comments={commentsReducer.comments} />
+            <Comment taskId={task.id} />
           </div>
         </div>
         <div className='separate-line'></div>
         <div className='footer-buttons'>
-          <CustomButton text='Save' onClick={onSaveClick} color='success' />
+          <CustomButton text='Save' onClick={onSaveClick} color='primary' />
         </div>
       </CustomCard>
     </div>

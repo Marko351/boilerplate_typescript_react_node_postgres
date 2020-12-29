@@ -24,7 +24,7 @@ class TaskController {
     try {
       const { id } = req.params
       const parsedId = parseInt(id)
-      const response = await this.repo.getOne<ITask>(parsedId)
+      const response = await this.repo.getTask(parsedId)
       res.status(200).json(response)
     } catch (err) {
       console.log(err)
@@ -34,7 +34,7 @@ class TaskController {
 
   async createTasks(req: Request, res: Response, next: NextFunction) {
     try {
-      const { name, dueDate, taskPriority, description, checklists, comments } = req.body
+      const { name, dueDate, taskPriority, description, checklist, comments } = req.body
       const data = {
         name,
         dueDate,
@@ -42,13 +42,14 @@ class TaskController {
         description,
         createdBy: req.userData.userId,
       }
-      const response = await this.repo.create<ITask>(data)
-      if (checklists && checklists.length) {
-        for (let i = 0; i < checklists.length; i++) {
+      const responseTaskCreated = await this.repo.create<ITask>(data)
+      console.log(responseTaskCreated)
+      if (checklist && checklist.length) {
+        for (let i = 0; i < checklist.length; i++) {
           const checklistData = {
-            taskId: response[i].id,
-            isDone: checklists[i].isDone,
-            description: checklists[i].description,
+            taskId: responseTaskCreated[0].id,
+            isDone: checklist[0].isDone,
+            description: checklist[0].description,
           }
           await this.checklistRepo.create<IChecklist>(checklistData)
         }
@@ -56,13 +57,14 @@ class TaskController {
       if (comments && comments.length) {
         for (let i = 0; i < comments.length; i++) {
           const commentData = {
-            taskId: response[i].id,
-            comment: comments[i].comment,
+            taskId: responseTaskCreated[0].id,
+            comment: comments[0].comment,
             createdBy: req.userData.userId,
           }
           await this.commentRepo.create<IComment>(commentData)
         }
       }
+      const response = await this.repo.getTask(responseTaskCreated[0].id as number)
       res.status(HTTP_OK).json(response)
     } catch (err) {
       console.log(err)
@@ -109,6 +111,7 @@ class TaskController {
           }),
           taskPriority: Joi.number().allow('').allow(null),
           description: Joi.string().allow(''),
+          checklist: Joi.array(),
         })
       await schema.validateAsync(data)
       next()

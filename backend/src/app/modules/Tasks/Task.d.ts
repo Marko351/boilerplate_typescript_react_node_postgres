@@ -1,4 +1,5 @@
 import { HIGH, LOW, MIDDLE } from '../../constants/TaskPriorities'
+import { IChecklistTask } from '../Checklists/Checklist'
 
 export interface ITask {
   id?: number
@@ -8,6 +9,7 @@ export interface ITask {
   dueDate: string
   taskPriority?: TTaskPriorities
   description?: string
+  checklist?: IChecklistTask[]
 }
 
 type TTaskPriorities = typeof LOW | typeof HIGH | typeof MIDDLE

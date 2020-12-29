@@ -34,7 +34,7 @@ class BaseRepository {
     const response = (await this.knex(this.tableName)
       .insert(data)
       .returning(this.columns || '*')) as T[]
-    return response
+    return response[0] as T
   }
 
   async updateOne<T>(data: DataI, id: number) {

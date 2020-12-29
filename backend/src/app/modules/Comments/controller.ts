@@ -12,13 +12,26 @@ class CommentsController {
     this.repo = new CommentsRepository()
   }
 
+  async getAllComments(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id, reference } = req.query
+      console.log(req.query)
+      const response = await this.repo.getAllComments(+id!, reference as string)
+      res.status(HTTP_OK).json(response)
+    } catch (err) {
+      console.log(err)
+      next(err)
+    }
+  }
+
   async createComments(req: Request, res: Response, next: NextFunction) {
     try {
       const data = {
         ...req.body,
+        createdBy: req.userData.userId,
       }
-      await this.repo.create<IComment>(data)
-      res.status(HTTP_OK)
+      const response = await this.repo.create<IComment>(data)
+      res.status(HTTP_OK).json(response)
     } catch (err) {
       console.log(err)
       next(err)
@@ -60,6 +73,7 @@ class CommentsController {
             'string.empty': 'Comment description is required',
           }),
         })
+        .unknown(true)
       await schema.validateAsync(data)
       next()
     } catch (err) {

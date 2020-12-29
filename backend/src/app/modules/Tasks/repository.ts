@@ -7,6 +7,26 @@ class TasksRepository extends BaseRepository {
     this.tableName = 'tasks'
   }
 
+  async getTask(id: number) {
+    const data = await this.knex(this.tableName)
+      .select([
+        'tasks.*',
+        this.knex.raw(
+          `array_agg(
+            CASE WHEN checklists.is_done is NULL THEN
+             'null' ELSE
+            to_json(json_build_object('isDone', checklists.is_done, 'description', checklists.description))
+            END
+            ) as checklist`,
+        ),
+      ])
+      .joinRaw(`LEFT JOIN checklists ON checklists.task_id = ${id}`)
+      .where('tasks.id', id)
+      .groupBy('tasks.id')
+      .first()
+    return data
+  }
+
   async getAllTasks(options: IGetAllTaskOptions, userId: number) {
     const joins = 'LEFT JOIN users ON users.id = tasks.created_by'
     const data = await this.knex(this.tableName)

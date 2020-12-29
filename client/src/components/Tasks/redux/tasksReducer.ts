@@ -1,9 +1,9 @@
 import { ITableOptions } from '../../../types/Table'
-import { ITask, TAllReduxTypes } from '../../../types/Task'
+import { ITask, ITaskReducer, TAllReduxTypes } from '../../../types/Task'
 import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS, GET_TASK, CLEAR_ALL_DATA } from './reduxTypes'
 
 export type TStateTasks = {
-  task: ITask
+  task: ITaskReducer
   tasks: Array<ITask>
   isLoading: boolean
   options: ITableOptions
@@ -15,6 +15,8 @@ const initialState: TStateTasks = {
     description: '',
     dueDate: '',
     taskPriority: 0,
+    checklist: [],
+    comments: [],
   },
   tasks: [],
   isLoading: false,
@@ -35,6 +37,8 @@ export const tasksReducer = (state = initialState, action: TAllReduxTypes): TSta
           description: '',
           dueDate: '',
           taskPriority: 0,
+          checklist: [],
+          comments: [],
         },
       }
     case GET_TASK:

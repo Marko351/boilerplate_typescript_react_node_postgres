@@ -5,6 +5,7 @@ import {
   GET_TASK,
   CLEAR_ALL_DATA,
 } from '../components/Tasks/redux/reduxTypes'
+import { IComment } from './Comment'
 import { ITableOptions } from './Table'
 
 export interface TAddNewTask {
@@ -27,7 +28,7 @@ export interface TGetAllTasks {
 
 export interface TGetTask {
   type: typeof GET_TASK
-  payload: ITask
+  payload: ITaskReducer
 }
 
 export interface IClearAllTaskData {
@@ -46,13 +47,18 @@ export interface ITask {
   isCompleted?: boolean
 }
 
+export interface ITaskReducer extends ITask {
+  checklist: IChecklist[]
+  comments: IComment[]
+}
+
 export interface ITasks {
   tasks: ITask[]
 }
 
 export interface IChecklist {
   description: string
-  isCompleted: boolean
+  isDone: boolean
   uuid?: string
   id?: number
 }

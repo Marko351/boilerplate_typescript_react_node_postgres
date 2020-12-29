@@ -82,7 +82,7 @@ export const EventsComponentDefault: React.FC<EventProps> = ({ commentsReducer, 
           />
         </div>
         <div className='event__right'>
-          <Comment comments={commentsReducer.comments} />
+          <Comment eventId={null} />
         </div>
       </div>
       <div className='separate-line'></div>

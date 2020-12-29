@@ -1,18 +1,30 @@
 .comment {
-  max-height: 30rem;
-  overflow-y: scroll;
-  @include scrollbars(0.5rem, $color-mainLight, $color-grayDark);
+  border: 1px solid $color-gray;
 
   &__header {
     padding: 1.5rem;
     background-color: $color-gray;
     font-size: 1.6rem;
   }
-  &__body {
+
+  &__inputs {
     padding: 1.5rem;
-    border: 1px solid $color-gray;
+    display: grid;
+    grid-template-columns: 1fr 45px;
+    grid-gap: 10px;
+  }
+
+  &__body {
+    max-height: 20rem;
+    overflow-y: scroll;
+    padding: 0 1.5rem;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
+    @include scrollbars(0.5rem, $color-grayDark, #fff);
+  }
+
+  &__body:last-child {
+    margin-bottom: 1.5rem;
   }
 
   &__add-comment {

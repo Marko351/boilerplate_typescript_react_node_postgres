@@ -4,7 +4,7 @@ import { ReactComponent as PencilIcon } from '../../assets/icons/pencil.svg'
 import { CustomInput } from '../../common/CustomInput/CustomInput'
 
 interface IChecklist {
-  isCompleted: boolean
+  isDone: boolean
   description: string
   onChangeChecklistDesc: (e: ChangeEvent<HTMLInputElement>, index: number) => void
   index: number
@@ -13,7 +13,7 @@ interface IChecklist {
 }
 
 export const ChecklistItem: React.FC<IChecklist> = ({
-  isCompleted,
+  isDone,
   description,
   onChangeChecklistDesc,
   index,
@@ -35,14 +35,9 @@ export const ChecklistItem: React.FC<IChecklist> = ({
   return (
     <div className='checklist'>
       <div className='checklist__ingredients'>
-        <input
-          type='checkbox'
-          checked={isCompleted}
-          name='isCompleted'
-          onChange={(e) => onChangeChecklistDesc(e, index)}
-        />
+        <input type='checkbox' checked={isDone} name='isDone' onChange={(e) => onChangeChecklistDesc(e, index)} />
         {!isUpdateClicked ? (
-          <span className={`checklist__description ${isCompleted && 'line-through'}`}>{description}</span>
+          <span className={`checklist__description ${isDone && 'line-through'}`}>{description}</span>
         ) : (
           <CustomInput
             customClass='ml-tiny'

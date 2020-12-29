@@ -1,36 +1,33 @@
 import { IComment, TAllReduxCommentTypes } from '../../../types/Comment'
-import { GET_COMMENTS } from './commentTypes'
+import { ADD_COMMENT, CHANGE_COMMENT_DATA, GET_COMMENTS } from './commentTypes'
 
 export type TStateComments = {
   comments: Array<IComment>
+  comment: IComment
 }
 
 const initialState: TStateComments = {
-  comments: [
-    {
-      id: 1,
-      createdAt: '22-01-1992',
-      createdBy: 'Marko',
-      description:
-        'Testiram za projekat. Ovo je komentar Testiram za projekat. Ovo je komentar Testiram za projekat. Ovo je komentar',
-    },
-    {
-      id: 2,
-      createdAt: '22-01-1992',
-      createdBy: 'Marko',
-      description: 'Testiram za projekat. Ovo je komentar',
-    },
-    {
-      id: 3,
-      createdAt: '22-01-1992',
-      createdBy: 'Marko',
-      description: 'Testiram za projekat. Ovo je komentar',
-    },
-  ],
+  comments: [],
+  comment: {
+    comment: '',
+  },
 }
 
 export const commentsReducer = (state = initialState, action: TAllReduxCommentTypes): TStateComments => {
   switch (action.type) {
+    case ADD_COMMENT:
+      return {
+        ...state,
+        comments: [action.payload, ...state.comments],
+      }
+    case CHANGE_COMMENT_DATA:
+      return {
+        ...state,
+        comment: {
+          ...state.comment,
+          [action.payload.name]: action.payload.value,
+        },
+      }
     case GET_COMMENTS:
       return {
         ...state,

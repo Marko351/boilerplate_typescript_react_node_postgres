@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-import { ITask } from '../../../types/Task'
+import { IChecklist, ITask } from '../../../types/Task'
 import { AppThunk } from '../../../redux/reducers'
 import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS, GET_TASK, CLEAR_ALL_DATA } from './reduxTypes'
 
-export const addNewTask = (data: ITask): AppThunk<void> => async (dispatch) => {
+export const addNewTask = (data: ITask, checklist: IChecklist[]): AppThunk<void> => async (dispatch) => {
   try {
-    const response = await axios.post<ITask>(`/tasks`, data, { withCredentials: true })
+    const response = await axios.post<ITask>(`/tasks`, { checklist, ...data }, { withCredentials: true })
     dispatch({ type: ADD_NEW_TASK, payload: response.data })
   } catch (err) {
     console.log(err)

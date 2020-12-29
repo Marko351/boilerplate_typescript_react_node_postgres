@@ -5,3 +5,8 @@ export interface IChecklist {
   isDone: boolean
   description: string
 }
+
+export interface IChecklistTask {
+  isDone: boolean
+  description: string
+}
