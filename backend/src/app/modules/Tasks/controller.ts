@@ -43,13 +43,12 @@ class TaskController {
         createdBy: req.userData.userId,
       }
       const responseTaskCreated = await this.repo.create<ITask>(data)
-      console.log(responseTaskCreated)
       if (checklist && checklist.length) {
         for (let i = 0; i < checklist.length; i++) {
           const checklistData = {
-            taskId: responseTaskCreated[0].id,
-            isDone: checklist[0].isDone,
-            description: checklist[0].description,
+            taskId: responseTaskCreated.id,
+            isDone: checklist[i].isDone,
+            description: checklist[i].description,
           }
           await this.checklistRepo.create<IChecklist>(checklistData)
         }
@@ -57,14 +56,14 @@ class TaskController {
       if (comments && comments.length) {
         for (let i = 0; i < comments.length; i++) {
           const commentData = {
-            taskId: responseTaskCreated[0].id,
-            comment: comments[0].comment,
+            taskId: responseTaskCreated.id,
+            comment: comments[i].comment,
             createdBy: req.userData.userId,
           }
-          await this.commentRepo.create<IComment>(commentData)
+          await this.commentRepo.createComment(commentData)
         }
       }
-      const response = await this.repo.getTask(responseTaskCreated[0].id as number)
+      const response = await this.repo.getTask(responseTaskCreated.id as number)
       res.status(HTTP_OK).json(response)
     } catch (err) {
       console.log(err)
@@ -112,6 +111,7 @@ class TaskController {
           taskPriority: Joi.number().allow('').allow(null),
           description: Joi.string().allow(''),
           checklist: Joi.array(),
+          comments: Joi.array(),
         })
       await schema.validateAsync(data)
       next()

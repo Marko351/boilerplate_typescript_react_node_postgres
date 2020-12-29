@@ -1,4 +1,10 @@
-import { ADD_COMMENT, CHANGE_COMMENT_DATA, GET_COMMENTS } from '../components/Comments/redux/commentTypes'
+import {
+  ADD_COMMENT,
+  CHANGE_COMMENT_DATA,
+  CLEAR_COMMENTS,
+  DELETE_COMMENT,
+  GET_COMMENTS,
+} from '../components/Comments/redux/commentTypes'
 
 export interface IGetComments {
   type: typeof GET_COMMENTS
@@ -18,7 +24,16 @@ export interface IAddComment {
   payload: IComment
 }
 
-export type TAllReduxCommentTypes = IGetComments | IChangeCommentData | IAddComment
+export interface IDeleteComment {
+  type: typeof DELETE_COMMENT
+  payload: number
+}
+
+export interface IClearComments {
+  type: typeof CLEAR_COMMENTS
+}
+
+export type TAllReduxCommentTypes = IGetComments | IChangeCommentData | IAddComment | IDeleteComment | IClearComments
 
 export interface IComment {
   id?: number | null

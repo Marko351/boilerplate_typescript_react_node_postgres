@@ -1,11 +1,12 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import moment from 'moment'
 
 import { CustomButton } from '../../common/CustomButton/CustomButton'
 import { CustomInput } from '../../common/CustomInput/CustomInput'
 import { RootState } from '../../redux/reducers'
-import { IComment } from '../../types/Comment'
-import { addNewComment, changeCommentData } from './redux/commentActions'
+import { ReactComponent as DeleteIcon } from '../../assets/icons/wrong.svg'
+import { addNewComment, changeCommentData, deleteComment } from './redux/commentActions'
 import { TStateComments } from './redux/commentReducer'
 
 interface commentProps {
@@ -28,6 +29,10 @@ export const Comment: React.FC<commentProps> = ({ taskId, eventId }) => {
     dispatch(addNewComment(id, reference))
   }
 
+  const onDeleteChecklistItem = (id: number) => {
+    dispatch(deleteComment(id))
+  }
+
   return (
     <div className='comment'>
       <div className='comment__header'>Comments</div>
@@ -43,8 +48,20 @@ export const Comment: React.FC<commentProps> = ({ taskId, eventId }) => {
       <div className='comment__body'>
         {CommentsReducer.comments.map((comment) => (
           <div className='comment__comment' key={comment.id}>
-            <span className='comment__comment--description'>{comment.comment}</span>
-            <span className='comment__comment--date'>{comment.creationDate}</span>
+            <div className='comment__comment--description-box'>
+              <div className='comment_comment--description'>{comment.comment}</div>
+              <div className='comment_comment--buttons'>
+                <div className='icon-box'>
+                  <button onClick={() => onDeleteChecklistItem(comment.id!)} className='icon-button'>
+                    <DeleteIcon />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className='comment__comment--credentials'>
+              <span>{comment.createdBy}</span>
+              <span>{moment(comment.creationDate).utc().local().format('YYYY-DD-MM HH:mm')}</span>
+            </div>
           </div>
         ))}
       </div>

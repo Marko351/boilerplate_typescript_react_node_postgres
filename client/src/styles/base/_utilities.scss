@@ -70,3 +70,19 @@
   font-size: 1.3rem;
   color: $color-grayDarkest;
 }
+
+.icon-box {
+  width: 2rem;
+  height: 2rem;
+}
+
+.icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}

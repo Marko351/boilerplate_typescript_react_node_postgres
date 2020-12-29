@@ -3,4 +3,5 @@ export interface IComment {
   taskId?: number
   eventId?: number
   comment: string
+  id?: number
 }

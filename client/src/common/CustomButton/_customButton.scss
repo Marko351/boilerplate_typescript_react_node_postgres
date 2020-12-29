@@ -31,6 +31,16 @@
     }
   }
 
+  &__danger {
+    border: 2px solid $color-mainLight;
+    background-color: $color-main;
+    color: #fff;
+
+    &:hover {
+      background-color: lighten($color-main, 10%);
+    }
+  }
+
   &__main {
     border: 2px solid $color-yellow;
     background-color: $color-yellow;

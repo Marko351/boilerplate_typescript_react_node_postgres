@@ -20,7 +20,7 @@ if (token) {
   const decoded = jwt_decode<IAuthUser>(token)
   store.dispatch({ type: SET_CURRENT_USER, payload: decoded })
   const currentTime = Date.now() / 1000
-  if (decoded.exp < currentTime) {
+  if (decoded.exp! < currentTime) {
     Cookies.remove('token')
   }
 }

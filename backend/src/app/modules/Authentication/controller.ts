@@ -29,8 +29,8 @@ class AuthenticationController {
         password: hashedPassword,
         username: username,
       }
-      const user: IUser[] = await this.repo.create<IUser>(data)
-      return generateJwtToken(user[0], res)
+      const user: IUser = await this.repo.create<IUser>(data)
+      return generateJwtToken(user, res)
     } catch (err) {
       console.log(err)
       next(err)

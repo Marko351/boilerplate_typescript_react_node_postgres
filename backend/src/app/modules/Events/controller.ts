@@ -43,7 +43,7 @@ class EventController {
       if (comments.length) {
         for (let i = 0; i < comments.length; i++) {
           const commentData = {
-            eventId: response[i].id,
+            eventId: response.id,
             comment: comments[i].comment,
             createdBy: req.userData.userId,
           }

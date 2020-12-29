@@ -18,7 +18,7 @@ import { addNewTask, getTask, clearAllTaskData } from './redux/taskActions'
 import { IChecklist, ITask } from '../../types/Task'
 import { CustomCard } from '../../common/CustomCard/CustomCard'
 import { TStateTasks } from './redux/tasksReducer'
-import { getComments } from '../Comments/redux/commentActions'
+import { clearComments, getComments } from '../Comments/redux/commentActions'
 
 interface MatchParams {
   id: string
@@ -28,7 +28,7 @@ type ITaskProps = RouteComponentProps<MatchParams>
 
 type Checklists = IChecklist[]
 
-export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
+export const TaskComponent: React.FC<ITaskProps> = ({ match, history }) => {
   const dispatch = useDispatch()
   const TaskReducer = useSelector<RootState, TStateTasks>((state) => state.tasksReducer)
   const [task, setTask] = useState<ITask>({
@@ -49,6 +49,7 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
     }
     return () => {
       dispatch(clearAllTaskData())
+      dispatch(clearComments())
     }
   }, [])
 
@@ -115,7 +116,7 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
       dueDate: task.dueDate,
       taskPriority: task.taskPriority,
     }
-    await dispatch(addNewTask(taskData, checklists))
+    await dispatch(addNewTask(taskData, checklists, history))
   }
 
   return (
@@ -187,7 +188,15 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match }) => {
         </div>
         <div className='separate-line'></div>
         <div className='footer-buttons'>
-          <CustomButton text='Save' onClick={onSaveClick} color='primary' />
+          {match.params.id ? (
+            <>
+              <CustomButton text='Update' onClick={onSaveClick} color='primary mr-tiny' />
+              <CustomButton text='Complete' onClick={onSaveClick} color='success mr-tiny' />
+              <CustomButton text='Delete' onClick={onSaveClick} color='danger' />
+            </>
+          ) : (
+            <CustomButton text='Save' onClick={onSaveClick} color='primary' />
+          )}
         </div>
       </CustomCard>
     </div>

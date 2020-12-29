@@ -41,13 +41,27 @@
     padding: 1rem 0.5rem;
     border-radius: 2px;
 
-    &--description {
+    &--description-box {
       font-size: 1.4rem;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 5fr 2rem;
+      grid-gap: 1rem;
     }
-    &--date {
+
+    &--description {
+    }
+
+    &--buttons {
+    }
+
+    &--credentials {
       margin-top: 0.5rem;
       color: $color-grayDarkest;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      grid-gap: 1rem;
     }
   }
 }

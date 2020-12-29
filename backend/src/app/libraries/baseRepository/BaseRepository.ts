@@ -1,6 +1,6 @@
 import { knex, knexType } from '../../config/dbConfig'
 
-interface DataI {
+export interface DataI {
   [key: string]: string | number | boolean | undefined | null
 }
 

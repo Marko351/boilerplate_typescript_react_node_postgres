@@ -4,12 +4,18 @@ import { SET_CURRENT_USER } from './authTypes'
 
 export type TStateAuth = {
   isAuthenticated: boolean
-  user: IAuthUser | unknown
+  user: IAuthUser
 }
 
 const initialState: TStateAuth = {
   isAuthenticated: false,
-  user: {},
+  user: {
+    userId: null,
+    email: '',
+    exp: null,
+    iat: null,
+    username: '',
+  },
 }
 
 export const authReducer = (state = initialState, action: TAllReduxAuthTypes): TStateAuth => {

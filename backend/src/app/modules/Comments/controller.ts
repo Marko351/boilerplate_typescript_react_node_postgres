@@ -30,7 +30,7 @@ class CommentsController {
         ...req.body,
         createdBy: req.userData.userId,
       }
-      const response = await this.repo.create<IComment>(data)
+      const response = await this.repo.createComment(data)
       res.status(HTTP_OK).json(response)
     } catch (err) {
       console.log(err)

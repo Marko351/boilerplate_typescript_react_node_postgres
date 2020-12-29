@@ -8,9 +8,10 @@ export interface ISetUser {
 export type TAllReduxAuthTypes = ISetUser
 
 export interface IAuthUser {
-  exp: number
-  iat: number
+  exp: number | null
+  iat: number | null
   userId: number | null
+  username: string
   email: string
 }
 
