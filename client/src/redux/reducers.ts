@@ -5,8 +5,10 @@ import { eventReducer } from '../components/Events/redux/eventReducer'
 import { commentsReducer } from '../components/Comments/redux/commentReducer'
 import { authReducer } from '../components/Login/redux/authReducer'
 import { errorReducer } from '../components/Errors/redux/errorReducer'
+import { checklistReducer } from '../components/Checklists/redux/checklistReducer'
 
 const rootReducer = combineReducers({
+  checklistReducer,
   tasksReducer,
   eventReducer,
   commentsReducer,

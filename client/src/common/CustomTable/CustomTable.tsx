@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import ReactDataGrid from '@inovua/reactdatagrid-community'
 import { TypeColumn } from '@inovua/reactdatagrid-community/types'
 import '@inovua/reactdatagrid-community/index.css'
@@ -37,6 +37,10 @@ export const CustomTable: React.FC<TableProps> = ({ data, columns, onSkipAndLimi
   const [limitUpdateOpen, setLimitUpdateOpen] = useState(false)
   const [gridStyle, setGridStyle] = useState({ minHeight: 240 })
 
+  useEffect(() => {
+    setGridStyle({ minHeight: data.length * 40 + 39 })
+  }, [data])
+
   const onSkipChange = useCallback(
     (amount, type) => {
       if (type === 1) {
@@ -57,11 +61,6 @@ export const CustomTable: React.FC<TableProps> = ({ data, columns, onSkipAndLimi
     onSkipAndLimitChange && onSkipAndLimitChange('limit', amount)
     setLimit(amount)
     setLimitUpdateOpen(false)
-    if (amount === 5) {
-      setGridStyle({ minHeight: 200 + 39 })
-    } else {
-      setGridStyle({ minHeight: (data.length + 1) * 40 + 39 })
-    }
   }
 
   const paginationToolbar = () => {

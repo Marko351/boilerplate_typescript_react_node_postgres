@@ -34,7 +34,7 @@ class TaskController {
 
   async createTasks(req: Request, res: Response, next: NextFunction) {
     try {
-      const { name, dueDate, taskPriority, description, checklist, comments } = req.body
+      const { name, dueDate, taskPriority, description, checklists, comments } = req.body
       const data = {
         name,
         dueDate,
@@ -43,12 +43,12 @@ class TaskController {
         createdBy: req.userData.userId,
       }
       const responseTaskCreated = await this.repo.create<ITask>(data)
-      if (checklist && checklist.length) {
-        for (let i = 0; i < checklist.length; i++) {
+      if (checklists && checklists.length) {
+        for (let i = 0; i < checklists.length; i++) {
           const checklistData = {
             taskId: responseTaskCreated.id,
-            isDone: checklist[i].isDone,
-            description: checklist[i].description,
+            isDone: checklists[i].isDone,
+            description: checklists[i].description,
           }
           await this.checklistRepo.create<IChecklist>(checklistData)
         }
@@ -110,7 +110,7 @@ class TaskController {
           }),
           taskPriority: Joi.number().allow('').allow(null),
           description: Joi.string().allow(''),
-          checklist: Joi.array(),
+          checklists: Joi.array(),
           comments: Joi.array(),
         })
       await schema.validateAsync(data)

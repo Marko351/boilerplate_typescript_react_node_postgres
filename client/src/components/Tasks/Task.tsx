@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState, useEffect } from 'react'
-import { useDispatch, useSelector, ConnectedProps } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 import { RouteComponentProps } from 'react-router-dom'
 import moment from 'moment'
@@ -8,9 +8,9 @@ import { CustomButton } from '../../common/CustomButton/CustomButton'
 import { CustomInput } from '../../common/CustomInput/CustomInput'
 import { CustomSelect } from '../../common/CustomSelect/CustomSelect'
 import { CustomTextarea } from '../../common/CustomTextarea/CustomTextarea'
-import { ChecklistItem } from './ChecklistItem'
 import { ProgressBar } from './ProgressBar'
 import { Comment } from '../Comments/Comment'
+import { Checklist } from '../Checklists/Checklist'
 
 import { TASK_PRIORITIES } from '../../constants/taskConstants'
 import { RootState } from '../../redux/reducers'
@@ -19,6 +19,8 @@ import { IChecklist, ITask } from '../../types/Task'
 import { CustomCard } from '../../common/CustomCard/CustomCard'
 import { TStateTasks } from './redux/tasksReducer'
 import { clearComments, getComments } from '../Comments/redux/commentActions'
+import { TStatechecklists } from '../Checklists/redux/checklistReducer'
+import { addNewChecklist, clearChecklist, getChecklists } from '../Checklists/redux/checklistActions'
 
 interface MatchParams {
   id: string
@@ -26,11 +28,10 @@ interface MatchParams {
 
 type ITaskProps = RouteComponentProps<MatchParams>
 
-type Checklists = IChecklist[]
-
 export const TaskComponent: React.FC<ITaskProps> = ({ match, history }) => {
   const dispatch = useDispatch()
   const TaskReducer = useSelector<RootState, TStateTasks>((state) => state.tasksReducer)
+  const ChecklistReducer = useSelector<RootState, TStatechecklists>((state) => state.checklistReducer)
   const [task, setTask] = useState<ITask>({
     id: null,
     name: '',
@@ -39,42 +40,42 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match, history }) => {
     taskPriority: 1,
     isCompleted: false,
   })
-  const [checklists, setChecklist] = useState<Checklists>([])
   const [progressValue, setProgressValue] = useState(0)
 
   useEffect(() => {
     if (match.params.id) {
       dispatch(getTask(+match.params.id))
       dispatch(getComments(+match.params.id, 'task'))
+      dispatch(getChecklists(+match.params.id))
     }
     return () => {
       dispatch(clearAllTaskData())
       dispatch(clearComments())
+      dispatch(clearChecklist())
     }
   }, [])
 
   useEffect(() => {
     if (Object.keys(TaskReducer.task).length) {
-      const { checklist, ...rest } = TaskReducer.task
+      const { ...rest } = TaskReducer.task
       const newTaskData = {
         ...rest,
         dueDate: moment(rest.dueDate).utc().local().format('YYYY-MM-DD'),
       }
       setTask(newTaskData)
-      setChecklist(checklist)
     }
   }, [TaskReducer.task])
 
   useEffect(() => {
     getProgressValue()
-  }, [checklists])
+  }, [ChecklistReducer.checklists])
 
   const getProgressValue = () => {
     let count = 0
-    checklists.forEach((checklist) => {
+    ChecklistReducer.checklists.forEach((checklist) => {
       if (checklist.isDone) count++
     })
-    setProgressValue(+((100 / checklists.length) * count).toFixed(2) || 0)
+    setProgressValue(+((100 / ChecklistReducer.checklists.length) * count).toFixed(2) || 0)
   }
 
   const handleTaskChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -83,30 +84,7 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match, history }) => {
   }
 
   const onAddCheckList = () => {
-    const newItem = {
-      isDone: false,
-      description: '',
-      uuid: uuidv4(),
-    }
-    setChecklist([...checklists, newItem])
-  }
-
-  const onChangeChecklistDesc = (e: ChangeEvent<HTMLInputElement>, index: number) => {
-    const { name, value, checked } = e.target
-    const newChecklist = [...checklists]
-    if (name === 'description') newChecklist[index][name] = value
-    if (name === 'isDone') newChecklist[index][name] = checked
-    setChecklist(newChecklist)
-  }
-
-  const onDeleteChecklistItem = (id: string | number) => {
-    let newChecklist = [...checklists]
-    if (typeof id === 'string') {
-      newChecklist = checklists.filter((checklist) => checklist.uuid !== id)
-    } else if (typeof id === 'number') {
-      newChecklist = checklists.filter((checklist) => checklist.id !== id)
-    }
-    setChecklist(newChecklist)
+    dispatch(addNewChecklist())
   }
 
   const onSaveClick = async () => {
@@ -116,7 +94,7 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match, history }) => {
       dueDate: task.dueDate,
       taskPriority: task.taskPriority,
     }
-    await dispatch(addNewTask(taskData, checklists, history))
+    await dispatch(addNewTask(taskData, history))
   }
 
   return (
@@ -160,22 +138,20 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match, history }) => {
             <div className='task__checklists'>
               <span className='task__checklists--label'>Checklist</span>
               <ProgressBar value={progressValue} />
-              {checklists.map((checklistItem, index) => {
+              {ChecklistReducer.checklists.map((checklistItem, index) => {
                 const id = checklistItem.id! || checklistItem.uuid!
                 return (
-                  <ChecklistItem
+                  <Checklist
                     key={id}
                     id={id}
                     isDone={checklistItem.isDone}
                     description={checklistItem.description}
-                    onChangeChecklistDesc={onChangeChecklistDesc}
-                    index={index}
-                    onDeleteChecklistItem={onDeleteChecklistItem}
+                    // onDeleteChecklistItem={onDeleteChecklistItem}
                   />
                 )
               })}
               <CustomButton
-                customClassName={`${checklists.length ? 'mt-tiny' : ''} d-block`}
+                customClassName={`${ChecklistReducer.checklists.length ? 'mt-tiny' : ''} d-block`}
                 text='Add Checklist Item'
                 onClick={onAddCheckList}
                 color='primary'

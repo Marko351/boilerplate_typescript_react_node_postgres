@@ -5,13 +5,11 @@ import { IChecklist, ITask } from '../../../types/Task'
 import { AppThunk } from '../../../redux/reducers'
 import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS, GET_TASK, CLEAR_ALL_DATA } from './reduxTypes'
 
-export const addNewTask = (data: ITask, checklist: IChecklist[], history: History): AppThunk<void> => async (
-  dispatch,
-  getState,
-) => {
+export const addNewTask = (data: ITask, history: History): AppThunk<void> => async (dispatch, getState) => {
   try {
     const comments = getState().commentsReducer.comments
-    const response = await axios.post<ITask>(`/tasks`, { comments, checklist, ...data }, { withCredentials: true })
+    const checklists = getState().checklistReducer.checklists
+    const response = await axios.post<ITask>(`/tasks`, { comments, checklists, ...data })
     history.push(`/tasks/${response.data.id}`)
     dispatch({ type: ADD_NEW_TASK, payload: response.data })
   } catch (err) {

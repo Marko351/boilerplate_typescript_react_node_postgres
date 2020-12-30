@@ -12,13 +12,24 @@ class ChecklistController {
     this.repo = new ChecklistRepository()
   }
 
+  async getChecklists(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { taskId } = req.query
+      const response = await this.repo.getChecklists(+taskId!)
+      res.status(HTTP_OK).json(response)
+    } catch (err) {
+      console.log(err)
+      next(err)
+    }
+  }
+
   async createChecklists(req: Request, res: Response, next: NextFunction) {
     try {
       const data = {
         ...req.body,
       }
-      await this.repo.create<IChecklist>(data)
-      res.status(HTTP_OK)
+      const response = await this.repo.create<IChecklist>(data)
+      res.status(HTTP_OK).json(response)
     } catch (err) {
       console.log(err)
       next(err)
@@ -56,6 +67,7 @@ class ChecklistController {
       const schema = Joi.object()
         .options({ abortEarly: false })
         .keys({
+          id: Joi.number().allow(null),
           description: Joi.string().allow(''),
           isDone: Joi.boolean().allow(null),
           taskId: Joi.number().allow(null).allow(''),
