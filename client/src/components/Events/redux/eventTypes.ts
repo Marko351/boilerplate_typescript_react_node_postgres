@@ -1,3 +1,6 @@
-export const GET_EVENTS = 'GET_EVENTS'
+export const ADD_NEW_EVENT = 'ADD_NEW_EVENT'
+export const UPDATE_EVENT = 'UPDATE_EVENT'
+export const DELETE_EVENT = 'DELETE_EVENT'
+export const CLEAR_ALL_EVENTS_DATA = 'CLEAR_ALL_EVENTS_DATA'
+export const GET_ALL_EVENTS = 'GET_ALL_EVENTS'
 export const GET_EVENT = 'GET_EVENT'
-export const SET_LOADING = 'SET_LOADING'

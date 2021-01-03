@@ -8,6 +8,7 @@ import { ReactComponent as ArrowDown } from '../../assets/icons/arrow-down.svg'
 import { ReactComponent as ArrowLeft } from '../../assets/icons/left-arrow.svg'
 import { ReactComponent as ArrowRight } from '../../assets/icons/right-arrow.svg'
 import { ITask } from '../../types/Task'
+import { IEvent } from '../../types/Event'
 
 export const DEFAULT_LIMIT = 5
 export const DEFAULT_SKIP = 0
@@ -19,7 +20,7 @@ export const LIMIT_OPTIONS = [5, 10, 15, 50]
 //   [key: string]: string | number | null | boolean | undefined
 // }
 interface TableProps {
-  data: ITask[]
+  data: ITask[] | IEvent[]
   // gridStyle?:
   //   | {
   //       [key: string]: React.ReactText

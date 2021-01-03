@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { History } from 'history'
 
-import { IChecklist, ITask } from '../../../types/Task'
+import { ITask } from '../../../types/Task'
 import { AppThunk } from '../../../redux/reducers'
 import { ADD_NEW_TASK, COMPLETE_TASK, GET_ALL_TASKS, GET_TASK, CLEAR_ALL_DATA } from './reduxTypes'
 

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import Joi from 'joi'
 
 import { HTTP_OK } from '../../constants/HTTPStatusCode'
-import { IEvent } from './Event'
+import { IEvent, IGetAllEventsOptions } from './Event'
 import { EventsRepository } from './repository'
 import { returnFormattedValidationError } from '../../helpers/formattedError'
 import { CommentsRepository } from '../Comments'
@@ -20,7 +20,7 @@ class EventController {
     try {
       const { id } = req.params
       const parsedId = parseInt(id)
-      const response = await this.repo.getOne<IEvent>(parsedId)
+      const response = await this.repo.getEvent(parsedId)
       res.status(200).json(response)
     } catch (err) {
       console.log(err)
@@ -40,7 +40,7 @@ class EventController {
         createdBy: req.userData.userId,
       }
       const response = await this.repo.create<IEvent>(data)
-      if (comments.length) {
+      if (comments && comments.length) {
         for (let i = 0; i < comments.length; i++) {
           const commentData = {
             eventId: response.id,
@@ -99,11 +99,27 @@ class EventController {
           }),
           location: Joi.string().allow('').allow(null),
           description: Joi.string().allow(''),
+          comments: Joi.array(),
         })
       await schema.validateAsync(data)
       next()
     } catch (err) {
       returnFormattedValidationError(err, res)
+    }
+  }
+
+  async getAllEvents(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { limit, skip } = req.query
+      const options: IGetAllEventsOptions = {
+        limit: Number(limit) || 0,
+        skip: Number(skip) || 0,
+      }
+      const response = await this.repo.getAllEvents(options, req.userData.userId!)
+      res.status(HTTP_OK).json(response)
+    } catch (err) {
+      console.log(err)
+      next(err)
     }
   }
 }

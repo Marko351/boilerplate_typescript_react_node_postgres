@@ -54,7 +54,6 @@ class TaskController {
           await this.checklistRepo.create<IChecklist>(checklistData)
         }
       }
-      console.log(comments)
       if (comments && comments.length) {
         for (let i = 0; i < comments.length; i++) {
           const commentData = {

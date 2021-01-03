@@ -8,3 +8,8 @@ export interface IEvent {
   description?: string
   location?: string
 }
+
+export interface IGetAllEventsOptions {
+  limit: number
+  skip: number
+}

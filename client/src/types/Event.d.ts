@@ -1,8 +1,12 @@
-import { GET_EVENT, GET_EVENTS, SET_LOADING } from '../components/Events/redux/eventTypes'
+import { ADD_NEW_EVENT, GET_ALL_EVENTS, GET_EVENT, CLEAR_ALL_EVENTS_DATA } from '../components/Events/redux/eventTypes'
+import { ITableOptions } from './Table'
 
 export interface IGetEvents {
-  type: typeof GET_EVENTS
-  payload: IEvent[]
+  type: typeof GET_ALL_EVENTS
+  payload: {
+    data: IEvent[]
+    options: ITableOptions
+  }
 }
 
 export interface IGetEvent {
@@ -10,15 +14,20 @@ export interface IGetEvent {
   payload: IEvent
 }
 
-export interface ISetLoading {
-  type: typeof SET_LOADING
+export interface IAddNewEvent {
+  type: typeof ADD_NEW_EVENT
+  payload: IEvent
 }
 
-export type TAllReduxEventTypes = IGetEvent | IGetEvents | ISetLoading
+export interface IClearAllEventData {
+  type: typeof CLEAR_ALL_EVENTS_DATA
+}
+
+export type TAllReduxEventTypes = IGetEvent | IGetEvents | IAddNewEvent | IClearAllEventData
 
 export interface IEvent {
-  id: number | null
-  eventName: string
+  id?: number | null
+  name: string
   description: string
   startDate: string
   endDate: string

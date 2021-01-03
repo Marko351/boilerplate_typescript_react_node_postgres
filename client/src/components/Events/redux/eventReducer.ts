@@ -1,16 +1,30 @@
 import { IEvent, TAllReduxEventTypes } from '../../../types/Event'
-import { GET_EVENT, GET_EVENTS, SET_LOADING } from './eventTypes'
+import { ITableOptions } from '../../../types/Table'
+import { GET_EVENT, ADD_NEW_EVENT, GET_ALL_EVENTS, CLEAR_ALL_EVENTS_DATA } from './eventTypes'
 
 export type TStateEvents = {
   events: IEvent[]
-  event: IEvent | null
+  event: IEvent
   isLoading: boolean
+  options: ITableOptions
 }
 
 const initialState: TStateEvents = {
   events: [],
-  event: null,
+  event: {
+    id: null,
+    name: '',
+    startDate: '',
+    endDate: '',
+    location: '',
+    description: '',
+  },
   isLoading: false,
+  options: {
+    totalRecords: 0,
+    limit: 0,
+    skip: 0,
+  },
 }
 
 export const eventReducer = (state = initialState, action: TAllReduxEventTypes): TStateEvents => {
@@ -21,16 +35,28 @@ export const eventReducer = (state = initialState, action: TAllReduxEventTypes):
         event: action.payload,
         isLoading: false,
       }
-    case GET_EVENTS:
+    case CLEAR_ALL_EVENTS_DATA:
       return {
         ...state,
-        events: action.payload,
-        isLoading: false,
+        event: {
+          id: null,
+          name: '',
+          startDate: '',
+          endDate: '',
+          location: '',
+          description: '',
+        },
       }
-    case SET_LOADING:
+    case ADD_NEW_EVENT:
       return {
         ...state,
-        isLoading: !state.isLoading,
+        events: [...state.events, action.payload],
+      }
+    case GET_ALL_EVENTS:
+      return {
+        ...state,
+        events: action.payload.data,
+        options: action.payload.options,
       }
     default:
       return state
