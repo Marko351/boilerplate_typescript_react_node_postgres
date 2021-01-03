@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<void> {
       table.increments('id').primary()
       table.timestamp('creation_date').notNullable().defaultTo(knex.fn.now())
 
-      table.integer('task_id').notNullable().unsigned().references('id').inTable('tasks')
+      table.integer('task_id').notNullable().unsigned().references('id').inTable('tasks').onDelete('CASCADE')
       table.boolean('is_done').defaultTo(false)
       table.specificType('description', 'VARCHAR(255)')
     })

@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { v4 as uuidv4 } from 'uuid'
 import { RouteComponentProps } from 'react-router-dom'
 import moment from 'moment'
 
@@ -14,8 +13,8 @@ import { Checklist } from '../Checklists/Checklist'
 
 import { TASK_PRIORITIES } from '../../constants/taskConstants'
 import { RootState } from '../../redux/reducers'
-import { addNewTask, getTask, clearAllTaskData } from './redux/taskActions'
-import { IChecklist, ITask } from '../../types/Task'
+import { addNewTask, getTask, clearAllTaskData, completeTask, updateTask, deleteTask } from './redux/taskActions'
+import { ITask } from '../../types/Task'
 import { CustomCard } from '../../common/CustomCard/CustomCard'
 import { TStateTasks } from './redux/tasksReducer'
 import { clearComments, getComments } from '../Comments/redux/commentActions'
@@ -39,6 +38,7 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match, history }) => {
     dueDate: '',
     taskPriority: 1,
     isCompleted: false,
+    completionDate: '',
   })
   const [progressValue, setProgressValue] = useState(0)
 
@@ -85,6 +85,25 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match, history }) => {
 
   const onAddCheckList = () => {
     dispatch(addNewChecklist())
+  }
+
+  const onCompleteClick = () => {
+    dispatch(completeTask(+match.params.id))
+  }
+
+  const onUpdateClick = () => {
+    const data = {
+      id: task.id!,
+      name: task.name,
+      description: task.description,
+      dueDate: task.dueDate,
+      taskPriority: task.taskPriority,
+    }
+    dispatch(updateTask(data))
+  }
+
+  const onDeleteClick = () => {
+    dispatch(deleteTask(+match.params.id, history))
   }
 
   const onSaveClick = async () => {
@@ -160,15 +179,26 @@ export const TaskComponent: React.FC<ITaskProps> = ({ match, history }) => {
           </div>
           <div className='task__right'>
             <Comment taskId={task.id} />
+            {task.isCompleted && (
+              <div className='task__completed'>
+                <span>Task Completed</span>
+                {moment(task.completionDate).utc().local().format('MM-DD-YYYY hh:mm A')}
+              </div>
+            )}
           </div>
         </div>
         <div className='separate-line'></div>
         <div className='footer-buttons'>
           {match.params.id ? (
             <>
-              <CustomButton text='Update' onClick={onSaveClick} color='primary mr-tiny' />
-              <CustomButton text='Complete' onClick={onSaveClick} color='success mr-tiny' />
-              <CustomButton text='Delete' onClick={onSaveClick} color='danger' />
+              <CustomButton text='Update' onClick={onUpdateClick} color='primary mr-tiny' />
+              <CustomButton
+                disabled={task.isCompleted}
+                text='Complete'
+                onClick={onCompleteClick}
+                color='success mr-tiny'
+              />
+              <CustomButton text='Delete' onClick={onDeleteClick} color='danger' />
             </>
           ) : (
             <CustomButton text='Save' onClick={onSaveClick} color='primary' />

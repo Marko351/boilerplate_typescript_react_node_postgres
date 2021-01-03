@@ -5,11 +5,15 @@ interface CustomButtonProps {
   onClick?: () => void
   color?: string
   customClassName?: string
+  disabled?: boolean
 }
 
-export const CustomButton: React.FC<CustomButtonProps> = ({ color, text, onClick, customClassName }) => {
+export const CustomButton: React.FC<CustomButtonProps> = ({ color, text, onClick, customClassName, disabled }) => {
   return (
-    <button className={`c-button c-button__${color} ${customClassName}`} onClick={onClick}>
+    <button
+      className={`c-button c-button__${color} ${customClassName} ${disabled ? `disabled__${color}` : ''}`}
+      onClick={onClick}
+      disabled={disabled}>
       {text}
     </button>
   )

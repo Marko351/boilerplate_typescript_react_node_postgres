@@ -1,16 +1,16 @@
 .task {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(30rem, 1fr) minmax(30rem, 1fr);
+  grid-gap: 2rem;
 
   &__left {
-    min-width: 55%;
-    padding-right: 2rem;
   }
 
   &__right {
-    min-width: 45%;
-    padding-left: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 35rem;
+    justify-content: space-between;
   }
 
   &__checklists {
@@ -22,56 +22,17 @@
       margin-bottom: 0.5rem;
     }
   }
-}
 
-.checklist {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.5rem;
-  border: 1px solid $color-secondaryLight;
-  border-radius: 3px;
-  font-size: 1.4rem;
+  &__completed {
+    font-size: 1.2rem;
+    color: $color-grayDarkest;
+    justify-self: end;
+    align-self: end;
 
-  &__ingredients {
-    display: flex;
-    align-items: center;
-    margin-right: auto;
-    min-width: calc(100% - 9rem);
-  }
-
-  &__description {
-    margin-left: 1rem;
-    max-width: 100%;
-  }
-
-  &__icons {
-    display: flex;
-    align-items: center;
-  }
-
-  &__icon-box {
-    width: 2rem;
-    height: 2rem;
-
-    &:not(:last-child) {
-      margin-right: 1rem;
+    span {
+      color: $color-green;
+      margin-right: 2rem;
     }
-  }
-
-  &__button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-
-    &:focus {
-      border: none;
-      outline: none;
-    }
-  }
-
-  &:not(:last-child) {
-    margin-bottom: 0.1rem;
   }
 }
 

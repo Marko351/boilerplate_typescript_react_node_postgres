@@ -9,9 +9,9 @@ export async function up(knex: Knex): Promise<void> {
       table.increments('id').primary()
       table.timestamp('creation_date').notNullable().defaultTo(knex.fn.now())
 
-      table.integer('created_by').notNullable().unsigned().references('id').inTable('users')
-      table.integer('event_id').unsigned().references('id').inTable('events')
-      table.integer('task_id').unsigned().references('id').inTable('tasks')
+      table.integer('created_by').notNullable().unsigned().references('id').inTable('users').onDelete('CASCADE')
+      table.integer('event_id').unsigned().references('id').inTable('events').onDelete('CASCADE')
+      table.integer('task_id').unsigned().references('id').inTable('tasks').onDelete('CASCADE')
       table.text('comment')
     })
   }

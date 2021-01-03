@@ -38,3 +38,30 @@ export const toggleComplete = (id: number): AppThunk<void> => (dispatch) => {
     console.log(err)
   }
 }
+
+interface data {
+  name: string
+  dueDate: string
+  taskPriority: number
+  description: string
+  id: number
+}
+
+export const updateTask = (data: data): AppThunk<void> => async (dispatch) => {
+  const { id, ...rest } = data
+  const response = await axios.patch(`/tasks/${id}`, rest)
+  dispatch({
+    type: GET_TASK,
+    payload: response.data,
+  })
+}
+
+export const deleteTask = (id: number, history: History): AppThunk<void> => async () => {
+  await axios.delete(`/tasks/${id}`)
+  history.push('/tasks')
+}
+
+export const completeTask = (id: number): AppThunk<void> => async (dispatch) => {
+  const response = await axios.patch(`/tasks/complete/${id}`)
+  dispatch({ type: GET_TASK, payload: response.data })
+}

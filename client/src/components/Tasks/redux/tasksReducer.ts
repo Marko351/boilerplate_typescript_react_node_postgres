@@ -14,7 +14,7 @@ const initialState: TStateTasks = {
     name: '',
     description: '',
     dueDate: '',
-    taskPriority: 0,
+    taskPriority: 1,
     checklist: [],
     comments: [],
   },

@@ -60,7 +60,7 @@ export const Comment: React.FC<commentProps> = ({ taskId, eventId }) => {
             </div>
             <div className='comment__comment--credentials'>
               <span>{comment.createdBy}</span>
-              <span>{moment(comment.creationDate).utc().local().format('YYYY-DD-MM HH:mm')}</span>
+              <span>{moment(comment.creationDate).utc().local().format('MM-DD-YYYY hh:mm A')}</span>
             </div>
           </div>
         ))}

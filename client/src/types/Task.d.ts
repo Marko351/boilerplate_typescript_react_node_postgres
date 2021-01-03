@@ -45,6 +45,7 @@ export interface ITask {
   creationDate?: string
   taskPriority: number
   isCompleted?: boolean
+  completionDate?: string | null
 }
 
 export interface ITaskReducer extends ITask {

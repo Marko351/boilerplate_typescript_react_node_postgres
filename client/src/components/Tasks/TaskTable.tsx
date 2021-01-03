@@ -54,7 +54,7 @@ export const TaskTable: React.FC<ITaskTable> = ({ history }) => {
   }
 
   const createdByBody = (rowData: any) => {
-    return rowData.data.createdByObj.username
+    return rowData.data.createdByObj && rowData.data.createdByObj.username
   }
 
   const nameBody = (rowData: any) => {

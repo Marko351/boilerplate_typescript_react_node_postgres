@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import Joi from 'joi'
+import moment from 'moment'
 
 import { HTTP_OK } from '../../constants/HTTPStatusCode'
 import { ITask, IGetAllTaskOptions } from './Task'
@@ -53,6 +54,7 @@ class TaskController {
           await this.checklistRepo.create<IChecklist>(checklistData)
         }
       }
+      console.log(comments)
       if (comments && comments.length) {
         for (let i = 0; i < comments.length; i++) {
           const commentData = {
@@ -60,6 +62,7 @@ class TaskController {
             comment: comments[i].comment,
             createdBy: req.userData.userId,
           }
+          console.log(commentData)
           await this.commentRepo.createComment(commentData)
         }
       }
@@ -129,6 +132,21 @@ class TaskController {
       }
       const response = await this.repo.getAllTasks(options, req.userData.userId!)
       // console.log(response)
+      res.status(HTTP_OK).json(response)
+    } catch (err) {
+      console.log(err)
+      next(err)
+    }
+  }
+
+  async completeTask(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params
+      const data = {
+        isCompleted: true,
+        completionDate: moment().format('YYYY-MM-DD hh:mm A'),
+      }
+      const response = await this.repo.updateOne(data, +id)
       res.status(HTTP_OK).json(response)
     } catch (err) {
       console.log(err)

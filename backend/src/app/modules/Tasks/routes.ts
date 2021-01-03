@@ -8,6 +8,7 @@ const controller = new TaskController()
 router.get('/:id', controller.getOne.bind(controller))
 router.get('/', controller.getAllTasks.bind(controller))
 router.post('/', controller.ValidateTaskData.bind(controller), controller.createTasks.bind(controller))
+router.patch('/complete/:id', controller.completeTask.bind(controller))
 router.patch('/:id', controller.ValidateTaskData.bind(controller), controller.updateTask.bind(controller))
 router.delete('/:id', controller.deleteTask.bind(controller))
 

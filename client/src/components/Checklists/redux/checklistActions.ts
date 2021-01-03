@@ -35,7 +35,6 @@ export const changeChecklistData = (name: keyof IChecklist, value: any, id: numb
       if (name === 'isDone') {
         checklist['isDone'] = value
       }
-      console.log(typeof id)
       if (typeof id == 'number') {
         await axios.patch(`/checklists/${id}`, checklist)
       }
